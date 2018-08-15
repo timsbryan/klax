@@ -1,8 +1,11 @@
+'use strict';
+
 const Belt = require('../belt').Belt;
+const p5 = require('p5');
 const belt = new Belt;
 
 beforeEach(() => {
-    var random = (num) => 1;
+    var p5.random = (num) => 1;
 });
 
 test('Creating a 2D array', () => {

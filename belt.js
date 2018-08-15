@@ -1,5 +1,7 @@
+'use strict';
+
 /* exported Belt */
-import config from './sketch.js';
+let config = require('./config.js');
 
 class Belt {
     constructor() {
