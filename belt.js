@@ -1,8 +1,5 @@
 'use strict';
 
-/* exported Belt */
-let config = require('./config.js');
-
 class Belt {
     constructor() {
         this.belt = this.make2DArray(config.lanes, config.lanes);
@@ -43,5 +40,3 @@ class Belt {
         this.tile5.draw();
     }
 }
-
-export { Belt };

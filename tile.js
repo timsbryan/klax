@@ -1,6 +1,6 @@
-/*  exported Tile */
+'use strict';
 
-export class Tile {
+class Tile {
     constructor(position, colour) {
         this.colour = colour;
         this.position = position;

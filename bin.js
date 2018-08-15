@@ -1,4 +1,4 @@
-/* exported Bin */
+'use strict';
 
 class Bin {
     constructor() {
@@ -12,5 +12,4 @@ class Bin {
         rect(0, 0, width, height/2);
         pop();
     }
-
-}
+};
