@@ -2,41 +2,65 @@
 
 class Belt {
     constructor() {
-        this.belt = this.make2DArray(config.lanes, config.lanes);
+        this.cols = config.lanes;
+        this.rows = config.lanes;
+
+        this.belt = this.make2DArray(this.cols, this.rows);
     }
 
-    make2DArray(cols, rows) {
-        var arr = new Array(cols);
-        for (var i = 0; i < arr.length; i++) {
-            arr[i] = new Array(rows);
+    make2DArray() {
+        let arr = new Array(this.cols);
+        for (let i = 0; i < arr.length; i++) {
+            arr[i] = new Array(this.rows);
+        }
+
+        for (let i = 0; i < this.cols; i++) {
+            for (let j = 0; j < this.rows; j++) {
+                arr[i][j] = null;
+            }
         }
 
         return arr;
     }
 
     addNewTile() {
-        return new Tile(random(config.lanes), 'red');
+        this.newTile = this.createNewTile();
+
+        return this.belt[parseInt(random(config.lanes))][0] = this.newTile;
+    }
+
+    createNewTile() {
+        return new Tile(Object.keys(config.tileColours)[parseInt(
+            random(Object.keys(config.tileColours).length)
+        )]);
     }
 
     step() {
-        setInterval(function() {
-            this.tile1.step();
-            this.tile2.step();
-            this.tile3.step();
-            this.tile4.step();
-            this.tile5.step();
-        }, 1000);
+        for (let i = this.cols - 1; i >= 0; i--) {
+            for (let j = this.rows - 1; j >= 0; j--) {
+                if (typeof this.belt[i][j] === 'object') {
+                    let thisTile = this.belt[i][j];
 
+                    this.belt[i][j] = null;
+                    this.belt[i][j + 1] = thisTile;
+                }
+            }
+        }
     }
 
     draw() {
-        fill(128);
-        rect(0, 0, width, height/2);
+        fill(128, 0, 0);
+        rect(0, 0, width, config.lanes * config.klaxSize);
 
-        this.tile1.draw();
-        this.tile2.draw();
-        this.tile3.draw();
-        this.tile4.draw();
-        this.tile5.draw();
+        for (let i = 0; i < this.cols; i++) {
+            for (let j = 0; j < this.rows; j++) {
+                if (this.belt[i][j] !== null) {
+                    push();
+                    translate(i * config.klaxSize, j * config.klaxSize);
+                    this.belt[i][j].draw();
+                    pop();
+                }
+            }
+        }
     }
 }
