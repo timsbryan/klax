@@ -9,7 +9,9 @@ module.exports = {
         "expect": true,
         "sinon": true,
         "sketch": true,
-        "tile": true
+        "tile": true,
+        "stacker": true,
+        "config": true
     },
     "extends": [
         "eslint:recommended",

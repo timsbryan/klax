@@ -1,8 +1,11 @@
+/* eslint-env p5js */
+
 'use strict';
 
 let config;
 let belt;
 let bin;
+let stacker;
 
 function setup() {
     config = {
@@ -18,11 +21,12 @@ function setup() {
         }
     };
 
-    config.klaxSize = (config.canvasWidth / config.lanes) / 2;
+    config.klaxSize = config.canvasWidth / config.lanes;
 
     createCanvas(config.canvasWidth, config.canvasWidth);
     background(51);
 
+    stacker = new Stacker();
     belt = new Belt();
     bin = new Bin();
 }
@@ -31,5 +35,17 @@ function draw() {
     background(51);
 
     belt.draw();
-    // bin.draw();
+    bin.draw();
+    stacker.draw();
+}
+
+function keyPressed() {
+    switch (keyCode) {
+        case 37:
+            stacker.left();
+            break;
+        case 39:
+            stacker.right();
+            break;
+    }
 }
