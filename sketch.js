@@ -1,14 +1,30 @@
 'use strict';
 
-let p5 = require('p5');
+const p5 = require('p5');
+const Belt = require('./belt');
+const bin = require('./bin.js');
+
+let belt;
+let config;
 
 new p5;
 
 let s = function (sketch) {
-    let belt = require('./belt.js');
-    let bin = require('./bin.js');
-
     sketch.setup = function () {
+        config = {
+            'canvasWidth': 300,
+            'lanes': 5,
+            'verticalSteps': 5,
+            'tileColours': {
+                'red': color(255, 0, 0),
+                'green': color(0, 255, 0),
+                'blue': color(0, 0, 255),
+                'yellow': color(255, 255, 0),
+                'purple': color(255, 0, 255)
+            }
+        };
+
+        config['klaxSize'] = width / this.lanes;
         createCanvas(600, 600);
         background(51);
 

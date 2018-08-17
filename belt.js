@@ -1,16 +1,19 @@
 'use strict';
 
 /* exported Belt */
-let config = require('./config.js');
+const p5 = require('p5');
+const Tile = require('./tile');
 
-class Belt {
+new p5;
+
+module.exports = class Belt {
     constructor() {
-        this.belt = this.make2DArray(config.lanes, config.lanes);
+        this.belt = this.make2DArray(5, 5);
     }
 
     make2DArray(cols, rows) {
         var arr = new Array(cols);
-        for (var i = 0; i < arr.length; i++) {
+        for (let i = 0; i < arr.length; i++) {
             arr[i] = new Array(rows);
         }
 
@@ -18,11 +21,11 @@ class Belt {
     }
 
     addNewTile() {
-        return new Tile(random(config.lanes), 'red');
+        return new Tile(random(5), 'red');
     }
 
     step() {
-        setInterval(function() {
+        setInterval(function () {
             this.tile1.step();
             this.tile2.step();
             this.tile3.step();
@@ -34,7 +37,7 @@ class Belt {
 
     draw() {
         fill(128);
-        rect(0, 0, width, height/2);
+        rect(0, 0, width, height / 2);
 
         this.tile1.draw();
         this.tile2.draw();
@@ -42,6 +45,4 @@ class Belt {
         this.tile4.draw();
         this.tile5.draw();
     }
-}
-
-export { Belt };
+};

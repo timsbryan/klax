@@ -1,6 +1,6 @@
 /*  exported Tile */
 
-export class Tile {
+module.exports = class Tile {
     constructor(position, colour) {
         this.colour = colour;
         this.position = position;
@@ -23,4 +23,4 @@ export class Tile {
 
         rect((this.position.x * klaxSize) - klaxSize, this.position.y, klaxSize, klaxSize);
     }
-}
+};
