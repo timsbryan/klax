@@ -1,5 +1,4 @@
 /* eslint-env p5js */
-
 'use strict';
 
 class Belt {
@@ -63,7 +62,7 @@ class Belt {
                 if (this.belt[i][j] !== null) {
                     push();
 
-                    translate(i * config.klaxSize, j * config.klaxSize);
+                    translate(i * config.tileSize, j * config.tileSize);
                     this.belt[i][j].draw();
 
                     pop();

@@ -1,5 +1,4 @@
 /* eslint-env p5js */
-
 'use strict';
 
 class Bin {

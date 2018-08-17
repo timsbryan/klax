@@ -1,5 +1,4 @@
 /* eslint-env p5js */
-
 'use strict';
 
 class Tile {
@@ -11,6 +10,6 @@ class Tile {
         noStroke();
         fill(config.tileColours[this.colour]);
 
-        rect(0, 0, config.klaxSize, config.klaxSize);
+        rect(0, 0, config.tileSize, config.tileSize);
     }
 }

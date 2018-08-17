@@ -1,5 +1,4 @@
 /* eslint-env p5js */
-
 'use strict';
 
 let config;
@@ -21,7 +20,7 @@ function setup() {
         }
     };
 
-    config.klaxSize = config.canvasWidth / config.lanes;
+    config.tileSize = config.canvasWidth / config.lanes;
 
     createCanvas(config.canvasWidth, config.canvasWidth);
     background(51);
