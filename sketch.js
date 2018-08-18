@@ -1,12 +1,14 @@
 /* eslint-env p5js */
+/* exported setup draw keyPressed */
 'use strict';
 
 let config;
 let belt;
 let bin;
-let stacker;
+let paddle;
 
 function setup() {
+    // frameRate(1);
     config = {
         'canvasWidth': 600,
         'lanes': 5,
@@ -25,7 +27,7 @@ function setup() {
     createCanvas(config.canvasWidth, config.canvasWidth);
     background(51);
 
-    stacker = new Stacker();
+    paddle = new Paddle();
     belt = new Belt();
     bin = new Bin();
 }
@@ -33,18 +35,32 @@ function setup() {
 function draw() {
     background(51);
 
-    belt.draw();
     bin.draw();
-    stacker.draw();
+    belt.draw();
+    paddle.draw();
+
+    let droppedTile = belt.step();
+
+    if (droppedTile !== undefined) {
+        paddle.pushToStacker(droppedTile.tile, droppedTile.col);
+    }
 }
 
 function keyPressed() {
     switch (keyCode) {
         case 37:
-            stacker.left();
+            paddle.left();
             break;
         case 39:
-            stacker.right();
+            paddle.right();
             break;
+        case 40: {
+            let droppedTile = paddle.drop();
+
+            if (droppedTile !== undefined) {
+                bin.pushToBin(droppedTile.tile, droppedTile.col);
+            }
+            break;
+        }
     }
 }

@@ -1,23 +1,26 @@
 /* eslint-env p5js */
+/* exported Belt */
 'use strict';
 
 class Belt {
     constructor() {
         this.cols = config.lanes;
         this.rows = config.lanes;
+        this.tileHeight = (config.tileSize / 4) * 3;
+        this.tileWidth = config.tileSize;
 
         this.belt = this.make2DArray(this.cols, this.rows);
     }
 
-    make2DArray() {
-        let arr = new Array(this.cols);
+    make2DArray(cols, rows) {
+        let arr = new Array(cols);
         for (let i = 0; i < arr.length; i++) {
-            arr[i] = new Array(this.rows);
+            arr[i] = new Array(rows);
         }
 
-        for (let i = 0; i < this.cols; i++) {
-            for (let j = 0; j < this.rows; j++) {
-                arr[i][j] = null;
+        for (let i = 0; i < cols; i++) {
+            for (let j = 0; j < rows; j++) {
+                arr[i][j] = -1;
             }
         }
 
@@ -31,41 +34,59 @@ class Belt {
     }
 
     createNewTile() {
-        return new Tile(Object.keys(config.tileColours)[parseInt(
-            random(Object.keys(config.tileColours).length)
-        )]);
+        return new Tile(Object.keys(config.tileColours)[
+            parseInt(random(Object.keys(config.tileColours).length))
+        ]);
     }
 
     step() {
-        for (let i = this.cols - 1; i >= 0; i--) {
-            for (let j = this.rows - 1; j >= 0; j--) {
+        for (let i = this.cols - 1; i >= 0; --i) {
+            for (let j = this.rows - 1; j >= 0; --j) {
                 if (typeof this.belt[i][j] === 'object') {
                     let thisTile = this.belt[i][j];
 
-                    this.belt[i][j] = null;
-                    this.belt[i][j + 1] = thisTile;
+                    this.belt[i][j] = -1;
+
+                    if (j + 1 >= this.belt[i].length) {
+                        return {
+                            'tile': thisTile,
+                            'col': i
+                        };
+                    } else {
+                        this.belt[i][j + 1] = thisTile;
+
+                        return undefined;
+                    }
                 }
             }
         }
     }
 
     draw() {
-        push();
-
-        fill(128, 0, 0);
-        rect(0, 0, width, height / 4 * 3);
-
-        pop();
-
         for (let i = 0; i < this.cols; i++) {
             for (let j = 0; j < this.rows; j++) {
-                if (this.belt[i][j] !== null) {
-                    push();
+                push();
 
-                    translate(i * config.tileSize, j * config.tileSize);
-                    this.belt[i][j].draw();
+                stroke(0);
+                strokeWeight(1);
+                fill(255);
 
-                    pop();
+                rect(
+                    i * this.tileWidth,
+                    j * this.tileHeight,
+                    this.tileWidth,
+                    this.tileHeight
+                );
+
+                pop();
+
+                if (this.belt[i][j] !== -1) {
+                    this.belt[i][j].draw(
+                        i * this.tileWidth,
+                        j * this.tileHeight,
+                        this.tileWidth,
+                        this.tileHeight
+                    );
                 }
             }
         }

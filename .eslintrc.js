@@ -5,12 +5,10 @@ module.exports = {
     },
     "globals": {
         "p5": true,
-        "assert": true,
-        "expect": true,
-        "sinon": true,
-        "sketch": true,
-        "tile": true,
-        "stacker": true,
+        "Paddle": true,
+        "Belt": true,
+        "Bin": true,
+        "Tile": true,
         "config": true
     },
     "extends": [

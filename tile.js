@@ -1,4 +1,5 @@
 /* eslint-env p5js */
+/* exported Tile */
 'use strict';
 
 class Tile {
@@ -6,10 +7,14 @@ class Tile {
         this.colour = colour;
     }
 
-    draw() {
+    draw(posX, posY, tWidth, tHeight) {
+        push();
+
         noStroke();
         fill(config.tileColours[this.colour]);
+        translate(posX, posY);
+        rect(0, 0, tWidth, tHeight);
 
-        rect(0, 0, config.tileSize, config.tileSize);
+        pop();
     }
 }
