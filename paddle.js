@@ -12,7 +12,7 @@ class Paddle {
     pushToStacker(tile, col) {
         if (col === this.paddleLane) {
             this.paddleTiles.push(tile);
-        } //TODO else statement
+        } //TODO else statement if player has missed the stacker
     }
 
     left() {
@@ -37,7 +37,7 @@ class Paddle {
     draw() {
         push();
 
-        fill(0, 255, 0);
+        fill(128);
         rectMode(CENTER);
         translate(
             (this.paddleLane + 1) * config.tileSize - (config.tileSize / 2),

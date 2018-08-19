@@ -38,24 +38,74 @@ class Bin {
     }
 
     pushToBin(tile, col) {
-        this.bin[col][this.getLowestEmptyRow(col)] = tile;
+        let row = this.getLowestEmptyRow(col);
+
+        this.bin[col][row] = tile;
+
+        let klaxTiles = this.checkForKlax(col, row);
+
+        if (Array.isArray(klaxTiles)) {
+            this.clearBinPositions(klaxTiles);
+        }
     }
 
-    checkForKlax() {
-        this.checkHorizontalKlax();
-        this.checkVerticalKlax();
-        this.checkDiagonalKlax();
+    checkForKlax(col, row) {
+        let horArr = this.checkHorizontalKlax(col, row);
+        let verticalArr = this.checkVerticalKlax(col, row);
+        let diagArr = this.checkDiagonalKlax(col, row);
+
+        if (Array.isArray(horArr) || Array.isArray(verticalArr) || Array.isArray(diagArr)) {
+            let newArr = [];
+            if (Array.isArray(horArr)) {
+                newArr = newArr.concat(horArr);
+            }
+
+            if (Array.isArray(verticalArr)) {
+                newArr = newArr.concat(verticalArr);
+            }
+
+            if (Array.isArray(diagArr)) {
+                newArr = newArr.concat(diagArr);
+            }
+
+            if (newArr.length > 0) {
+                return newArr;
+            }
+         }
     }
 
-    checkHorizontalKlax() {
+    checkHorizontalKlax(col, row) {
+        let horArr = [[col, row]];
+        let tileColour = this.bin[col][row].colour;
+        
+        if (this.bin[col+1][row].colour === tileColour) {
+            horArr.push([col+1, row]);
+        }
 
-    }
+        if (this.bin[col-1][row].colour === tileColour) {
+            horArr.push([col-1, row]);
+        }
+
+        if (horArr.length >= 3) {
+            return horArr;
+        }
+   }
 
     checkVerticalKlax() {
 
     }
 
     checkDiagonalKlax() {
+
+    }
+
+    clearBinPositions(tileArr) {
+        console.log('tileArr', tileArr);
+
+        tileArr.forEach((tilePos) => {
+            console.log('tilePos', tilePos);
+            this.bin[tilePos[0], tilePos[1]] = -1;
+        });
 
     }
 
@@ -67,9 +117,9 @@ class Bin {
                 //TODO Translate better
                 translate(0, (config.tileSize / 4 * 3) * 5);
 
-                stroke(0);
+                stroke(255);
                 strokeWeight(1);
-                fill(51);
+                fill(0);
 
                 rect(
                     i * this.tileWidth,
@@ -80,6 +130,8 @@ class Bin {
 
 
                 if (this.bin[i][j] !== -1) {
+                    console.log('i,j: ', i, j);
+                    console.log('tile', this.bin[i][j]);
                     this.bin[i][j].draw(
                         i * this.tileWidth,
                         j * this.tileHeight,

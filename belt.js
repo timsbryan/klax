@@ -67,9 +67,9 @@ class Belt {
             for (let j = 0; j < this.rows; j++) {
                 push();
 
-                stroke(0);
+                stroke(255);
                 strokeWeight(1);
-                fill(255);
+                fill(51);
 
                 rect(
                     i * this.tileWidth,
