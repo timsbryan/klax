@@ -14,10 +14,10 @@ function setup() {
         'lanes': 5,
         'beltSteps': 5,
         'tileColours': {
-            // 'red': color(255, 0, 0),
-            // 'green': color(0, 255, 0),
-            // 'blue': color(0, 0, 255),
-            // 'yellow': color(255, 255, 0),
+            'red': color(255, 0, 0),
+            'green': color(0, 255, 0),
+            'blue': color(0, 0, 255),
+            'yellow': color(255, 255, 0),
             'purple': color(255, 0, 255)
         }
     };
@@ -62,5 +62,15 @@ function keyPressed() {
             }
             break;
         }
+        case 65:
+            belt.addNewPurpleTile();
+            break;
+        case 83:
+            belt.addNewGreenTile();
+            break;
+        case 81:
+            frameRate(1);
+            console.log('Framerate now 1fps');
+            break;
     }
 }

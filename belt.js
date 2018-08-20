@@ -39,6 +39,24 @@ class Belt {
         ]);
     }
 
+    //TODO Remove
+    addNewGreenTile() {
+        this.newTile = this.createNewGreenTile();
+
+        return this.belt[parseInt(random(config.lanes))][0] = this.newTile;
+    }
+    createNewGreenTile() {
+        return new Tile('green');
+    }
+    addNewPurpleTile() {
+        this.newTile = this.createNewPurpleTile();
+
+        return this.belt[parseInt(random(config.lanes))][0] = this.newTile;
+    }
+    createNewPurpleTile() {
+        return new Tile('purple');
+    }
+
     step() {
         for (let i = this.cols - 1; i >= 0; --i) {
             for (let j = this.rows - 1; j >= 0; --j) {

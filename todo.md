@@ -15,7 +15,7 @@ Parts
 <!-- - The stacker can drop the last caught tile onto the bin lane it is currently over. -->
 - The stacker can throw the top most tile up onto the conveyor belt.
 - If the bins ever have three or more klax tiles in a line (vertial, horizontal, diagonal), a Klax then those tiles disapear and points are added to the score board.
-<!-- - If a klax reaches the bottom of the conveyor belt and the stacker isn't there, it is dropped from play. -->
+- If a klax reaches the bottom of the conveyor belt and the stacker isn't there, it is dropped from play.
 - There are a limited number of tiles that can be dropped per round if the limit is reached, the game is over.
 - You get points for getting a Klax:
     - 50 	    3-fold vertical
