@@ -2,6 +2,8 @@
 /* exported Bin */
 'use strict';
 
+//TODO unit tests on this class!!
+
 class Bin {
     constructor() {
         this.cols = config.lanes;
@@ -28,6 +30,7 @@ class Bin {
         return arr;
     }
 
+    //TODO forgotten what this does
     getLowestEmptyRow(col) {
         for (let i = 0; i < this.bin[col].length; i++) {
             if (this.bin[col][i + 1] !== -1) {
@@ -45,25 +48,13 @@ class Bin {
         this.checkForKlax(col, row);
     }
 
+    /* TODO depending on performance maybe remove this function and just check for Klax at every
+     * position, always
+     */
     checkForKlax(col, row) {
-        let horArr;
-        let verticalArr;
-        let diagArr;
-
-        if (col !== undefined || row !== undefined) {
-            horArr = this.checkHorizontalKlax(col, row);
-            verticalArr = this.checkVerticalKlax(col, row);
-            diagArr = this.checkDiagonalKlax(col, row);
-        } else {
-            this.bin.forEach((tile, i) => {
-                this.bin[i].forEach((tile, j) => {
-                    //TODO Not firing when expected
-                    horArr = this.checkHorizontalKlax(i, j);
-                    verticalArr = this.checkVerticalKlax(i, j);
-                    diagArr = this.checkDiagonalKlax(i, j);
-                });
-            });
-        }
+        let horArr = this.checkHorizontalKlax(col, row);
+        let verticalArr = this.checkVerticalKlax(col, row);
+        let diagArr = this.checkDiagonalKlax(col, row);
 
         if (Array.isArray(horArr) || Array.isArray(verticalArr) || Array.isArray(diagArr)) {
             let newArr = [];
@@ -85,6 +76,37 @@ class Bin {
                 this.dropTiles();
             }
         }
+    }
+
+    checkAllForKlax() {
+        this.bin.forEach((row, i) => {
+            this.bin[i].forEach((tile, j) => {
+                let horArr = this.checkHorizontalKlax(i, j);
+                let verticalArr = this.checkVerticalKlax(i, j);
+                let diagArr = this.checkDiagonalKlax(i, j);
+
+                if (Array.isArray(horArr) || Array.isArray(verticalArr) || Array.isArray(diagArr)) {
+                    let newArr = [];
+                    if (Array.isArray(horArr)) {
+                        newArr = newArr.concat(horArr);
+                    }
+
+                    if (Array.isArray(verticalArr)) {
+                        newArr = newArr.concat(verticalArr);
+                    }
+
+                    if (Array.isArray(diagArr)) {
+                        newArr = newArr.concat(diagArr);
+                    }
+
+                    if (newArr.length > 0) {
+                        this.clearBinPositions(newArr);
+
+                        this.dropTiles();
+                    }
+                }
+            });
+        });
     }
 
     checkHorizontalKlax(col, row) {
@@ -226,10 +248,11 @@ class Bin {
                     this.bin[i][j + 1] = tile;
                     this.bin[i][j] = -1;
                     this.dropTiles();
+
+                    this.checkAllForKlax(i, j);
                 }
             });
         });
-        this.checkForKlax();
     }
 
     clearBinPositions(tileArr) {
