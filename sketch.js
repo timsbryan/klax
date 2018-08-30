@@ -15,15 +15,15 @@ function preload() {
 function setup() {
     // frameRate(1);
     config = {
-        'canvasWidth': 600,
-        'lanes': 5,
-        'beltSteps': 5,
-        'tileColours': {
-            'red': color(255, 0, 0),
-            'green': color(0, 255, 0),
-            'blue': color(0, 0, 255),
-            'yellow': color(255, 255, 0),
-            'purple': color(255, 0, 255)
+        canvasWidth: 600,
+        lanes: 5,
+        beltSteps: 5,
+        tileColours: {
+            red: color(255, 0, 0),
+            green: color(0, 255, 0),
+            blue: color(0, 0, 255),
+            yellow: color(255, 255, 0),
+            purple: color(255, 0, 255)
         }
     };
 
@@ -35,7 +35,6 @@ function setup() {
     belt = new Belt(spritesheets);
     paddle = new Paddle();
     bin = new Bin();
-
 }
 
 function draw() {
@@ -50,7 +49,6 @@ function draw() {
     if (droppedTile !== undefined) {
         paddle.pushToStacker(droppedTile.tile, droppedTile.col);
     }
-
 }
 
 function keyPressed() {
