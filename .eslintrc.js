@@ -9,7 +9,8 @@ module.exports = {
         "Belt": true,
         "Bin": true,
         "Tile": true,
-        "config": true
+        "config": true,
+        "Sprite": true
     },
     "extends": [
         "eslint:recommended",
