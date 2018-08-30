@@ -3,7 +3,7 @@
 'use strict';
 
 class Belt {
-    constructor() {
+    constructor(tileImages) {
         this.cols = config.lanes;
         this.rows = config.lanes;
         this.tileHeight = (config.tileSize / 4) * 3;
@@ -36,7 +36,7 @@ class Belt {
     createNewTile() {
         return new Tile(Object.keys(config.tileColours)[
             parseInt(random(Object.keys(config.tileColours).length))
-        ]);
+        ], this.tileImages);
     }
 
     //TODO Remove

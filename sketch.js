@@ -1,11 +1,16 @@
 /* eslint-env p5js */
-/* exported setup draw keyPressed */
+/* exported setup draw keyPressed preload */
 'use strict';
 
 let config;
 let belt;
 let bin;
 let paddle;
+let spritesheets = {};
+
+function preload() {
+    spritesheets.pink = loadImage('assets/tile-pink.png');
+}
 
 function setup() {
     // frameRate(1);
@@ -27,9 +32,10 @@ function setup() {
     createCanvas(config.canvasWidth, config.canvasWidth);
     background(51);
 
+    belt = new Belt(spritesheets);
     paddle = new Paddle();
-    belt = new Belt();
     bin = new Bin();
+
 }
 
 function draw() {
@@ -44,6 +50,7 @@ function draw() {
     if (droppedTile !== undefined) {
         paddle.pushToStacker(droppedTile.tile, droppedTile.col);
     }
+
 }
 
 function keyPressed() {
