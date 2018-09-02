@@ -27,11 +27,18 @@ class Paddle {
         }
     }
 
-    drop() {
-        return {
-            'tile': this.paddleTiles.pop(),
-            'col': this.paddleLane
-        };
+    up() {
+        //TODO push tile top paddle tile to top of belt
+        console.log('TODO');
+    }
+
+    down() {
+        if (this.paddleTiles.length) {
+            return {
+                'tile': this.paddleTiles.pop(),
+                'col': this.paddleLane
+            };
+        }
     }
 
     draw() {
