@@ -2,8 +2,11 @@
 /* exported Paddle */
 'use strict';
 
-class Paddle {
-    constructor() {
+export default class Paddle {
+    constructor(sketch, config) {
+        this.sketch = sketch;
+        this.config = config;
+
         this.paddleTiles = [];
         this.paddleLane = Math.floor(config.lanes / 2);
         this.paddleHeight = config.tileSize / 3;
@@ -22,7 +25,7 @@ class Paddle {
     }
 
     right() {
-        if (this.paddleLane < config.lanes - 1) {
+        if (this.paddleLane < this.config.lanes - 1) {
             this.paddleLane++;
         }
     }
@@ -42,24 +45,24 @@ class Paddle {
     }
 
     draw() {
-        push();
+        this.sketch.push();
 
-        fill(128);
-        rectMode(CENTER);
-        translate(
-            (this.paddleLane + 1) * config.tileSize - (config.tileSize / 2),
-            (height / 4 * 3) + (this.paddleTiles.length * (this.paddleHeight))
+        this.sketch.fill(128);
+        this.sketch.rectMode(this.sketch.CENTER);
+        this.sketch.translate(
+            (this.paddleLane + 1) * this.config.tileSize - (this.config.tileSize / 2),
+            (this.sketch.height / 4 * 3) + (this.paddleTiles.length * (this.paddleHeight))
         );
 
-        rect(0, 0, config.tileSize, this.paddleHeight);
+        this.sketch.rect(0, 0, this.config.tileSize, this.paddleHeight);
 
-        push();
+        this.sketch.push();
         this.paddleTiles.forEach((tile, i) => {
-            translate(0, this.paddleHeight * -1);
-            tile.draw(0, 0, config.tileSize, this.paddleHeight);
+            this.sketch.translate(0, this.paddleHeight * -1);
+            tile.draw(0, 0, this.config.tileSize, this.paddleHeight);
         });
-        pop();
+        this.sketch.pop();
 
-        pop();
+        this.sketch.pop();
     }
 }

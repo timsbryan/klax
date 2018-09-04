@@ -2,13 +2,18 @@
 /* exported Tile */
 'use strict';
 
+import Sprite from './sprite';
+
 let pinkSpriteImg;
 let pinkSpriteFrames = 36;
 let pinkSpriteWidth = 180;
 let pinkAnimation = [];
 
-class Tile {
-    constructor(colour, tileImages) {
+export default class Tile {
+    constructor(sketch, config, colour, tileImages) {
+        this.sketch = sketch;
+        this.config = config;
+
         for (let i = 0; i < pinkSpriteFrames; i++) {
             let pos = i * pinkSpriteWidth;
 
@@ -16,7 +21,7 @@ class Tile {
             pinkAnimation.push(img);
         }
 
-        pinkSpriteImg = new Sprite(pinkAnimation, 0, 0, 0.1);
+        pinkSpriteImg = new Sprite(this.sketch, pinkAnimation, 0, 0, 0.1);
 
         this.colour = colour;
     }
@@ -28,7 +33,7 @@ class Tile {
         push();
 
         noStroke();
-        fill(config.tileColours[this.colour]);
+        fill(this.config.tileColours[this.colour]);
         translate(posX, posY);
         rect(0, 0, tWidth, tHeight);
 

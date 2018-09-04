@@ -2,8 +2,13 @@
 /* exported Belt */
 'use strict';
 
-class Belt {
-    constructor(tileImages) {
+import Tile from './tile';
+
+export default class Belt {
+    constructor(sketch, config, tileImages) {
+        this.sketch = sketch;
+        this.config = config;
+
         this.cols = config.lanes;
         this.rows = config.lanes;
         this.tileHeight = (config.tileSize / 4) * 3;
@@ -30,31 +35,35 @@ class Belt {
     addNewTile() {
         this.newTile = this.createNewTile();
 
-        return this.belt[parseInt(random(config.lanes))][0] = this.newTile;
+        return this.belt[parseInt(this.sketch.random(this.config.lanes))][0] = this.newTile;
     }
 
     createNewTile() {
-        return new Tile(Object.keys(config.tileColours)[
-            parseInt(random(Object.keys(config.tileColours).length))
-        ], this.tileImages);
+        return new Tile(
+            this.sketch,
+            this.config,
+            Object.keys(this.config.tileColours)[
+                parseInt(this.sketch.random(Object.keys(this.config.tileColours).length))
+            ],
+            this.tileImages);
     }
 
     //TODO Remove
     addNewGreenTile() {
         this.newTile = this.createNewGreenTile();
 
-        return this.belt[parseInt(random(config.lanes))][0] = this.newTile;
+        return this.belt[parseInt(this.sketch.random(this.config.lanes))][0] = this.newTile;
     }
     createNewGreenTile() {
-        return new Tile('green');
+        return new Tile(this.sketch, this.config, 'green');
     }
     addNewPurpleTile() {
         this.newTile = this.createNewPurpleTile();
 
-        return this.belt[parseInt(random(config.lanes))][0] = this.newTile;
+        return this.belt[parseInt(this.sketch.random(this.config.lanes))][0] = this.newTile;
     }
     createNewPurpleTile() {
-        return new Tile('purple');
+        return new Tile(this.sketch, this.config, 'purple');
     }
 
     step() {
@@ -83,20 +92,20 @@ class Belt {
     draw() {
         for (let i = 0; i < this.cols; i++) {
             for (let j = 0; j < this.rows; j++) {
-                push();
+                this.sketch.push();
 
-                stroke(255);
-                strokeWeight(1);
-                fill(51);
+                this.sketch.stroke(255);
+                this.sketch.strokeWeight(1);
+                this.sketch.fill(51);
 
-                rect(
+                this.sketch.rect(
                     i * this.tileWidth,
                     j * this.tileHeight,
                     this.tileWidth,
                     this.tileHeight
                 );
 
-                pop();
+                this.sketch.pop();
 
                 if (this.belt[i][j] !== -1) {
                     this.belt[i][j].draw(

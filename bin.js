@@ -4,13 +4,16 @@
 
 //TODO unit tests on this class!!
 
-class Bin {
-    constructor() {
-        this.cols = config.lanes;
-        this.rows = config.lanes;
+export default class Bin {
+    constructor(sketch, config) {
+        this.sketch = sketch;
+        this.config = config;
+
+        this.cols = this.config.lanes;
+        this.rows = this.config.lanes;
         //TODO calc tile height better
         this.tileHeight = 30;
-        this.tileWidth = config.tileSize;
+        this.tileWidth = this.config.tileSize;
 
         this.bin = this.make2DArray(this.cols, this.rows);
     }
@@ -264,16 +267,16 @@ class Bin {
     draw() {
         for (let i = 0; i < this.cols; i++) {
             for (let j = 0; j < this.rows; j++) {
-                push();
+                this.sketch.push();
 
                 //TODO Translate better
-                translate(0, (config.tileSize / 4 * 3) * 5);
+                this.sketch.translate(0, (this.config.tileSize / 4 * 3) * 5);
 
-                stroke(255);
-                strokeWeight(1);
-                fill(0);
+                this.sketch.stroke(255);
+                this.sketch.strokeWeight(1);
+                this.sketch.fill(0);
 
-                rect(
+                this.sketch.rect(
                     i * this.tileWidth,
                     j * this.tileHeight,
                     this.tileWidth,
@@ -290,7 +293,7 @@ class Bin {
                     );
                 }
 
-                pop();
+                this.sketch.pop();
             }
         }
     }

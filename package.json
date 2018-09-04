@@ -4,7 +4,8 @@
   "description": "Klax game.",
   "main": "sketch.js",
   "scripts": {
-    "start": "http-server -g -o -c-1",
+    "start": "parcel index.html",
+    "build": "parcel build index.html",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Tim Bryan",
@@ -17,6 +18,11 @@
     "eslint-plugin-node": "^6.0.1",
     "eslint-plugin-promise": "^3.7.0",
     "eslint-plugin-standard": "^3.0.1",
-    "http-server": "^0.11.1"
+    "parcel-bundler": "^1.9.7"
+  },
+  "dependencies": {
+    "config": "^2.0.1",
+    "p5": "^0.7.1",
+    "sketch": "^0.2.0"
   }
 }
