@@ -6,10 +6,10 @@ let config;
 let belt;
 let bin;
 let paddle;
-let spritesheets = {};
+let spritesheets;
 
 function preload() {
-    spritesheets.pink = loadImage('assets/klax-spritesheet-96x161.png');
+    spritesheets = loadImage('assets/klax-spritesheet-96x161.png');
 }
 
 function setup() {
@@ -25,7 +25,8 @@ function setup() {
             pink: color(255, 0, 255),
             red: color(255, 0, 0),
             yellow: color(255, 255, 0)
-        }
+        },
+        level: 1
     };
 
     config.tileSize = config.canvasWidth / config.lanes;
@@ -56,40 +57,40 @@ function keyPressed() {
     switch (keyCode) {
         case 37:
             paddle.left();
-            
             break;
+
         case 38:
             paddle.up();
-
             break;
+
         case 39:
             paddle.right();
-
             break;
+
         case 40: {
             let droppedTile = paddle.down();
 
             if (droppedTile !== undefined) {
                 bin.pushToBin(droppedTile.tile, droppedTile.col);
             }
-
             break;
         }
+
         case 65:
             //TODO remove for debug only
             belt.addNewPurpleTile();
-
             break;
+
         case 83:
             //TODO remove for debug only
             belt.addNewGreenTile();
-
             break;
+
         case 81:
             //TODO remove for debug only
             frameRate(1);
             console.log('Framerate now 1fps');
-
             break;
+
     }
 }

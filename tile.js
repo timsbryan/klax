@@ -9,6 +9,7 @@ let pinkAnimation = [];
 
 class Tile {
     constructor(colour, tileImages) {
+        this.tileImages = tileImages;
         for (let i = 0; i < pinkSpriteFrames; i++) {
             let pos = i * pinkSpriteWidth;
 
@@ -16,7 +17,7 @@ class Tile {
             pinkAnimation.push(img);
         }
 
-        pinkSpriteImg = new Sprite(pinkAnimation, 0, 0, 0.1);
+        pinkSpriteImg = new Sprite(tileImages, 0, 0, 0.1);
 
         this.colour = colour;
     }
