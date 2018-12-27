@@ -2,14 +2,19 @@
 /* exported Tile */
 'use strict';
 
+const Sprite = require('./sprite');
+
 let pinkSpriteImg;
 let pinkSpriteFrames = 36;
 let pinkSpriteWidth = 180;
 let pinkAnimation = [];
 
 class Tile {
-    constructor(colour, tileImages) {
+    constructor(sketch, config, colour, tileImages) {
+        this.sketch = sketch;
+        this.config = config;
         this.tileImages = tileImages;
+
         for (let i = 0; i < pinkSpriteFrames; i++) {
             let pos = i * pinkSpriteWidth;
 
@@ -17,7 +22,7 @@ class Tile {
             pinkAnimation.push(img);
         }
 
-        pinkSpriteImg = new Sprite(tileImages, 0, 0, 0.1);
+        pinkSpriteImg = new Sprite(this.sketch, pinkAnimation, 0, 0, 0.1);
 
         this.colour = colour;
     }
@@ -29,10 +34,11 @@ class Tile {
         push();
 
         noStroke();
-        fill(config.tileColours[this.colour]);
+        fill(this.config.tileColours[this.colour]);
         translate(posX, posY);
         rect(0, 0, tWidth, tHeight);
 
         pop();
     }
 }
+module.exports = Tile;

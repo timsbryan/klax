@@ -3,14 +3,8 @@ module.exports = {
         "browser": true,
         "es6": true
     },
-    "globals": {
-        "p5": true,
-        "Paddle": true,
-        "Belt": true,
-        "Bin": true,
-        "Tile": true,
-        "config": true,
-        "Sprite": true
+    "parserOptions": {
+        "sourceType": "module"
     },
     "extends": [
         "eslint:recommended",
