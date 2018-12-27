@@ -34,7 +34,7 @@ function setup() {
     createCanvas(config.canvasWidth, config.canvasWidth);
     background(51);
 
-    belt = new Belt(spritesheets);
+    belt = new Belt(spritesheets, config);
     paddle = new Paddle();
     bin = new Bin();
 }

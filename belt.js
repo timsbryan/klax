@@ -3,7 +3,7 @@
 'use strict';
 
 class Belt {
-    constructor(tileImages) {
+    constructor(tileImages, config) {
         this.tileImage = tileImages;
         this.cols = config.lanes;
         this.rows = config.lanes;
@@ -37,7 +37,7 @@ class Belt {
     createNewTile() {
         return new Tile(
             Object.keys(config.tileColours)[
-                parseInt(random(Object.keys(config.tileColours).length))
+            parseInt(random(Object.keys(config.tileColours).length))
             ],
             this.tileImages);
     }
@@ -113,3 +113,5 @@ class Belt {
         }
     }
 }
+
+module.exports = Belt;
