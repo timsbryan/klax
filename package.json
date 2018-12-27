@@ -10,9 +10,6 @@
   "author": "Tim Bryan",
   "license": "ISC",
   "devDependencies": {
-    "babel-preset-env": "^1.7.0",
-    "beefy": "^2.1.8",
-    "canvas": "^2.2.0",
     "eslint": "^5.11.0",
     "eslint-config-p5js": "^1.0.1",
     "eslint-config-standard": "^12.0.0",
