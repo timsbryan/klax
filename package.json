@@ -1,13 +1,11 @@
 {
   "name": "klax",
   "version": "1.0.0",
-  "description": "Klax game",
-  "private": true,
+  "description": "Klax game.",
+  "main": "sketch.js",
   "scripts": {
-    "start": "http-server",
-    "lint": "eslint *.js",
-    "test": "jest --watchAll",
-    "serve": "beefy sketch.js --debug=true --live"
+    "start": "http-server -g -o -c-1",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Tim Bryan",
   "license": "ISC",
@@ -23,7 +21,8 @@
     "eslint-plugin-node": "^8.0.0",
     "eslint-plugin-promise": "^4.0.1",
     "eslint-plugin-standard": "^4.0.0",
-    "jest": "^23.6.0"
+    "jest": "^23.6.0",
+    "http-server": "^0.11.1"
   },
   "jest": {
     "verbose": true,

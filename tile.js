@@ -1,26 +1,38 @@
-/*  exported Tile */
+/* eslint-env p5js */
+/* exported Tile */
+'use strict';
 
-module.exports = class Tile {
-    constructor(position, colour) {
-        this.colour = colour;
-        this.position = position;
-    }
+let pinkSpriteImg;
+let pinkSpriteFrames = 36;
+let pinkSpriteWidth = 180;
+let pinkAnimation = [];
 
-    draw() {
-        noStroke();
+class Tile {
+    constructor(colour, tileImages) {
+        this.tileImages = tileImages;
+        for (let i = 0; i < pinkSpriteFrames; i++) {
+            let pos = i * pinkSpriteWidth;
 
-        if (this.colour === 'red') {
-            fill(255, 0, 0);
-        } else if (this.colour === 'green') {
-            fill(0, 255, 0);
-        } else if (this.colour === 'blue') {
-            fill(0, 0, 255);
-        } else if (this.colour === 'yellow') {
-            fill(255, 255, 0);
-        } else if (this.colour === 'purple') {
-            fill(255, 0, 255);
+            let img = [pos, 0, pinkSpriteWidth, pinkSpriteWidth];
+            pinkAnimation.push(img);
         }
 
-        rect((this.position.x * klaxSize) - klaxSize, this.position.y, klaxSize, klaxSize);
+        pinkSpriteImg = new Sprite(tileImages, 0, 0, 0.1);
+
+        this.colour = colour;
+    }
+
+    draw(posX, posY, tWidth, tHeight) {
+        pinkSpriteImg.show();
+        pinkSpriteImg.animate();
+
+        push();
+
+        noStroke();
+        fill(config.tileColours[this.colour]);
+        translate(posX, posY);
+        rect(0, 0, tWidth, tHeight);
+
+        pop();
     }
 };

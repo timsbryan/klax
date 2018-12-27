@@ -1,48 +1,115 @@
+/* eslint-env p5js */
+/* exported Belt */
 'use strict';
 
-/* exported Belt */
-const p5 = require('p5');
-const Tile = require('./tile');
+class Belt {
+    constructor(tileImages) {
+        this.tileImage = tileImages;
+        this.cols = config.lanes;
+        this.rows = config.lanes;
+        this.tileHeight = (config.tileSize / 4) * 3;
+        this.tileWidth = config.tileSize;
 
-new p5;
-
-module.exports = class Belt {
-    constructor() {
-        this.belt = this.make2DArray(5, 5);
+        this.belt = this.make2DArray(this.cols, this.rows);
     }
 
     make2DArray(cols, rows) {
-        var arr = new Array(cols);
+        let arr = new Array(cols);
         for (let i = 0; i < arr.length; i++) {
             arr[i] = new Array(rows);
+        }
+
+        for (let i = 0; i < cols; i++) {
+            for (let j = 0; j < rows; j++) {
+                arr[i][j] = -1;
+            }
         }
 
         return arr;
     }
 
     addNewTile() {
-        return new Tile(random(5), 'red');
+        this.newTile = this.createNewTile();
+
+        return this.belt[parseInt(random(config.lanes))][0] = this.newTile;
+    }
+
+    createNewTile() {
+        return new Tile(
+            Object.keys(config.tileColours)[
+                parseInt(random(Object.keys(config.tileColours).length))
+            ],
+            this.tileImages);
+    }
+
+    //TODO Remove
+    addNewGreenTile() {
+        this.newTile = this.createNewGreenTile();
+
+        return this.belt[parseInt(random(config.lanes))][0] = this.newTile;
+    }
+    createNewGreenTile() {
+        return new Tile('green');
+    }
+    addNewPurpleTile() {
+        this.newTile = this.createNewPurpleTile();
+
+        return this.belt[parseInt(random(config.lanes))][0] = this.newTile;
+    }
+    createNewPurpleTile() {
+        return new Tile('purple');
     }
 
     step() {
-        setInterval(function () {
-            this.tile1.step();
-            this.tile2.step();
-            this.tile3.step();
-            this.tile4.step();
-            this.tile5.step();
-        }, 1000);
+        for (let i = this.cols - 1; i >= 0; --i) {
+            for (let j = this.rows - 1; j >= 0; --j) {
+                if (typeof this.belt[i][j] === 'object') {
+                    let thisTile = this.belt[i][j];
 
+                    this.belt[i][j] = -1;
+
+                    if (j + 1 >= this.belt[i].length) {
+                        return {
+                            'tile': thisTile,
+                            'col': i
+                        };
+                    } else {
+                        this.belt[i][j + 1] = thisTile;
+
+                        return undefined;
+                    }
+                }
+            }
+        }
     }
 
     draw() {
-        fill(128);
-        rect(0, 0, width, height / 2);
+        for (let i = 0; i < this.cols; i++) {
+            for (let j = 0; j < this.rows; j++) {
+                push();
 
-        this.tile1.draw();
-        this.tile2.draw();
-        this.tile3.draw();
-        this.tile4.draw();
-        this.tile5.draw();
+                stroke(255);
+                strokeWeight(1);
+                fill(51);
+
+                rect(
+                    i * this.tileWidth,
+                    j * this.tileHeight,
+                    this.tileWidth,
+                    this.tileHeight
+                );
+
+                pop();
+
+                if (this.belt[i][j] !== -1) {
+                    this.belt[i][j].draw(
+                        i * this.tileWidth,
+                        j * this.tileHeight,
+                        this.tileWidth,
+                        this.tileHeight
+                    );
+                }
+            }
+        }
     }
-};
+}
