@@ -3,7 +3,7 @@
 'use strict';
 
 class Belt {
-    constructor(tileImages) {
+    constructor(tileImages, config) {
         this.tileImage = tileImages;
         this.cols = config.lanes;
         this.rows = config.lanes;
