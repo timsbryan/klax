@@ -1,7 +1,7 @@
+/* eslint-env jest */
 'use strict';
 
 const Belt = require('../belt');
-const belt = new Belt;
 
 class mockTile {
     constructor(position, colour) {
@@ -10,12 +10,15 @@ class mockTile {
     }
 }
 
+
+
 let tile = new mockTile(1.3721783156506717, 'red');
 
-describe('The belt should', () => {
-    test('', () => {
-        
-    });
+test('The belt should', () => {
+    const belt = new Belt();
+    expect(belt).toBe(1);
+});
+
     // test('create a 2D array', () => {
     //     expect(belt.make2DArray(2, 2)).toEqual([[undefined, undefined], [undefined, undefined]]);
     // });
@@ -23,4 +26,5 @@ describe('The belt should', () => {
     // test('Add another tile to the conveyor belt when required', () => {
     //     expect(belt.addNewTile()).toEqual(tile);
     // });
-});
+// });
+// 

@@ -17,6 +17,10 @@ module.exports = {
         "p5js",
         "p5js/dom"
     ],
+    "parserOptions": {
+        "ecmaVersion": 6,
+        "sourceType": "module"
+    },
     "rules": {
         "arrow-parens": [
             "error"
@@ -68,10 +72,7 @@ module.exports = {
             "error",
             "single"
         ],
-        "semi": [
-            "error",
-            "always"
-        ],
+        "semi": [ "error", "always" ],
         "space-before-blocks": [
             "error",
             "always"
