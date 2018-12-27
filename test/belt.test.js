@@ -3,25 +3,20 @@
 
 const Belt = require('../belt');
 const config = { 'lanes': 1, 'tileSize': 4 };
-
-class mockTile {
-    constructor(position, colour) {
-        this.position = position;
-        this.colour = colour;
-    }
-}
+const tileImage = 'image';
 
 // let tile = new mockTile(1.3721783156506717, 'red');
 
 describe('The belt should', () => {
-    const belt = new Belt('tileImages', config);
+    const belt = new Belt(tileImage, config);
+
     test('be setup with some default', () => {
         expect(belt).toEqual({
             'belt': [[-1]],
             'cols': 1,
             'rows': 1,
             'tileHeight': 3,
-            'tileImage': 'tileImages',
+            'tileImage': 'image',
             'tileWidth': 4
         });
     });
