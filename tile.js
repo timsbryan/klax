@@ -13,6 +13,7 @@ export default class Tile {
     constructor(sketch, config, colour, tileImages) {
         this.sketch = sketch;
         this.config = config;
+        this.tileImages = tileImages;
 
         for (let i = 0; i < pinkSpriteFrames; i++) {
             let pos = i * pinkSpriteWidth;

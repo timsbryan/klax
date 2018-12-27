@@ -6,23 +6,38 @@
   "scripts": {
     "start": "parcel index.html",
     "build": "parcel build index.html",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest --watchAll"
   },
   "author": "Tim Bryan",
   "license": "ISC",
   "devDependencies": {
     "eslint": "^5.11.1",
     "eslint-config-p5js": "^1.0.1",
-    "eslint-config-standard": "^11.0.0",
-    "eslint-plugin-import": "^2.9.0",
-    "eslint-plugin-node": "^6.0.1",
-    "eslint-plugin-promise": "^3.7.0",
-    "eslint-plugin-standard": "^3.0.1",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-jest": "^22.1.2",
+    "eslint-plugin-node": "^8.0.0",
+    "eslint-plugin-promise": "^4.0.1",
+    "eslint-plugin-standard": "^4.0.0",
+    "jest": "^23.6.0",
+    "babel-jest": "^23.6.0",
     "parcel-bundler": "^1.11.0"
+  },
+  "jest": {
+    "verbose": true,
+    "testURL": "http://localhost:8080/",
+    "transformIgnorePatterns": [
+      "/node_modules/"
+    ],
+    "moduleDirectories": [
+      "node_modules"
+    ]
   },
   "dependencies": {
     "config": "^2.0.2",
     "p5": "^0.7.2",
-    "sketch": "^0.2.0"
-  }
+  },
+  "eslintIgnore": [
+    "vendor/*"
+  ]
 }

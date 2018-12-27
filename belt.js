@@ -119,3 +119,5 @@ export default class Belt {
         }
     }
 }
+
+module.exports = Belt;
