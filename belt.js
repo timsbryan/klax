@@ -2,9 +2,9 @@
 /* exported Belt */
 'use strict';
 
-import Tile from './tile';
+const Tile = require('./tile');
 
-export default class Belt {
+class Belt {
     constructor(sketch, config, tileImages) {
         this.sketch = sketch;
         this.config = config;

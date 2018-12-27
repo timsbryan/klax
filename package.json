@@ -35,7 +35,7 @@
   },
   "dependencies": {
     "config": "^2.0.2",
-    "p5": "^0.7.2",
+    "p5": "^0.7.2"
   },
   "eslintIgnore": [
     "vendor/*"

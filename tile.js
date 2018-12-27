@@ -2,14 +2,14 @@
 /* exported Tile */
 'use strict';
 
-import Sprite from './sprite';
+const Sprite = require('./sprite');
 
 let pinkSpriteImg;
 let pinkSpriteFrames = 36;
 let pinkSpriteWidth = 180;
 let pinkAnimation = [];
 
-export default class Tile {
+class Tile {
     constructor(sketch, config, colour, tileImages) {
         this.sketch = sketch;
         this.config = config;
@@ -41,3 +41,4 @@ export default class Tile {
         pop();
     }
 }
+module.exports = Tile;

@@ -18,9 +18,10 @@ describe('The belt should', () => {
         expect(belt).toEqual({
             'belt': [[-1]],
             'cols': 1,
+            'config': {'lanes': 1, 'tileSize': 4},
             'rows': 1,
+            'sketch': 'image',
             'tileHeight': 3,
-            'tileImage': 'image',
             'tileWidth': 4
         });
     });
