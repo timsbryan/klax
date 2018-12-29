@@ -14,6 +14,8 @@ class Tile {
         this.sketch = sketch;
         this.config = config;
         this.tileImages = tileImages;
+        this.lastUpdate = this.sketch.millis();
+        this.colour = colour;
 
         for (let i = 0; i < pinkSpriteFrames; i++) {
             let pos = i * pinkSpriteWidth;
@@ -23,22 +25,35 @@ class Tile {
         }
 
         pinkSpriteImg = new Sprite(this.sketch, pinkAnimation, 0, 0, 0.1);
+    }
 
-        this.colour = colour;
+    update() {
+        if (this.step()) {
+            this.draw();
+        }
+    }
+
+    step() {
+        if (this.sketch.millis() - this.lastUpdate < this.config.lastUpdate) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
     draw(posX, posY, tWidth, tHeight) {
-        pinkSpriteImg.show();
-        pinkSpriteImg.animate();
+        // pinkSpriteImg.show();
+        // pinkSpriteImg.animate();
 
-        push();
+        this.sketch.push();
 
-        noStroke();
-        fill(this.config.tileColours[this.colour]);
-        translate(posX, posY);
-        rect(0, 0, tWidth, tHeight);
+        this.sketch.noStroke();
+        this.sketch.fill(this.colour);
+        this.sketch.translate(posX, posY);
+        this.sketch.rect(0, 0, tWidth, tHeight);
 
-        pop();
+        this.sketch.pop();
     }
 }
+
 module.exports = Tile;

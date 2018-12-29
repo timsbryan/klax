@@ -33,7 +33,6 @@ export default class Bin {
         return arr;
     }
 
-    //TODO forgotten what this does
     getLowestEmptyRow(col) {
         for (let i = 0; i < this.bin[col].length; i++) {
             if (this.bin[col][i + 1] !== -1) {
@@ -47,7 +46,6 @@ export default class Bin {
         let row = this.getLowestEmptyRow(col);
 
         this.bin[col][row] = tile;
-
         this.checkForKlax(col, row);
     }
 
@@ -282,7 +280,6 @@ export default class Bin {
                     this.tileWidth,
                     this.tileHeight
                 );
-
 
                 if (this.bin[i][j] !== -1) {
                     this.bin[i][j].draw(

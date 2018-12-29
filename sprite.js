@@ -12,7 +12,6 @@ class Sprite {
 
     show() {
         let index = Math.floor(this.index) % this.len;
-        console.log(this.animation);
 
         this.sketch.image(this.animation[index], this.x, this.y);
     }

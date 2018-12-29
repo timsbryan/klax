@@ -25,6 +25,7 @@ let myp5 = new p5(function (sketch) {
             canvasWidth: 600,
             lanes: 5,
             beltSteps: 5,
+            speed: 3000,
             tileColours: {
                 blue: sketch.color(0, 0, 255),
                 green: sketch.color(0, 255, 0),
@@ -32,7 +33,9 @@ let myp5 = new p5(function (sketch) {
                 pink: sketch.color(255, 0, 255),
                 red: sketch.color(255, 0, 0),
                 yellow: sketch.color(255, 255, 0)
-            }
+            },
+            //TODO add node env parameter for debug true/false
+            debug: true
         };
 
         config.tileSize = config.canvasWidth / config.lanes;
@@ -61,42 +64,51 @@ let myp5 = new p5(function (sketch) {
 
     sketch.keyPressed = function () {
         switch (sketch.keyCode) {
+            //left arrow
             case 37:
                 paddle.left();
-
                 break;
+
+            //up arrow
             case 38:
                 paddle.up();
-
                 break;
+
+            //right arrow
             case 39:
                 paddle.right();
-
                 break;
+            
+            //down arrow
             case 40: {
                 let droppedTile = paddle.down();
 
                 if (droppedTile !== undefined) {
                     bin.pushToBin(droppedTile.tile, droppedTile.col);
                 }
-
                 break;
             }
+
+            //a
             case 65:
-                //TODO remove for debug only
-                belt.addNewPurpleTile();
-
+                if (config.debug) {
+                    belt.addNewPurpleTile();
+                }
                 break;
+
+            //s
             case 83:
-                //TODO remove for debug only
-                belt.addNewGreenTile();
-
+                if (config.debug) {
+                    belt.addNewGreenTile();
+                }
                 break;
+            
+            //q
             case 81:
-                //TODO remove for debug only
-                frameRate(1);
-                console.log('Framerate now 1fps');
-
+                if (config.debug) {
+                    frameRate(1);
+                    console.log('Framerate now 1fps');
+                }
                 break;
         }
     };

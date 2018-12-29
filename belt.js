@@ -48,14 +48,14 @@ class Belt {
             this.tileImages);
     }
 
-    //TODO Remove
+    //TODO Remove once finished testing
     addNewGreenTile() {
         this.newTile = this.createNewGreenTile();
 
         return this.belt[parseInt(this.sketch.random(this.config.lanes))][0] = this.newTile;
     }
     createNewGreenTile() {
-        return new Tile(this.sketch, this.config, 'green');
+        return new Tile(this.sketch, this.config, this.config.tileColours.green);
     }
     addNewPurpleTile() {
         this.newTile = this.createNewPurpleTile();
@@ -63,9 +63,11 @@ class Belt {
         return this.belt[parseInt(this.sketch.random(this.config.lanes))][0] = this.newTile;
     }
     createNewPurpleTile() {
-        return new Tile(this.sketch, this.config, 'purple');
+        return new Tile(this.sketch, this.config, this.config.tileColours.pink);
     }
 
+    //steps each tile one space lower if needed
+    //TODO firgure out whether this logic needs to move to each tile so that the tile can tell the belt if it needs to move.
     step() {
         for (let i = this.cols - 1; i >= 0; --i) {
             for (let j = this.rows - 1; j >= 0; --j) {
@@ -108,7 +110,7 @@ class Belt {
                 this.sketch.pop();
 
                 if (this.belt[i][j] !== -1) {
-                    this.belt[i][j].draw(
+                    this.belt[i][j].update(
                         i * this.tileWidth,
                         j * this.tileHeight,
                         this.tileWidth,
