@@ -27,17 +27,20 @@ class Tile {
         pinkSpriteImg = new Sprite(this.sketch, pinkAnimation, 0, 0, 0.1);
     }
 
-    update() {
-        if (this.step()) {
-            this.draw();
+    //TODO check this is still being used and fix
+    update(posX, posY, tWidth, tHeight) {
+        if (true) {
+            this.draw(posX, posY, tWidth, tHeight);
         }
     }
 
     step() {
-        if (this.sketch.millis() - this.lastUpdate < this.config.lastUpdate) {
-            return false;
-        } else {
+        if (this.sketch.millis() - this.lastUpdate > this.config.speed) {
+            this.lastUpdate = this.sketch.millis();
+
             return true;
+        } else {
+            return false;
         }
     }
 

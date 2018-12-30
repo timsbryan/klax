@@ -33,6 +33,7 @@ class Belt {
     }
 
     addNewTile() {
+        //TODO check that there is not a tile in place where tile will go
         this.newTile = this.createNewTile();
 
         return this.belt[parseInt(this.sketch.random(this.config.lanes))][0] = this.newTile;
@@ -43,7 +44,7 @@ class Belt {
             this.sketch,
             this.config,
             Object.keys(this.config.tileColours)[
-                parseInt(this.sketch.random(Object.keys(this.config.tileColours).length))
+            parseInt(this.sketch.random(Object.keys(this.config.tileColours).length))
             ],
             this.tileImages);
     }
@@ -67,24 +68,32 @@ class Belt {
     }
 
     //steps each tile one space lower if needed
-    //TODO firgure out whether this logic needs to move to each tile so that the tile can tell the belt if it needs to move.
+    /* TODO firgure out whether this logic needs to move to each tile so that the tile can tell the
+     * belt if it needs to move.
+     */
     step() {
         for (let i = this.cols - 1; i >= 0; --i) {
             for (let j = this.rows - 1; j >= 0; --j) {
                 if (typeof this.belt[i][j] === 'object') {
                     let thisTile = this.belt[i][j];
 
-                    this.belt[i][j] = -1;
 
-                    if (j + 1 >= this.belt[i].length) {
-                        return {
-                            'tile': thisTile,
-                            'col': i
-                        };
-                    } else {
-                        this.belt[i][j + 1] = thisTile;
+                    if (thisTile.step()) {
+                        if (j + 1 >= this.belt[i].length) {
+                            this.belt[i][j] = -1;
 
-                        return undefined;
+                            return {
+                                'tile': thisTile,
+                                'col': i
+                            };
+                        } else {
+                            //Refactor repetition of this line with if statement above
+
+                            this.belt[i][j + 1] = thisTile;
+                            this.belt[i][j] = -1;
+
+                            return undefined;
+                        }
                     }
                 }
             }

@@ -106,8 +106,8 @@ let myp5 = new p5(function (sketch) {
             //q
             case 81:
                 if (config.debug) {
-                    frameRate(1);
-                    console.log('Framerate now 1fps');
+                    sketch.frameRate(5);
+                    console.log('Framerate now 5fps');
                 }
                 break;
         }
