@@ -5,8 +5,7 @@
 const Tile = require('./tile');
 
 class Belt {
-    constructor(sketch, config, tileImages) {
-        this.sketch = sketch;
+    constructor(config, tileImages) {
         this.config = config;
 
         this.cols = config.lanes;
@@ -32,19 +31,45 @@ class Belt {
         return arr;
     }
 
-    addNewTile() {
-        //TODO check that there is not a tile in place where tile will go
-        this.newTile = this.createNewTile();
+    nextSpaceEmpty(col, row) {
+        if (this.belt[col, row + 1] === -1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
-        return this.belt[parseInt(this.sketch.random(this.config.lanes))][0] = this.newTile;
+    addNewTile() {
+        //TODO check that there is not a tile in place where new tile will go
+        //TODO another recursive function do better checking
+        let randomLane = random(this.config.lanes);
+
+        if (nextSpaceEmpty(randomLane, 0)) {
+            this.newTile = this.createNewTile();
+
+            return this.belt[parseInt(random(this.config.lanes))][0] = this.newTile;
+        } else {
+            this.addNewTile();
+        }
+    }
+
+    getRandomLane() {
+    //TODO refactor to make recursion of function safer
+    //Possibly use an array of unchecked lanes for recursion and exit if there are no lanes left
+        const randomLane = random(this.config.lanes);
+
+        if (this.belt[parseInt(randomLane)][0] === -1) {
+            return randomLane;
+        } else {
+            this.getRandomLane();
+        }
     }
 
     createNewTile() {
         return new Tile(
-            this.sketch,
             this.config,
             Object.keys(this.config.tileColours)[
-            parseInt(this.sketch.random(Object.keys(this.config.tileColours).length))
+            parseInt(random(Object.keys(this.config.tileColours).length))
             ],
             this.tileImages);
     }
@@ -53,18 +78,18 @@ class Belt {
     addNewGreenTile() {
         this.newTile = this.createNewGreenTile();
 
-        return this.belt[parseInt(this.sketch.random(this.config.lanes))][0] = this.newTile;
+        return this.belt[parseInt(random(this.config.lanes))][0] = this.newTile;
     }
     createNewGreenTile() {
-        return new Tile(this.sketch, this.config, this.config.tileColours.green);
+        return new Tile(this.config, this.config.tileColours.green);
     }
     addNewPurpleTile() {
         this.newTile = this.createNewPurpleTile();
 
-        return this.belt[parseInt(this.sketch.random(this.config.lanes))][0] = this.newTile;
+        return this.belt[parseInt(random(this.config.lanes))][0] = this.newTile;
     }
     createNewPurpleTile() {
-        return new Tile(this.sketch, this.config, this.config.tileColours.pink);
+        return new Tile(this.config, this.config.tileColours.pink);
     }
 
     //steps each tile one space lower if needed
@@ -103,20 +128,20 @@ class Belt {
     draw() {
         for (let i = 0; i < this.cols; i++) {
             for (let j = 0; j < this.rows; j++) {
-                this.sketch.push();
+                push();
 
-                this.sketch.stroke(255);
-                this.sketch.strokeWeight(1);
-                this.sketch.fill(51);
+                stroke(255);
+                strokeWeight(1);
+                fill(51);
 
-                this.sketch.rect(
+                rect(
                     i * this.tileWidth,
                     j * this.tileHeight,
                     this.tileWidth,
                     this.tileHeight
                 );
 
-                this.sketch.pop();
+                pop();
 
                 if (this.belt[i][j] !== -1) {
                     this.belt[i][j].update(

@@ -3,8 +3,7 @@
 'use strict';
 
 export default class Paddle {
-    constructor(sketch, config) {
-        this.sketch = sketch;
+    constructor(config) {
         this.config = config;
 
         this.paddleTiles = [];
@@ -45,24 +44,24 @@ export default class Paddle {
     }
 
     draw() {
-        this.sketch.push();
+        push();
 
-        this.sketch.fill(128);
-        this.sketch.rectMode(this.sketch.CENTER);
-        this.sketch.translate(
+        fill(128);
+        rectMode(CENTER);
+        translate(
             (this.paddleLane + 1) * this.config.tileSize - (this.config.tileSize / 2),
-            (this.sketch.height / 4 * 3) + (this.paddleTiles.length * (this.paddleHeight))
+            (height / 4 * 3) + (this.paddleTiles.length * (this.paddleHeight))
         );
 
-        this.sketch.rect(0, 0, this.config.tileSize, this.paddleHeight);
+        rect(0, 0, this.config.tileSize, this.paddleHeight);
 
-        this.sketch.push();
+        push();
         this.paddleTiles.forEach((tile, i) => {
-            this.sketch.translate(0, this.paddleHeight * -1);
+            translate(0, this.paddleHeight * -1);
             tile.draw(0, 0, this.config.tileSize, this.paddleHeight);
         });
-        this.sketch.pop();
+        pop();
 
-        this.sketch.pop();
+        pop();
     }
 }

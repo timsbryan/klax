@@ -5,26 +5,25 @@
 const Sprite = require('./sprite');
 
 let pinkSpriteImg;
-let pinkSpriteFrames = 36;
-let pinkSpriteWidth = 180;
-let pinkAnimation = [];
+const pinkSpriteFrames = 36;
+const pinkSpriteWidth = 180;
+const pinkAnimation = [];
 
 class Tile {
-    constructor(sketch, config, colour, tileImages) {
-        this.sketch = sketch;
+    constructor(config, colour, tileImages) {
         this.config = config;
         this.tileImages = tileImages;
-        this.lastUpdate = this.sketch.millis();
+        this.lastUpdate = millis();
         this.colour = colour;
 
         for (let i = 0; i < pinkSpriteFrames; i++) {
-            let pos = i * pinkSpriteWidth;
+            const pos = i * pinkSpriteWidth;
 
-            let img = [pos, 0, pinkSpriteWidth, pinkSpriteWidth];
+            const img = [pos, 0, pinkSpriteWidth, pinkSpriteWidth];
             pinkAnimation.push(img);
         }
 
-        pinkSpriteImg = new Sprite(this.sketch, pinkAnimation, 0, 0, 0.1);
+        pinkSpriteImg = new Sprite(pinkAnimation, 0, 0, 0.1);
     }
 
     //TODO check this is still being used and fix
@@ -35,8 +34,8 @@ class Tile {
     }
 
     step() {
-        if (this.sketch.millis() - this.lastUpdate > this.config.speed) {
-            this.lastUpdate = this.sketch.millis();
+        if (millis() - this.lastUpdate > this.config.speed) {
+            this.lastUpdate = millis();
 
             return true;
         } else {
@@ -48,14 +47,14 @@ class Tile {
         // pinkSpriteImg.show();
         // pinkSpriteImg.animate();
 
-        this.sketch.push();
+        push();
 
-        this.sketch.noStroke();
-        this.sketch.fill(this.colour);
-        this.sketch.translate(posX, posY);
-        this.sketch.rect(0, 0, tWidth, tHeight);
+        noStroke();
+        fill(this.colour);
+        translate(posX, posY);
+        rect(0, 0, tWidth, tHeight);
 
-        this.sketch.pop();
+        pop();
     }
 }
 

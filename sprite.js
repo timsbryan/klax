@@ -1,6 +1,5 @@
 class Sprite {
-    constructor(sketch, animation, x, y, speed) {
-        this.sketch = sketch;
+    constructor(animation, x, y, speed) {
         this.x = x;
         this.y = y;
         this.animation = animation;
@@ -13,7 +12,7 @@ class Sprite {
     show() {
         let index = Math.floor(this.index) % this.len;
 
-        this.sketch.image(this.animation[index], this.x, this.y);
+        image(this.animation[index], this.x, this.y);
     }
 
     animate() {
