@@ -1,6 +1,5 @@
-class Sprite {
-    constructor(sketch, animation, x, y, speed) {
-        this.sketch = sketch;
+export default class Sprite {
+    constructor(animation, x, y, speed) {
         this.x = x;
         this.y = y;
         this.animation = animation;
@@ -12,14 +11,11 @@ class Sprite {
 
     show() {
         let index = Math.floor(this.index) % this.len;
-        console.log(this.animation);
 
-        this.sketch.image(this.animation[index], this.x, this.y);
+        image(this.animation[index], this.x, this.y);
     }
 
     animate() {
         this.index += this.speed;
     }
 }
-
-module.exports = Sprite;

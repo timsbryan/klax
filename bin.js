@@ -5,8 +5,7 @@
 //TODO unit tests on this class!!
 
 export default class Bin {
-    constructor(sketch, config) {
-        this.sketch = sketch;
+    constructor(config) {
         this.config = config;
 
         this.cols = this.config.lanes;
@@ -33,7 +32,6 @@ export default class Bin {
         return arr;
     }
 
-    //TODO forgotten what this does
     getLowestEmptyRow(col) {
         for (let i = 0; i < this.bin[col].length; i++) {
             if (this.bin[col][i + 1] !== -1) {
@@ -47,7 +45,6 @@ export default class Bin {
         let row = this.getLowestEmptyRow(col);
 
         this.bin[col][row] = tile;
-
         this.checkForKlax(col, row);
     }
 
@@ -267,22 +264,21 @@ export default class Bin {
     draw() {
         for (let i = 0; i < this.cols; i++) {
             for (let j = 0; j < this.rows; j++) {
-                this.sketch.push();
+                push();
 
                 //TODO Translate better
-                this.sketch.translate(0, (this.config.tileSize / 4 * 3) * 5);
+                translate(0, (this.config.tileSize / 4 * 3) * 5);
 
-                this.sketch.stroke(255);
-                this.sketch.strokeWeight(1);
-                this.sketch.fill(0);
+                stroke(255);
+                strokeWeight(1);
+                fill(0);
 
-                this.sketch.rect(
+                rect(
                     i * this.tileWidth,
                     j * this.tileHeight,
                     this.tileWidth,
                     this.tileHeight
                 );
-
 
                 if (this.bin[i][j] !== -1) {
                     this.bin[i][j].draw(
@@ -293,7 +289,7 @@ export default class Bin {
                     );
                 }
 
-                this.sketch.pop();
+                pop();
             }
         }
     }
