@@ -71,7 +71,9 @@ window.keyPressed = function () {
         //up arrow
         case 38: {
             let tile = paddle.removeTopTile();
-            belt.pushTileToTop(tile, paddle.paddleLane);
+            if (tile) {
+                belt.pushTileToTop(tile, paddle.paddleLane);
+            }
 
             break;
         }

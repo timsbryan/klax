@@ -2,7 +2,7 @@
 /* exported Tile */
 'use strict';
 
-const Sprite = require('./sprite');
+import Sprite from './sprite';
 
 let pinkSpriteImg;
 const pinkSpriteFrames = 36;

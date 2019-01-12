@@ -18,7 +18,11 @@ export default class Paddle {
     }
 
     removeTopTile() {
-        return this.paddleTiles.pop();
+        if (this.paddleLane.length) {
+            return this.paddleTiles.pop();
+        } else {
+            return false;
+        }
     }
 
     left() {
