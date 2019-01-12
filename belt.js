@@ -2,9 +2,9 @@
 /* exported Belt */
 'use strict';
 
-const Tile = require('./tile');
+import Tile from './tile';
 
-class Belt {
+export default class Belt {
     constructor(config, tileImages) {
         this.config = config;
 
@@ -44,13 +44,17 @@ class Belt {
         //TODO another recursive function do better checking
         let randomLane = random(this.config.lanes);
 
-        if (nextSpaceEmpty(randomLane, 0)) {
+        if (this.nextSpaceEmpty(randomLane, 0)) {
             this.newTile = this.createNewTile();
 
             return this.belt[parseInt(random(this.config.lanes))][0] = this.newTile;
         } else {
             this.addNewTile();
         }
+    }
+
+    pushTileToTop(tile, lane) {
+        this.belt[lane][0] = tile;
     }
 
     getRandomLane() {
@@ -155,5 +159,3 @@ class Belt {
         }
     }
 }
-
-module.exports = Belt;

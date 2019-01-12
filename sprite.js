@@ -1,4 +1,4 @@
-class Sprite {
+export default class Sprite {
     constructor(animation, x, y, speed) {
         this.x = x;
         this.y = y;
@@ -19,5 +19,3 @@ class Sprite {
         this.index += this.speed;
     }
 }
-
-module.exports = Sprite;

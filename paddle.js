@@ -17,6 +17,10 @@ export default class Paddle {
         } //TODO else statement if player has missed the stacker
     }
 
+    removeTopTile() {
+        return this.paddleTiles.pop();
+    }
+
     left() {
         if (this.paddleLane > 0) {
             this.paddleLane--;
@@ -27,11 +31,6 @@ export default class Paddle {
         if (this.paddleLane < this.config.lanes - 1) {
             this.paddleLane++;
         }
-    }
-
-    up() {
-        //TODO push tile top paddle tile to top of belt
-        console.log('TODO');
     }
 
     down() {
