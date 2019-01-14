@@ -40,7 +40,6 @@ export default class Belt {
     }
 
     addNewTile() {
-        //TODO check that there is not a tile in place where new tile will go
         //TODO another recursive function do better checking
         let randomLane = random(this.config.lanes);
 
