@@ -4,16 +4,15 @@
 import Belt from '../belt.js';
 const config = { 'lanes': 1, 'tileSize': 4 };
 const tileImage = 'image';
-let belt;
-
-beforeEach(() => {
-    belt = new Belt(tileImage, config);
-    console.log(belt);
-});
 
 // let tile = new mockTile(1.3721783156506717, 'red');
 
 describe('The belt should', () => {
+    let belt;
+
+    beforeEach(() => {
+        belt = new Belt(config, tileImage);
+    });
 
     test('be setup with some default', () => {
         expect(belt).toEqual({
@@ -21,7 +20,6 @@ describe('The belt should', () => {
             'cols': 1,
             'config': {'lanes': 1, 'tileSize': 4},
             'rows': 1,
-            'sketch': 'image',
             'tileHeight': 3,
             'tileWidth': 4
         });
