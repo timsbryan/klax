@@ -1,13 +1,14 @@
 /* eslint-env jest */
 'use strict';
 
-const Belt = require('../belt');
+import Belt from '../belt.js';
 const config = { 'lanes': 1, 'tileSize': 4 };
 const tileImage = 'image';
 let belt;
 
 beforeEach(() => {
     belt = new Belt(tileImage, config);
+    console.log(belt);
 });
 
 // let tile = new mockTile(1.3721783156506717, 'red');

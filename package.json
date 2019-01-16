@@ -11,6 +11,8 @@
   "author": "Tim Bryan",
   "license": "ISC",
   "devDependencies": {
+    "@babel/core": "^7.2.2",
+    "@babel/preset-env": "^7.2.3",
     "babel-jest": "^23.6.0",
     "eslint": "^5.11.1",
     "eslint-config-p5js": "^1.0.1",
@@ -21,15 +23,16 @@
     "eslint-plugin-promise": "^4.0.1",
     "eslint-plugin-standard": "^4.0.0",
     "jest": "^23.6.0",
-    "parcel-bundler": "^1.11.0"
+    "parcel-bundler": "^1.11.0",
+    "regenerator-runtime": "^0.13.1"
   },
   "jest": {
     "verbose": true,
     "testURL": "http://localhost:8080/",
-    "transformIgnorePatterns": [
-      "/node_modules/"
-    ],
     "moduleDirectories": [
+      "node_modules"
+    ],
+    "modulePathIgnorePatterns": [
       "node_modules"
     ]
   },
