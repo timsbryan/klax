@@ -1,11 +1,15 @@
 /* eslint-env jest */
 'use strict';
 
+window.random = (min) => 0.5;
 import Belt from '../belt.js';
 const config = { 'lanes': 1, 'tileSize': 4 };
 const tileImage = 'image';
 
-// let tile = new mockTile(1.3721783156506717, 'red');
+import Tile from '../tile';
+jest.mock('../tile');
+
+let tile = new Tile(1.3721783156506717, 'red');
 
 describe('The belt should', () => {
     let belt;

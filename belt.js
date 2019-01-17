@@ -43,13 +43,13 @@ export default class Belt {
         //TODO another recursive function do better checking
         let randomLane = random(this.config.lanes);
 
-        if (this.nextSpaceEmpty(randomLane, 0)) {
-            this.newTile = this.createNewTile();
+        // if (this.nextSpaceEmpty(randomLane, 0)) {
+        //     this.newTile = this.createNewTile();
 
-            return this.belt[parseInt(random(this.config.lanes))][0] = this.newTile;
-        } else {
-            this.addNewTile();
-        }
+        //     return this.belt[parseInt(random(this.config.lanes))][0] = this.newTile;
+        // } else {
+        //     this.addNewTile();
+        // }
     }
 
     pushTileToTop(tile, lane) {
