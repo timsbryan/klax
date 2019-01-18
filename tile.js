@@ -2,28 +2,30 @@
 /* exported Tile */
 'use strict';
 
-import Sprite from './sprite';
+//TODO Create sprites when ready
+// import Sprite from './sprite';
 
-let pinkSpriteImg;
-const pinkSpriteFrames = 36;
-const pinkSpriteWidth = 180;
-const pinkAnimation = [];
+// let pinkSpriteImg;
+// const pinkSpriteFrames = 36;
+// const pinkSpriteWidth = 180;
+// const pinkAnimation = [];
 
-class Tile {
+export default class Tile {
     constructor(config, colour, tileImages) {
         this.config = config;
         this.tileImages = tileImages;
         this.lastUpdate = millis();
         this.colour = colour;
 
-        for (let i = 0; i < pinkSpriteFrames; i++) {
-            const pos = i * pinkSpriteWidth;
+        //TODO Create sprites when ready
+        // for (let i = 0; i < pinkSpriteFrames; i++) {
+        //     const pos = i * pinkSpriteWidth;
 
-            const img = [pos, 0, pinkSpriteWidth, pinkSpriteWidth];
-            pinkAnimation.push(img);
-        }
+        //     const img = [pos, 0, pinkSpriteWidth, pinkSpriteWidth];
+        //     pinkAnimation.push(img);
+        // }
 
-        pinkSpriteImg = new Sprite(pinkAnimation, 0, 0, 0.1);
+        // pinkSpriteImg = new Sprite(pinkAnimation, 0, 0, 0.1);
     }
 
     //TODO check this is still being used and fix
@@ -34,7 +36,7 @@ class Tile {
     }
 
     step() {
-        if (millis() - this.lastUpdate > this.config.speed) {
+        if (millis() - this.lastUpdate >= this.config.speed) {
             this.lastUpdate = millis();
 
             return true;
@@ -57,5 +59,3 @@ class Tile {
         pop();
     }
 }
-
-module.exports = Tile;
