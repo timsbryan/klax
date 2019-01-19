@@ -1,5 +1,4 @@
 /* eslint-env p5js */
-/* exported Paddle */
 'use strict';
 
 export default class Paddle {
@@ -11,14 +10,15 @@ export default class Paddle {
         this.paddleHeight = config.tileSize / 3;
     }
 
-    pushToStacker(tile, col) {
+    //Not sure this is the best name for this method
+    pushToPaddle(tile, col) {
         if (col === this.paddleLane) {
             this.paddleTiles.push(tile);
         } //TODO else statement if player has missed the stacker
     }
 
     removeTopTile() {
-        if (this.paddleLane.length) {
+        if (this.paddleTiles.length) {
             return this.paddleTiles.pop();
         } else {
             return false;
