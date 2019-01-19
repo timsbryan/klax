@@ -37,6 +37,7 @@
     ]
   },
   "dependencies": {
+    "@types/jest": "^23.3.13",
     "config": "^2.0.2",
     "p5": "^0.7.2"
   },
