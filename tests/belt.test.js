@@ -2,12 +2,12 @@
 'use strict';
 
 window.random = (min) => 0.5;
-import Belt from '../belt.js';
+import Belt from '../src/belt.js';
 const config = { 'lanes': 1, 'tileSize': 4 };
 const tileImage = 'image';
 
-import Tile from '../tile';
-jest.mock('../tile');
+import Tile from '../src/tile';
+jest.mock('../src/tile');
 
 let tile = new Tile(1.3721783156506717, 'red');
 

@@ -1,8 +1,8 @@
 /* eslint-env jest */
 'use strict';
 
-import Paddle from '../paddle.js';
-import Tile from '../tile.js';
+import Paddle from '../src/paddle.js';
+import Tile from '../src/tile.js';
 const config = { 'lanes': 2, 'tileSize': 4 };
 
 window.push = () => null;

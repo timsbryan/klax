@@ -249,7 +249,7 @@ export default class Bin {
                     this.bin[i][j] = -1;
                     this.dropTiles();
 
-                    this.checkAllForKlax(i, j);
+                    this.checkAllForKlax();
                 }
             });
         });

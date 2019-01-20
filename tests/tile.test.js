@@ -1,7 +1,7 @@
 /* eslint-env jest */
 'use strict';
 
-import Tile from '../tile.js';
+import Tile from '../src/tile.js';
 const config = {
   'speed': 1
 };

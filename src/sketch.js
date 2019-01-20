@@ -3,7 +3,7 @@
 'use strict';
 
 import 'p5';
-import klaxSpriteSheet from './assets/klax-spritesheet-96x161.png';
+import klaxSpriteSheet from '../assets/klax-spritesheet-96x161.png';
 import Belt from './belt';
 import Paddle from './paddle';
 import Bin from './bin';
@@ -56,7 +56,7 @@ window.draw = function () {
 
     let droppedTile = belt.step();
 
-    if (droppedTile !== undefined) {
+    if (droppedTile !== null) {
         paddle.pushToPaddle(droppedTile.tile, droppedTile.col);
     }
 };

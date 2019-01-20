@@ -120,7 +120,7 @@ export default class Belt {
                             this.belt[i][j + 1] = thisTile;
                             this.belt[i][j] = -1;
 
-                            return undefined;
+                            return null;
                         }
                     }
                 }
