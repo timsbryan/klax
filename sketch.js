@@ -24,7 +24,7 @@ window.setup = function () {
         canvasWidth: 600,
         lanes: 5,
         beltSteps: 5,
-        speed: 3000,
+        speed: 500,
         tileColours: {
             blue: color(0, 0, 255),
             green: color(0, 255, 0),
@@ -57,7 +57,7 @@ window.draw = function () {
     let droppedTile = belt.step();
 
     if (droppedTile !== undefined) {
-        paddle.pushToStacker(droppedTile.tile, droppedTile.col);
+        paddle.pushToPaddle(droppedTile.tile, droppedTile.col);
     }
 };
 
@@ -71,8 +71,9 @@ window.keyPressed = function () {
         //up arrow
         case 38: {
             let tile = paddle.removeTopTile();
+
             if (tile) {
-                belt.pushTileToTop(tile, paddle.paddleLane);
+                belt.pushTileToTop(tile.tile, tile.col);
             }
 
             break;
@@ -85,10 +86,10 @@ window.keyPressed = function () {
 
         //down arrow
         case 40: {
-            let droppedTile = paddle.down();
+            let tile = paddle.removeTopTile();
 
-            if (droppedTile !== undefined) {
-                bin.pushToBin(droppedTile.tile, droppedTile.col);
+            if (tile) {
+                bin.pushToBin(tile.tile, tile.col);
             }
             break;
         }
