@@ -19,7 +19,10 @@ export default class Paddle {
 
     removeTopTile() {
         if (this.paddleTiles.length) {
-            return this.paddleTiles.pop();
+            return {
+                'tile': this.paddleTiles.pop(),
+                'col': this.paddleLane
+            };
         } else {
             return false;
         }
@@ -34,15 +37,6 @@ export default class Paddle {
     right() {
         if (this.paddleLane < this.config.lanes - 1) {
             this.paddleLane++;
-        }
-    }
-
-    down() {
-        if (this.paddleTiles.length) {
-            return {
-                'tile': this.paddleTiles.pop(),
-                'col': this.paddleLane
-            };
         }
     }
 
