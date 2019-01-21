@@ -6,7 +6,8 @@
   "scripts": {
     "start": "parcel index.html",
     "build": "parcel build index.html",
-    "test": "jest --coverage --watchAll"
+    "test": "jest --watchAll",
+    "coverage": "jest --coverage"
   },
   "author": "Tim Bryan",
   "license": "ISC",
