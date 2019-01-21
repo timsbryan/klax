@@ -5,7 +5,7 @@
 import Tile from './tile';
 
 export default class Belt {
-    constructor(config, tileImages) {
+    constructor(config) {
         this.config = config;
 
         this.cols = config.lanes;
@@ -27,12 +27,11 @@ export default class Belt {
                 arr[i][j] = -1;
             }
         }
-
         return arr;
     }
 
     nextSpaceEmpty(col, row) {
-        if (this.belt[col, row + 1] === -1) {
+        if (this.belt[row + 1][col] === -1) {
             return true;
         } else {
             return false;
@@ -41,19 +40,30 @@ export default class Belt {
 
     addNewTile() {
         //TODO another recursive function do better checking
+        //eventually use getRandomLane method to do this to make it safer
         let randomLane = random(this.config.lanes);
 
-        // if (this.nextSpaceEmpty(randomLane, 0)) {
-        //     this.newTile = this.createNewTile();
+        // let unchecked = [this.belt[0]];
 
-        //     return this.belt[parseInt(random(this.config.lanes))][0] = this.newTile;
+        // if (this.nextSpaceEmpty(randomLane, 0)) {
+            this.newTile = this.createNewTile();
+
+            this.belt[parseInt(randomLane)][0] = this.newTile;
         // } else {
         //     this.addNewTile();
         // }
     }
 
-    pushTileToTop(tile, lane) {
-        this.belt[lane][0] = tile;
+    createNewTile() {
+        return new Tile(
+            this.config,
+            Object.keys(this.config.tileColours)[
+                parseInt(random(Object.keys(this.config.tileColours).length))
+            ]);
+    }
+
+    pushTileToTop(tile, col) {
+        this.belt[0][col] = tile;
     }
 
     getRandomLane() {
@@ -68,35 +78,29 @@ export default class Belt {
         }
     }
 
-    createNewTile() {
-        return new Tile(
-            this.config,
-            Object.keys(this.config.tileColours)[
-            parseInt(random(Object.keys(this.config.tileColours).length))
-            ],
-            this.tileImages);
-    }
-
     //TODO Remove once finished testing
     addNewGreenTile() {
         this.newTile = this.createNewGreenTile();
 
         return this.belt[parseInt(random(this.config.lanes))][0] = this.newTile;
     }
+    //TODO Remove once finished testing
     createNewGreenTile() {
         return new Tile(this.config, this.config.tileColours.green);
     }
+    //TODO Remove once finished testing
     addNewPurpleTile() {
         this.newTile = this.createNewPurpleTile();
 
         return this.belt[parseInt(random(this.config.lanes))][0] = this.newTile;
     }
+    //TODO Remove once finished testing
     createNewPurpleTile() {
         return new Tile(this.config, this.config.tileColours.pink);
     }
 
     //steps each tile one space lower if needed
-    /* TODO firgure out whether this logic needs to move to each tile so that the tile can tell the
+    /* TODO think about whether this logic needs to move to each tile so that the tile can tell the
      * belt if it needs to move.
      */
     step() {
@@ -123,6 +127,8 @@ export default class Belt {
                             return null;
                         }
                     }
+                } else {
+                    return null;
                 }
             }
         }

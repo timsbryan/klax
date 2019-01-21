@@ -3,6 +3,8 @@
 
 import Paddle from '../src/paddle.js';
 import Tile from '../src/tile.js';
+// jest.mock('../src/tile.js');
+
 const config = { 'lanes': 2, 'tileSize': 4 };
 
 window.push = () => null;

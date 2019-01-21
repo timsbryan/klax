@@ -20,7 +20,7 @@ describe('Creating a new tile should', () => {
   let tile;
 
   beforeEach(() => {
-    tile = new Tile(config, colour, tileImage);
+    tile = new Tile(config, colour);
   });
 
   test('have the correct values', () => {
@@ -29,8 +29,7 @@ describe('Creating a new tile should', () => {
       'config': {
         'speed': 1
       },
-      'lastUpdate': 1,
-      'tileImages': 'tileImage'
+      'lastUpdate': 1
     });
   });
 
@@ -40,7 +39,7 @@ describe('Updating a tile should', () => {
   let tile;
 
   beforeEach(() => {
-    tile = new Tile(config, colour, tileImage);
+    tile = new Tile(config, colour);
   });
 
   test('redraw the tile', () => {
@@ -57,7 +56,7 @@ describe('The tile should', () => {
   let tile;
 
   beforeEach(() => {
-    tile = new Tile(config, colour, tileImage);
+    tile = new Tile(config, colour);
   });
 
   test('step to the next tile at the correct time', () => {

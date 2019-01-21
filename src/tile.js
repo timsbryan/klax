@@ -11,9 +11,8 @@
 // const pinkAnimation = [];
 
 export default class Tile {
-    constructor(config, colour, tileImages) {
+    constructor(config, colour) {
         this.config = config;
-        this.tileImages = tileImages;
         this.lastUpdate = millis();
         this.colour = colour;
 
