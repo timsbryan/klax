@@ -99,19 +99,16 @@ export default class Belt {
         return new Tile(this.config, this.config.tileColours.pink);
     }
 
-    //steps each tile one space lower if needed
-    /* TODO think about whether this logic needs to move to each tile so that the tile can tell the
-     * belt if it needs to move.
-     */
+    //calls tile to find out if tile should move one space lower.
     step() {
         for (let i = this.cols - 1; i >= 0; --i) {
             for (let j = this.rows - 1; j >= 0; --j) {
                 if (typeof this.belt[i][j] === 'object') {
                     let thisTile = this.belt[i][j];
 
-
                     if (thisTile.step()) {
                         if (j + 1 >= this.belt[i].length) {
+                            //Refactor repetition of this line with else statement below
                             this.belt[i][j] = -1;
 
                             return {
@@ -119,17 +116,14 @@ export default class Belt {
                                 'col': i
                             };
                         } else {
-                            //Refactor repetition of this line with if statement above
-
                             this.belt[i][j + 1] = thisTile;
+                            //Refactor repetition of this line with if statement above
                             this.belt[i][j] = -1;
 
                             return null;
                         }
-                    }
-                } else {
-                    return null;
-                }
+                    } else return null;
+                } else return null;
             }
         }
     }

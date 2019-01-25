@@ -76,7 +76,7 @@ describe('The belt should', () => {
         expect(belt.belt).toEqual(changedBelt);
     });
 
-    test('pushTileToTop', () => {
+    test('add a tile to the top of belt at the correct column', () => {
         belt.belt = [
             [-1, -1, -1, -1, -1],
             [-1, -1, -1, -1, -1]
