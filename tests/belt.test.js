@@ -6,11 +6,15 @@ import Tile from '../src/tile';
 // jest.mock('../src/tile');
 
 window.random = (min) => 1;
-window.color = (r,g,b) => 1;
+window.color = (r, g, b) => 1;
 window.millis = () => null;
-const config = { 'lanes': 1, 'tileSize': 4, 'tileColours': {
-    'blue': color(0, 0, 255),
-    'green': color(0, 255, 0) }
+const config = {
+    'lanes': 5,
+    'tileSize': 4,
+    'tileColours': {
+        'blue': color(0, 0, 255),
+        'green': color(0, 255, 0)
+    }
 };
 
 describe('The belt should', () => {
@@ -24,17 +28,33 @@ describe('The belt should', () => {
 
     test('be setup with some default', () => {
         expect(belt).toEqual({
-            'belt': [[-1]],
-            'cols': 1,
-            'config': {'lanes': 1, 'tileColours': { 'blue': 1, 'green': 1 }, 'tileSize': 4},
-            'rows': 1,
+            'belt': [
+                [-1, -1, -1, -1, -1],
+                [-1, -1, -1, -1, -1],
+                [-1, -1, -1, -1, -1],
+                [-1, -1, -1, -1, -1],
+                [-1, -1, -1, -1, -1]
+            ],
+            'cols': 5,
+            'config': {
+                'lanes': 5,
+                'tileColours': {
+                    'blue': 1,
+                    'green': 1
+                },
+                'tileSize': 4
+            },
+            'rows': 5,
             'tileHeight': 3,
             'tileWidth': 4
         });
     });
 
     test('create a 2D array board with all empty spaces', () => {
-        expect(belt.make2DArray(2, 2)).toEqual([[-1, -1], [-1, -1]]);
+        expect(belt.make2DArray(2, 2)).toEqual([
+            [-1, -1],
+            [-1, -1]
+        ]);
     });
 
     test('return true if the next space in the belt is empty', () => {
@@ -91,5 +111,22 @@ describe('The belt should', () => {
 
         expect(belt.belt).toEqual(newBelt);
     });
-});
 
+    test('return a random empty lane from the belt', () => {
+        belt.belt = [
+            [-1, tile, tile, -1, -1],
+            [-1, -1, -1, -1, -1]
+        ];
+
+        expect(belt.getRandomEmptyLane()).toBe(1);
+    });
+
+    test('return null from the belt if there are no empty lanes', () => {
+        belt.belt = [
+            [tile, tile, tile, tile, tile],
+            [-1, -1, -1, -1, -1]
+        ];
+
+        expect(belt.getRandomEmptyLane()).toBe(null);
+    });
+});

@@ -66,16 +66,18 @@ export default class Belt {
         this.belt[0][col] = tile;
     }
 
-    getRandomLane() {
-    //TODO refactor to make recursion of function safer
-    //Possibly use an array of unchecked lanes for recursion and exit if there are no lanes left
-        const randomLane = random(this.config.lanes);
+    getRandomEmptyLane() {
+        const indices = [];
 
-        if (this.belt[parseInt(randomLane)][0] === -1) {
-            return randomLane;
-        } else {
-            this.getRandomLane();
-        }
+        this.belt[0].forEach((el, i) => {
+            if (el === -1) {
+                indices.push(i);
+            }
+        });
+
+        if (indices.length) {
+            return random(indices.length);
+        } else return null;
     }
 
     //TODO Remove once finished testing
