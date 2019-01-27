@@ -18,7 +18,7 @@
     "@types/jest": "^23.3.13",
     "@types/p5": "^0.7.1",
     "babel-core": "^7.0.0-bridge.0",
-    "babel-jest": "^23.6.0",
+    "babel-jest": "^24.0.0",
     "eslint": "^5.12.1",
     "eslint-config-p5js": "^1.0.1",
     "eslint-config-standard": "^12.0.0",
@@ -27,7 +27,7 @@
     "eslint-plugin-node": "^8.0.1",
     "eslint-plugin-promise": "^4.0.1",
     "eslint-plugin-standard": "^4.0.0",
-    "jest": "^23.6.0",
+    "jest": "^24.0.0",
     "parcel-bundler": "^1.11.0"
   },
   "jest": {
