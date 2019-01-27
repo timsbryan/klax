@@ -2,8 +2,6 @@
 /* exported Bin */
 'use strict';
 
-//TODO unit tests on this class!!
-
 export default class Bin {
     constructor(config) {
         this.config = config;
