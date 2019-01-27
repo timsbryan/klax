@@ -1,6 +1,10 @@
 Klax
 ====
 
+TODOs
+-----
+- Swap belt array cols and rows so it makes sense visually and when displaying.
+
 Features
 --------
 - Conveyor belt

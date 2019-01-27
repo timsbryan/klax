@@ -11,9 +11,8 @@
 // const pinkAnimation = [];
 
 export default class Tile {
-    constructor(config, colour, tileImages) {
+    constructor(config, colour) {
         this.config = config;
-        this.tileImages = tileImages;
         this.lastUpdate = millis();
         this.colour = colour;
 
@@ -30,9 +29,7 @@ export default class Tile {
 
     //TODO check this is still being used and fix
     update(posX, posY, tWidth, tHeight) {
-        if (true) {
-            this.draw(posX, posY, tWidth, tHeight);
-        }
+        this.draw(posX, posY, tWidth, tHeight);
     }
 
     step() {

@@ -5,7 +5,7 @@
 import Tile from './tile';
 
 export default class Belt {
-    constructor(config, tileImages) {
+    constructor(config) {
         this.config = config;
 
         this.cols = config.lanes;
@@ -27,12 +27,11 @@ export default class Belt {
                 arr[i][j] = -1;
             }
         }
-
         return arr;
     }
 
     nextSpaceEmpty(col, row) {
-        if (this.belt[col, row + 1] === -1) {
+        if (this.belt[row + 1][col] === -1) {
             return true;
         } else {
             return false;
@@ -40,41 +39,38 @@ export default class Belt {
     }
 
     addNewTile() {
-        //TODO another recursive function do better checking
+        //TODO eventually use getRandomLane method to do this to make it safer
         let randomLane = random(this.config.lanes);
 
-        // if (this.nextSpaceEmpty(randomLane, 0)) {
-        //     this.newTile = this.createNewTile();
+        this.newTile = this.createNewTile();
 
-        //     return this.belt[parseInt(random(this.config.lanes))][0] = this.newTile;
-        // } else {
-        //     this.addNewTile();
-        // }
-    }
-
-    pushTileToTop(tile, lane) {
-        this.belt[lane][0] = tile;
-    }
-
-    getRandomLane() {
-    //TODO refactor to make recursion of function safer
-    //Possibly use an array of unchecked lanes for recursion and exit if there are no lanes left
-        const randomLane = random(this.config.lanes);
-
-        if (this.belt[parseInt(randomLane)][0] === -1) {
-            return randomLane;
-        } else {
-            this.getRandomLane();
-        }
+        this.belt[randomLane][0] = this.newTile;
     }
 
     createNewTile() {
         return new Tile(
             this.config,
             Object.keys(this.config.tileColours)[
-            parseInt(random(Object.keys(this.config.tileColours).length))
-            ],
-            this.tileImages);
+                parseInt(random(Object.keys(this.config.tileColours).length))
+            ]);
+    }
+
+    pushTileToTop(tile, col) {
+        this.belt[0][col] = tile;
+    }
+
+    getRandomEmptyLane() {
+        const indices = [];
+
+        this.belt[0].forEach((el, i) => {
+            if (el === -1) {
+                indices.push(i);
+            }
+        });
+
+        if (indices.length) {
+            return random(indices.length);
+        } else return null;
     }
 
     //TODO Remove once finished testing
@@ -83,49 +79,47 @@ export default class Belt {
 
         return this.belt[parseInt(random(this.config.lanes))][0] = this.newTile;
     }
+    //TODO Remove once finished testing
     createNewGreenTile() {
         return new Tile(this.config, this.config.tileColours.green);
     }
+    //TODO Remove once finished testing
     addNewPurpleTile() {
         this.newTile = this.createNewPurpleTile();
 
         return this.belt[parseInt(random(this.config.lanes))][0] = this.newTile;
     }
+    //TODO Remove once finished testing
     createNewPurpleTile() {
         return new Tile(this.config, this.config.tileColours.pink);
     }
 
-    //steps each tile one space lower if needed
-    /* TODO firgure out whether this logic needs to move to each tile so that the tile can tell the
-     * belt if it needs to move.
-     */
+    //calls tile to find out if tile should move one space lower.
     step() {
+        let droppedTiles = [];
+
         for (let i = this.cols - 1; i >= 0; --i) {
             for (let j = this.rows - 1; j >= 0; --j) {
                 if (typeof this.belt[i][j] === 'object') {
                     let thisTile = this.belt[i][j];
 
-
                     if (thisTile.step()) {
-                        if (j + 1 >= this.belt[i].length) {
-                            this.belt[i][j] = -1;
+                        this.belt[i][j] = -1;
 
-                            return {
+                        if (j + 1 >= this.belt[i].length) {
+                            droppedTiles.push({
                                 'tile': thisTile,
                                 'col': i
-                            };
+                            });
                         } else {
-                            //Refactor repetition of this line with if statement above
-
                             this.belt[i][j + 1] = thisTile;
-                            this.belt[i][j] = -1;
-
-                            return null;
                         }
                     }
                 }
             }
         }
+
+        return droppedTiles;
     }
 
     draw() {
