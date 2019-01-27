@@ -3,12 +3,21 @@
 
 import Belt from '../src/belt.js';
 import Tile from '../src/tile';
-// jest.mock('../src/tile');
 
 window.random = (min) => 1;
 window.color = (r, g, b) => 1;
 window.millis = () => null;
+window.push = () => null;
+window.stroke = () => null;
+window.noStroke = () => null;
+window.strokeWeight = () => null;
+window.translate = () => null;
+window.fill = () => null;
+window.rect = () => null;
+window.pop = () => null;
+
 const config = {
+    'speed': 2,
     'lanes': 5,
     'tileSize': 4,
     'tileColours': {
@@ -37,6 +46,7 @@ describe('The belt should', () => {
             ],
             'cols': 5,
             'config': {
+                'speed': 2,
                 'lanes': 5,
                 'tileColours': {
                     'blue': 1,
@@ -128,5 +138,112 @@ describe('The belt should', () => {
         ];
 
         expect(belt.getRandomEmptyLane()).toBe(null);
+    });
+
+    test('belt should move all tiles one row lower when ready', () => {
+        const tile1 = new Tile(config, 'red');
+        const tile2 = new Tile(config, 'green');
+        tile1.lastUpdate = 1;
+        tile2.lastUpdate = 1;
+
+        window.millis = () => 5;
+
+        belt.belt = [
+            [tile1, -1, tile2, -1, -1],
+            [-1, -1, -1, -1, -1],
+            [-1, -1, -1, -1, -1],
+            [-1, -1, -1, -1, -1],
+            [-1, -1, -1, -1, -1]
+        ];
+
+        const newBelt = [
+            [-1, tile1, -1, tile2, -1],
+            [-1, -1, -1, -1, -1],
+            [-1, -1, -1, -1, -1],
+            [-1, -1, -1, -1, -1],
+            [-1, -1, -1, -1, -1]
+        ];
+
+        expect(belt.step()).toEqual([]);
+        expect(belt.belt).toEqual(newBelt);
+    });
+
+    test('belt should return any tiles on the bottom row when they\'re ready to move', () => {
+        const tile3 = new Tile(config, 'red');
+        const tile4 = new Tile(config, 'green');
+        const tile5 = new Tile(config, 'blue');
+        tile3.lastUpdate = 1;
+        tile4.lastUpdate = 1;
+        tile5.lastUpdate = 3;
+
+        window.millis = () => 5;
+
+        belt.belt = [
+            [tile3, -1, -1, -1, -1],
+            [-1, -1, -1, -1, tile5],
+            [-1, -1, -1, -1, -1],
+            [-1, -1, -1, -1, tile4],
+            [-1, -1, -1, -1, -1]
+        ];
+
+        const newBelt = [
+            [-1, tile3, -1, -1, -1],
+            [-1, -1, -1, -1, -1],
+            [-1, -1, -1, -1, -1],
+            [-1, -1, -1, -1, -1],
+            [-1, -1, -1, -1, -1]
+        ];
+
+        expect(belt.step()).toEqual(
+            [{'tile': tile4, 'col': 3},
+             {'tile': tile5, 'col': 1}]
+        );
+        expect(belt.belt).toEqual(newBelt);
+    });
+
+    test('belt should not move tiles one row lower when not ready', () => {
+        const tile6 = new Tile(config, 'purple');
+        const tile7 = new Tile(config, 'orange');
+        tile6.lastUpdate = 1;
+        tile7.lastUpdate = 1;
+
+        window.millis = () => 2.9999;
+
+        belt.belt = [
+            [tile6, -1, -1, -1, -1],
+            [-1, -1, -1, -1, tile7],
+            [-1, -1, -1, -1, -1],
+            [-1, -1, -1, -1, -1],
+            [-1, -1, -1, -1, -1]
+        ];
+
+        
+        const newBelt = [
+            [tile6, -1, -1, -1, -1],
+            [-1, -1, -1, -1, tile7],
+            [-1, -1, -1, -1, -1],
+            [-1, -1, -1, -1, -1],
+            [-1, -1, -1, -1, -1]
+        ];
+
+        belt.step();
+        expect(belt.belt).toEqual(newBelt);
+    });
+
+    test('belt', () => {
+        const spy = jest.spyOn(tile, 'update');
+
+        belt.belt = [
+            [tile, -1, -1, -1, -1],
+            [-1, -1, -1, -1, tile],
+            [-1, -1, -1, -1, -1],
+            [-1, -1, -1, -1, -1],
+            [-1, -1, -1, -1, -1]
+        ];
+
+        belt.draw();
+        expect(spy).toHaveBeenCalledTimes(2);
+
+        spy.mockRestore();
     });
 });

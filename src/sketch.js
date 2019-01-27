@@ -42,7 +42,7 @@ window.setup = function () {
     createCanvas(config.canvasWidth, config.canvasWidth);
     background(51);
 
-    belt = new Belt(config, spritesheets);
+    belt = new Belt(config);
     paddle = new Paddle(config);
     bin = new Bin(config);
 };
@@ -54,10 +54,12 @@ window.draw = function () {
     belt.draw();
     paddle.draw();
 
-    let droppedTile = belt.step();
+    let droppedTiles = belt.step();
 
-    if (droppedTile !== null) {
-        paddle.pushToPaddle(droppedTile.tile, droppedTile.col);
+    if (droppedTiles.length !== 0) {
+        droppedTiles.forEach((el) => {
+            paddle.pushToPaddle(el.tile, el.col);
+        });
     }
 };
 

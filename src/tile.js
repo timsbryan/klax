@@ -29,9 +29,7 @@ export default class Tile {
 
     //TODO check this is still being used and fix
     update(posX, posY, tWidth, tHeight) {
-        if (true) {
-            this.draw(posX, posY, tWidth, tHeight);
-        }
+        this.draw(posX, posY, tWidth, tHeight);
     }
 
     step() {

@@ -39,19 +39,12 @@ export default class Belt {
     }
 
     addNewTile() {
-        //TODO another recursive function do better checking
-        //eventually use getRandomLane method to do this to make it safer
+        //TODO eventually use getRandomLane method to do this to make it safer
         let randomLane = random(this.config.lanes);
 
-        // let unchecked = [this.belt[0]];
+        this.newTile = this.createNewTile();
 
-        // if (this.nextSpaceEmpty(randomLane, 0)) {
-            this.newTile = this.createNewTile();
-
-            this.belt[parseInt(randomLane)][0] = this.newTile;
-        // } else {
-        //     this.addNewTile();
-        // }
+        this.belt[randomLane][0] = this.newTile;
     }
 
     createNewTile() {
@@ -103,31 +96,30 @@ export default class Belt {
 
     //calls tile to find out if tile should move one space lower.
     step() {
+        let droppedTiles = [];
+
         for (let i = this.cols - 1; i >= 0; --i) {
             for (let j = this.rows - 1; j >= 0; --j) {
                 if (typeof this.belt[i][j] === 'object') {
                     let thisTile = this.belt[i][j];
 
                     if (thisTile.step()) {
-                        if (j + 1 >= this.belt[i].length) {
-                            //Refactor repetition of this line with else statement below
-                            this.belt[i][j] = -1;
+                        this.belt[i][j] = -1;
 
-                            return {
+                        if (j + 1 >= this.belt[i].length) {
+                            droppedTiles.push({
                                 'tile': thisTile,
                                 'col': i
-                            };
+                            });
                         } else {
                             this.belt[i][j + 1] = thisTile;
-                            //Refactor repetition of this line with if statement above
-                            this.belt[i][j] = -1;
-
-                            return null;
                         }
-                    } else return null;
-                } else return null;
+                    }
+                }
             }
         }
+
+        return droppedTiles;
     }
 
     draw() {
