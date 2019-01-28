@@ -16,6 +16,7 @@ export default class Belt {
         this.belt = this.make2DArray(this.cols, this.rows);
     }
 
+    //TODO move into utility class
     make2DArray(cols, rows) {
         let arr = new Array(cols);
         for (let i = 0; i < arr.length; i++) {

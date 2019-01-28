@@ -15,6 +15,7 @@ export default class Bin {
         this.bin = this.make2DArray(this.cols, this.rows);
     }
 
+    //TODO move into utility class
     make2DArray(cols, rows) {
         let arr = new Array(cols);
         for (let i = 0; i < arr.length; i++) {
@@ -32,10 +33,12 @@ export default class Bin {
 
     getLowestEmptyRow(col) {
         for (let i = 0; i < this.bin[col].length; i++) {
-            if (this.bin[col][i + 1] !== -1) {
-                //TODO fix bug here when too many tiles in column
-                return i;
-            }
+            if (this.bin[col].some((x) => x === -1)) {
+                if (this.bin[col][i + 1] !== -1) {
+                    //TODO fix bug here when too many tiles in column
+                    return i;
+                }
+            } else return null;
         }
     }
 
