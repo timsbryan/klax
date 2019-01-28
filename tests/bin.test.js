@@ -50,13 +50,19 @@ describe('The bin should', () => {
         bin.bin = [
             [-1, -1, -1, tile, tile],
             [-1, -1, -1, -1, tile],
-            [-1, tile, tile, tile, tile],
-            [tile, tile, tile, tile, tile]
+            [-1, tile, tile, tile, tile]
         ];
 
         expect(bin.getLowestEmptyRow(0)).toBe(2);
         expect(bin.getLowestEmptyRow(1)).toBe(3);
         expect(bin.getLowestEmptyRow(2)).toBe(0);
-        expect(bin.getLowestEmptyRow(3)).toBe(null);
+    });
+
+    test('return null when the lane is full of tiles', () => {
+        bin.bin = [
+            [tile, tile, tile, tile, tile]
+        ];
+
+        expect(bin.getLowestEmptyRow(0)).toBe(null);
     });
 });
