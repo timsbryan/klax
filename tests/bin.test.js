@@ -106,4 +106,72 @@ describe('The bin should', () => {
         expect(bin.pushToBin(tile1, 1)).toEqual({'tile': tile1, 'col': 1});
         expect(bin.bin[1]).toEqual(newBin[1]);
     });
+
+    test('remove tiles when it forms a vertical klax', () => {
+        bin.bin = [
+            [-1, -1, -1, tile, tile],
+            [-1, -1, tile, tile, tile],
+            [-1, -1, -1, -1, -1],
+            [-1, -1, -1, -1, -1],
+            [-1, -1, -1, -1, -1]
+        ];
+
+        const newBin = [
+            [-1, -1, -1, tile, tile],
+            [-1, -1, -1, -1, -1],
+            [-1, -1, -1, -1, -1],
+            [-1, -1, -1, -1, -1],
+            [-1, -1, -1, -1, -1]
+        ];
+
+        bin.checkForKlax(1, 2);
+
+        expect(bin.bin).toEqual(newBin);
+    });
+
+    test('remove tiles when it forms a horizontal klax', () => {
+        bin.bin = [
+            [-1, -1, -1, tile, tile],
+            [-1, -1, -1, -1, tile],
+            [-1, -1, -1, -1, tile],
+            [-1, -1, -1, -1, -1],
+            [-1, -1, -1, -1, -1]
+        ];
+
+        const newBin = [
+            [-1, -1, -1, -1, tile],
+            [-1, -1, -1, -1, -1],
+            [-1, -1, -1, -1, -1],
+            [-1, -1, -1, -1, -1],
+            [-1, -1, -1, -1, -1]
+        ];
+
+        bin.checkForKlax(1, 4);
+
+        expect(bin.bin).toEqual(newBin);
+    });
+
+    test('remove tiles when it forms a diagonal klax', () => {
+        const tile1 = new Tile(config, 'red');
+
+        bin.bin = [
+            [-1, -1, tile, tile1, tile1],
+            [-1, -1, -1, tile, tile],
+            [-1, -1, -1, -1, tile],
+            [-1, -1, -1, -1, -1],
+            [-1, -1, -1, -1, -1]
+        ];
+
+        const newBin = [
+            [-1, -1, -1, tile1, tile1],
+            [-1, -1, -1, -1, tile],
+            [-1, -1, -1, -1, -1],
+            [-1, -1, -1, -1, -1],
+            [-1, -1, -1, -1, -1]
+        ];
+
+        bin.checkForKlax(0, 2);
+
+        expect(bin.bin).toEqual(newBin);
+    });
 });
