@@ -174,4 +174,27 @@ describe('The bin should', () => {
 
         expect(bin.bin).toEqual(newBin);
     });
+
+    test('remove no tile when it forms no klaxes', () => {
+        bin.bin = [
+            [-1, -1, -1, tile, tile],
+            [-1, -1, -1, tile, tile],
+            [-1, -1, -1, -1, -1],
+            [-1, -1, -1, -1, -1],
+            [-1, -1, -1, -1, -1]
+        ];
+
+        const newBin = [
+            [-1, -1, -1, tile, tile],
+            [-1, -1, -1, tile, tile],
+            [-1, -1, -1, -1, -1],
+            [-1, -1, -1, -1, -1],
+            [-1, -1, -1, -1, -1]
+        ];
+
+        bin.checkForKlax(0, 3);
+
+        expect(bin.bin).toEqual(newBin);
+
+    });
 });
