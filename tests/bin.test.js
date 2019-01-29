@@ -65,4 +65,45 @@ describe('The bin should', () => {
 
         expect(bin.getLowestEmptyRow(0)).toBe(null);
     });
+
+    test('put the tile at the lowest empty position in that column', () => {
+        const tile1 = new Tile(config, 'red');
+
+        bin.bin = [
+            [-1, -1, -1, tile, tile],
+            [-1, tile, tile, tile, tile]
+        ];
+
+        const newBin = [
+            [-1, -1, tile1, tile, tile],
+            [-1, tile, tile, tile, tile]
+        ];
+
+        bin.pushToBin(tile1, 0);
+
+        expect(bin.bin).toEqual(newBin);
+    });
+
+    test('return the tile and column back to the paddle if there are no empty spaces', () => {
+        const tile1 = new Tile(config, 'red');
+
+        bin.bin = [
+            [-1, -1, -1, tile, tile],
+            [tile, tile, tile, tile, tile],
+            [-1, -1, -1, -1, -1],
+            [-1, -1, -1, -1, -1],
+            [-1, -1, -1, -1, -1]
+        ];
+
+        const newBin = [
+            [-1, -1, -1, tile, tile],
+            [tile, tile, tile, tile, tile],
+            [-1, -1, -1, -1, -1],
+            [-1, -1, -1, -1, -1],
+            [-1, -1, -1, -1, -1]
+        ];
+
+        expect(bin.pushToBin(tile1, 1)).toEqual({'tile': tile1, 'col': 1});
+        expect(bin.bin[1]).toEqual(newBin[1]);
+    });
 });
