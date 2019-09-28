@@ -15,8 +15,8 @@
     "@babel/cli": "^7.6.0",
     "@babel/core": "^7.6.0",
     "@babel/preset-env": "^7.6.0",
-    "@types/jest": "^23.3.14",
-    "@types/p5": "^0.7.3",
+    "@types/jest": "^24.0.18",
+    "@types/p5": "^0.9.0",
     "babel-core": "^7.0.0-bridge.0",
     "babel-jest": "^24.9.0",
     "eslint": "^5.16.0",
@@ -42,7 +42,7 @@
   },
   "dependencies": {
     "config": "^2.0.2",
-    "p5": "^0.7.3"
+    "p5": "^0.9.0"
   },
   "eslintIgnore": [
     "vendor/*"
