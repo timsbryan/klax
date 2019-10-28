@@ -112,11 +112,15 @@ export default class Bin {
     }
 
     checkHorizontalKlax(col, row) {
-        //TODO Refactor to include all possible tiles not just three, use for loop etc.
+        //TODO Maybe refactor to include all possible tiles not just three, use for loop etc.
         let horArr = [[col, row]];
-        let tileColour = this.bin[col][row].colour;
+        let tileColour;
+        if (this.bin[col][row] !== undefined) {
+            tileColour = this.bin[col][row].colour;
+        }
 
         if (this.bin[col + 1] !== undefined &&
+            this.bin[col + 1][row] !== undefined &&
             this.bin[col + 1][row].colour === tileColour) {
             horArr.push([col + 1, row]);
 

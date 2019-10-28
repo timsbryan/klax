@@ -1,11 +1,19 @@
-
 /* eslint-env jest */
 'use strict';
 
-import Bin from '../src/bin.js';
 import Tile from '../src/tile.js';
+import Bin from '../src/bin.js';
+jest.mock('../src/tile.js');
 
+
+window.fill = () => null;
 window.millis = () => null;
+window.pop = () => null;
+window.push = () => null;
+window.rect = () => null;
+window.stroke = () => null;
+window.strokeWeight = () => null;
+window.translate = () => null;
 
 const config = {
     'speed': 2,
@@ -17,9 +25,14 @@ describe('The bin should', () => {
     let bin;
     let tile;
 
-    beforeEach(() => {
+    beforeAll(() => {
         bin = new Bin(config);
-        tile = new Tile(config, 'green');
+        tile = new Tile();
+        tile.colour = 'green';
+    });
+
+    beforeEach(() => {
+        Tile.mockClear();
     });
 
     test('be setup with some default', () => {
@@ -58,7 +71,7 @@ describe('The bin should', () => {
         expect(bin.getLowestEmptyRow(2)).toBe(0);
     });
 
-    test('return null when the lane is full of tiles', () => {
+    test('return null when the lane is full of tiles when trying to get the lowest empty row', () => {
         bin.bin = [
             [tile, tile, tile, tile, tile]
         ];
@@ -68,11 +81,15 @@ describe('The bin should', () => {
 
     test('put the tile at the lowest empty position in that column', () => {
         const tile1 = new Tile(config, 'red');
+        tile1.colour = 'red';
+
 
         bin.bin = [
             [-1, -1, -1, tile, tile],
             [-1, tile, tile, tile, tile]
         ];
+
+        // console.log(tile);
 
         const newBin = [
             [-1, -1, tile1, tile, tile],
@@ -175,7 +192,7 @@ describe('The bin should', () => {
         expect(bin.bin).toEqual(newBin);
     });
 
-    test('remove no tile when it forms no klaxes', () => {
+    test('don\'t remove a tile when it forms no klaxes', () => {
         bin.bin = [
             [-1, -1, -1, tile, tile],
             [-1, -1, -1, tile, tile],
@@ -195,6 +212,28 @@ describe('The bin should', () => {
         bin.checkForKlax(0, 3);
 
         expect(bin.bin).toEqual(newBin);
+
+    });
+
+    test('draw each tile in the bin', () => {
+        let tile = new Tile();
+        let tile1 = new Tile();
+
+        bin.bin = [
+            [-1, -1, -1, tile, tile],
+            [-1, -1, -1, tile, tile],
+            [-1, -1, -1, -1, tile1],
+            [-1, -1, -1, -1, tile1],
+            [-1, -1, -1, -1, -1]
+        ];
+
+        expect(Tile.mock.instances[0].draw).not.toHaveBeenCalled();
+        expect(Tile.mock.instances[1].draw).not.toHaveBeenCalled();
+
+        bin.draw();
+
+        expect(Tile.mock.instances[0].draw).toHaveBeenCalledTimes(4)
+        expect(Tile.mock.instances[1].draw).toHaveBeenCalledTimes(2)
 
     });
 });
