@@ -2,8 +2,6 @@
 /* exported Bin */
 'use strict';
 
-//TODO unit tests on this class!!
-
 export default class Bin {
     constructor(config) {
         this.config = config;
@@ -17,6 +15,7 @@ export default class Bin {
         this.bin = this.make2DArray(this.cols, this.rows);
     }
 
+    //TODO move into utility class
     make2DArray(cols, rows) {
         let arr = new Array(cols);
         for (let i = 0; i < arr.length; i++) {
@@ -34,18 +33,21 @@ export default class Bin {
 
     getLowestEmptyRow(col) {
         for (let i = 0; i < this.bin[col].length; i++) {
-            if (this.bin[col][i + 1] !== -1) {
-                //TODO fix bug here when too many tiles in column
-                return i;
-            }
+            if (this.bin[col].some((x) => x === -1)) {
+                if (this.bin[col][i + 1] !== -1) {
+                    //TODO fix bug here when too many tiles in column
+                    return i;
+                }
+            } else return null;
         }
     }
 
     pushToBin(tile, col) {
         let row = this.getLowestEmptyRow(col);
-
-        this.bin[col][row] = tile;
-        this.checkForKlax(col, row);
+        if (row !== null) {
+            this.bin[col][row] = tile;
+            this.checkForKlax(col, row);
+        } else return { 'col': col, 'tile': tile };
     }
 
     /* TODO depending on performance maybe remove this function and just check for Klax at every
@@ -110,11 +112,15 @@ export default class Bin {
     }
 
     checkHorizontalKlax(col, row) {
-        //TODO Refactor to include all possible tiles not just three, use for loop etc.
+        //TODO Maybe refactor to include all possible tiles not just three, use for loop etc.
         let horArr = [[col, row]];
-        let tileColour = this.bin[col][row].colour;
+        let tileColour;
+        if (this.bin[col][row] !== undefined) {
+            tileColour = this.bin[col][row].colour;
+        }
 
         if (this.bin[col + 1] !== undefined &&
+            this.bin[col + 1][row] !== undefined &&
             this.bin[col + 1][row].colour === tileColour) {
             horArr.push([col + 1, row]);
 
