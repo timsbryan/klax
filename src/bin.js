@@ -44,7 +44,8 @@ export default class Bin {
 
     pushToBin(tile, col) {
         let row = this.getLowestEmptyRow(col);
-        if (row !== null) {
+        // TODO see if this should be -1 or null (or undefined)
+        if (row !== null || row !== -1) {
             this.bin[col][row] = tile;
             return this.checkForKlax(col, row);
         } else return new Object;
