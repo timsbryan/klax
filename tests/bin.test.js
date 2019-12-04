@@ -5,7 +5,6 @@ import Tile from '../src/tile.js';
 import Bin from '../src/bin.js';
 jest.mock('../src/tile.js');
 
-
 window.fill = () => null;
 window.millis = () => null;
 window.pop = () => null;
@@ -89,8 +88,6 @@ describe('The bin should', () => {
             [-1, tile, tile, tile, tile]
         ];
 
-        // console.log(tile);
-
         const newBin = [
             [-1, -1, tile1, tile, tile],
             [-1, tile, tile, tile, tile]
@@ -101,7 +98,7 @@ describe('The bin should', () => {
         expect(bin.bin).toEqual(newBin);
     });
 
-    test('return the tile and column back to the paddle if there are no empty spaces', () => {
+    test('return an empty object if there are no empty spaces', () => {
         const tile1 = new Tile(config, 'red');
 
         bin.bin = [
@@ -120,7 +117,7 @@ describe('The bin should', () => {
             [-1, -1, -1, -1, -1]
         ];
 
-        expect(bin.pushToBin(tile1, 1)).toEqual({'tile': tile1, 'col': 1});
+        expect(bin.pushToBin(tile1, 1)).toEqual({});
         expect(bin.bin[1]).toEqual(newBin[1]);
     });
 
@@ -232,8 +229,8 @@ describe('The bin should', () => {
 
         bin.draw();
 
-        expect(Tile.mock.instances[0].draw).toHaveBeenCalledTimes(4)
-        expect(Tile.mock.instances[1].draw).toHaveBeenCalledTimes(2)
+        expect(Tile.mock.instances[0].draw).toHaveBeenCalledTimes(4);
+        expect(Tile.mock.instances[1].draw).toHaveBeenCalledTimes(2);
 
     });
 });

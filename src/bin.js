@@ -46,8 +46,8 @@ export default class Bin {
         let row = this.getLowestEmptyRow(col);
         if (row !== null) {
             this.bin[col][row] = tile;
-            this.checkForKlax(col, row);
-        } else return { 'col': col, 'tile': tile };
+            return this.checkForKlax(col, row);
+        } else return new Object;
     }
 
     /* TODO depending on performance maybe remove this function and just check for Klax at every
