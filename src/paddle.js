@@ -10,7 +10,7 @@ export default class Paddle {
         this.paddleHeight = config.tileSize / 3;
     }
 
-    //Not sure this is the best name for this method
+    //TODO Not sure this is the best name for this method
     pushToPaddle(tile, col) {
         if (col === this.paddleLane) {
             this.paddleTiles.push(tile);

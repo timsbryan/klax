@@ -89,8 +89,6 @@ describe('The bin should', () => {
             [-1, tile, tile, tile, tile]
         ];
 
-        // console.log(tile);
-
         const newBin = [
             [-1, -1, tile1, tile, tile],
             [-1, tile, tile, tile, tile]
