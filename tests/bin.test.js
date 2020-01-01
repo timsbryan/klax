@@ -65,17 +65,18 @@ describe('The bin should', () => {
             [-1, tile, tile, tile, tile]
         ];
 
-        expect(bin.getLowestEmptyRow(0)).toBe(2);
-        expect(bin.getLowestEmptyRow(1)).toBe(3);
-        expect(bin.getLowestEmptyRow(2)).toBe(0);
+        expect(bin.getLowestEmptyPosition(0)).toBe(2);
+        expect(bin.getLowestEmptyPosition(1)).toBe(3);
+        expect(bin.getLowestEmptyPosition(2)).toBe(0);
     });
 
-    test('return null when the lane is full of tiles when trying to get the lowest empty row', () => {
+    test('return null when the lane is full of tiles when trying to get the lowest empty row',
+    () => {
         bin.bin = [
             [tile, tile, tile, tile, tile]
         ];
 
-        expect(bin.getLowestEmptyRow(0)).toBe(null);
+        expect(bin.getLowestEmptyPosition(0)).toBe(null);
     });
 
     test('put the tile at the lowest empty position in that column', () => {
@@ -100,6 +101,7 @@ describe('The bin should', () => {
 
     test('return an empty object if there are no empty spaces', () => {
         const tile1 = new Tile(config, 'red');
+        tile1.colour = 'red';
 
         bin.bin = [
             [-1, -1, -1, tile, tile],
@@ -119,6 +121,34 @@ describe('The bin should', () => {
 
         expect(bin.pushToBin(tile1, 1)).toEqual({});
         expect(bin.bin[1]).toEqual(newBin[1]);
+    });
+
+    test(`return an object with the position of tiles that form an horizontal klax
+        when an horizontal klax of 3 tiles is created`, () => {
+        const tile1 = new Tile(config, 'red');
+        tile1.colour = 'red';
+
+        bin.bin = [
+            [-1, -1, -1, tile, tile],
+            [-1, -1, -1, tile, tile],
+            [-1, -1, -1, -1, -1],
+            [-1, -1, -1, -1, -1],
+            [-1, -1, -1, -1, -1]
+        ];
+
+        const newBin = [
+            [-1, -1, -1, -1, tile],
+            [-1, -1, -1, -1, tile],
+            [-1, -1, -1, -1, -1],
+            [-1, -1, -1, -1, -1],
+            [-1, -1, -1, -1, -1]
+        ];
+
+        expect(bin.pushToBin(tile, 2)).toMatchObject(
+            [{'col': 2, 'row': 4}, {'col': 1, 'row': 4}, {'col': 0, 'row': 4}]
+        );
+
+        expect(bin.bin).toEqual(newBin);
     });
 
     test('remove tiles when it forms a vertical klax', () => {
