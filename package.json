@@ -12,7 +12,7 @@
   "author": "Tim Bryan",
   "license": "ISC",
   "devDependencies": {
-    "@babel/cli": "^7.6.0",
+    "@babel/cli": "^7.12.1",
     "@babel/core": "^7.6.0",
     "@babel/preset-env": "^7.6.0",
     "@types/jest": "^24.0.18",
@@ -28,7 +28,7 @@
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
     "jest": "^24.9.0",
-    "parcel-bundler": "^1.12.3"
+    "parcel-bundler": "^1.12.4"
   },
   "jest": {
     "verbose": true,
