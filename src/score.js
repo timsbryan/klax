@@ -4,6 +4,22 @@
 export default class Score {
   constructor() {
       this.pointsAmount = 0;
+
+      // TODO Big sandwich
+      this.amounts = {
+        paddle: 5,
+        threeVertical: 50,
+        fourVertical: 10000,
+        fiveVertical: 15000,
+        threeHorizontal: 1000,
+        fourHorizontal: 5000,
+        fiveHorizontal: 10000,
+        threeDiagonal: 5000,
+        fourDiagonal: 10000,
+        fiveDiagonal: 20000,
+        largeX: 80000,
+        bigSandwich: null
+      };
   }
 
   points() {
@@ -12,6 +28,27 @@ export default class Score {
 
   add(amount) {
     this.pointsAmount += amount;
+  }
+
+
+  addVerticalKlax(klax) {
+    if (klax.length === 3) {
+      this.add(this.amounts.threeVertical);
+    } else if (klax.length === 4) {
+      this.add(this.amounts.fourVertical);
+    } else {
+      throw new Error(`Unexpected vertical klax length: ${klax.length}`);
+    }
+  }
+
+  addHorizontalKlax(klax) {
+    if (klax.length === 3) {
+      this.add(this.amounts.threeHorizontal);
+    } else if (klax.length === 4) {
+      this.add(this.amounts.fourHorizontal);
+    } else {
+      throw new Error(`Unexpected horizontal klax length: ${klax.length}`);
+    }
   }
 }
 

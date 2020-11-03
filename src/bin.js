@@ -56,6 +56,8 @@ export default class Bin {
      * every position, always.
      */
     checkForKlax(col, row) {
+        /* TODO for these checks could point along the line and stop at first tile that isn't the
+           same colour */
         let horArr = this.checkHorizontalKlax(col, row);
         let verticalArr = this.checkVerticalKlax(col, row);
         let diagArr = this.checkDiagonalKlax(col, row);
@@ -77,7 +79,6 @@ export default class Bin {
 
             if (newArr.length > 0) {
                 this.clearBinPositions(newArr);
-
                 this.dropTiles();
             }
 
@@ -279,7 +280,7 @@ export default class Bin {
             for (let j = 0; j < this.rows; j++) {
                 push();
 
-                //TODO Translate better
+                //TODO Translate better (can't remember what this meant. Magic numbers maybe?)
                 translate(0, (this.config.tileSize / 4 * 3) * 5);
 
                 stroke(255);
