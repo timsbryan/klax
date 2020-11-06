@@ -45,6 +45,14 @@ describe('The score should', () => {
         expect(score.points()).toBe(10 + score.amounts.fourVertical);
     });
 
+    test('add the correct amount to the score when a 5 tile vertical klax is scored', () => {
+        const verticalArr = [ {}, {}, {}, {}, {} ];
+        score.pointsAmount = 10;
+        score.addVerticalKlax(verticalArr);
+        
+        expect(score.points()).toBe(10 + score.amounts.fiveVertical);
+    });
+
     test('add the correct amount to the score when a 3 tile horizontal klax is scored', () => {
         const horArr = [ {}, {}, {} ];
         score.pointsAmount = 10;
@@ -59,5 +67,37 @@ describe('The score should', () => {
         score.addHorizontalKlax(horArr);
         
         expect(score.points()).toBe(10 + score.amounts.fourHorizontal);
+    });
+
+    test('add the correct amount to the score when a 5 tile horizontal klax is scored', () => {
+        const horArr = [ {}, {}, {}, {}, {} ];
+        score.pointsAmount = 10;
+        score.addHorizontalKlax(horArr);
+        
+        expect(score.points()).toBe(10 + score.amounts.fiveHorizontal);
+    });
+
+    test('add the correct amount to the score when a 3 tile diagonal klax is scored', () => {
+        const diagonalArr = [ {}, {}, {} ];
+        score.pointsAmount = 10;
+        score.addDiagonalKlax(diagonalArr);
+        
+        expect(score.points()).toBe(10 + score.amounts.threeDiagonal);
+    });
+
+    test('add the correct amount to the score when a 4 tile diagonal klax is scored', () => {
+        const diagonalArr = [ {}, {}, {}, {} ];
+        score.pointsAmount = 10;
+        score.addDiagonalKlax(diagonalArr);
+        
+        expect(score.points()).toBe(10 + score.amounts.fourDiagonal);
+    });
+
+    test('add the correct amount to the score when a 5 tile diagonal klax is scored', () => {
+        const diagonalArr = [ {}, {}, {}, {}, {} ];
+        score.pointsAmount = 10;
+        score.addDiagonalKlax(diagonalArr);
+        
+        expect(score.points()).toBe(10 + score.amounts.fiveDiagonal);
     });
   });

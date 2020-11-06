@@ -8,7 +8,7 @@ export default class Bin {
 
         this.cols = this.config.lanes;
         this.rows = this.config.lanes;
-        //TODO calc tile height better
+        //TODO calc tile height without magic number, using sketch height or whatever
         this.tileHeight = 30;
         this.tileWidth = this.config.tileSize;
 
@@ -56,8 +56,8 @@ export default class Bin {
      * every position, always.
      */
     checkForKlax(col, row) {
-        /* TODO for these checks could point along the line and stop at first tile that isn't the
-           same colour */
+        /* TODO for these check functions, could point along the line and stop at first tile that
+           isn't the same colour */
         let horArr = this.checkHorizontalKlax(col, row);
         let verticalArr = this.checkVerticalKlax(col, row);
         let diagArr = this.checkDiagonalKlax(col, row);
@@ -109,7 +109,6 @@ export default class Bin {
 
                     if (newArr.length > 0) {
                         this.clearBinPositions(newArr);
-
                         this.dropTiles();
                     }
                 }
@@ -203,6 +202,7 @@ export default class Bin {
                 diag1Arr.push({'col': col + 2, 'row': row + 2});
             }
         }
+
         //Left and up *1 and *2
         if (this.bin[col - 1] !== undefined &&
             this.bin[col - 1][row - 1] !== undefined &&

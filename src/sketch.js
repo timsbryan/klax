@@ -1,5 +1,8 @@
 /* eslint-env p5js */
 /// <reference path="../node_modules/@types/p5/global.d.ts" />
+/// <reference path="../node_modules/@types/p5/index.d.ts" />
+/// <reference path="../node_modules/@types/p5/literals.d.ts" />
+/// <reference path="../node_modules/@types/p5/constants.d.ts" />
 /* exported setup draw keyPressed preload */
 'use strict';
 
@@ -7,16 +10,18 @@ import 'p5';
 import Belt from './belt';
 import Paddle from './paddle';
 import Bin from './bin';
+import Score from './score';
 
 let belt;
 let bin;
 let paddle;
-let klaxSpriteSheet = '../assets/klax-spritesheet-96x161.png';
+let score;
+// let klaxSpriteSheet = './assets/klax-spritesheet-96x161.png';
 let spritesheets = {};
 let config;
 
 window.preload = function () {
-    spritesheets.pink = loadImage(klaxSpriteSheet);
+    // spritesheets.pink = loadImage(klaxSpriteSheet);
 };
 
 window.setup = function () {
@@ -47,6 +52,7 @@ window.setup = function () {
     belt = new Belt(config);
     paddle = new Paddle(config);
     bin = new Bin(config);
+    score = new Score();
 };
 
 window.draw = function () {
@@ -55,6 +61,7 @@ window.draw = function () {
     bin.draw();
     belt.draw();
     paddle.draw();
+    score.draw();
 
     let droppedTiles = belt.step();
 
@@ -99,7 +106,7 @@ window.keyPressed = function () {
             let tile = paddle.removeTopTile();
 
             if (tile) {
-                bin.pushToBin(tile.tile, tile.col);
+                let klaxes = bin.pushToBin(tile.tile, tile.col);
             }
             break;
         }

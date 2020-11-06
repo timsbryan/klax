@@ -30,12 +30,13 @@ export default class Score {
     this.pointsAmount += amount;
   }
 
-
   addVerticalKlax(klax) {
     if (klax.length === 3) {
       this.add(this.amounts.threeVertical);
     } else if (klax.length === 4) {
       this.add(this.amounts.fourVertical);
+    } else if (klax.length === 5) {
+      this.add(this.amounts.fiveVertical);
     } else {
       throw new Error(`Unexpected vertical klax length: ${klax.length}`);
     }
@@ -46,9 +47,31 @@ export default class Score {
       this.add(this.amounts.threeHorizontal);
     } else if (klax.length === 4) {
       this.add(this.amounts.fourHorizontal);
+    } else if (klax.length === 5) {
+      this.add(this.amounts.fiveHorizontal);
     } else {
       throw new Error(`Unexpected horizontal klax length: ${klax.length}`);
     }
+  }
+
+  addDiagonalKlax(klax) {
+    if (klax.length === 3) {
+      this.add(this.amounts.threeDiagonal);
+    } else if (klax.length === 4) {
+      this.add(this.amounts.fourDiagonal);
+    } else if (klax.length === 5) {
+      this.add(this.amounts.fiveDiagonal);
+    } else {
+      throw new Error(`Unexpected horizontal klax length: ${klax.length}`);
+    }
+  }
+
+  draw() {
+    push();
+    fill(255);
+    textSize(32);
+    text(this.points(), 10, 30);
+    pop();
   }
 }
 
