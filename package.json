@@ -1,5 +1,6 @@
 {
   "name": "klax",
+  "browserslist": "> 1.0%, last 2 versions, not dead",
   "version": "1.0.0",
   "description": "Klax game.",
   "main": "sketch.js",
@@ -13,11 +14,10 @@
   "license": "ISC",
   "devDependencies": {
     "@babel/cli": "^7.12.1",
-    "@babel/core": "^7.6.0",
+    "@babel/core": "^7.12.0",
     "@babel/preset-env": "^7.6.0",
     "@types/jest": "^24.0.18",
     "@types/p5": "^0.9.0",
-    "babel-core": "^7.0.0-bridge.0",
     "babel-jest": "^24.9.0",
     "eslint": "^5.16.0",
     "eslint-config-p5js": "^1.0.1",
@@ -28,7 +28,7 @@
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
     "jest": "^24.9.0",
-    "parcel-bundler": "^1.12.4"
+    "parcel": "^2.2.0"
   },
   "jest": {
     "verbose": true,
