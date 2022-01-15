@@ -122,26 +122,31 @@ export default class Bin {
         let tileColour;
         // TODO refactor to include if statement around whole function.
         //Throw error when if statement fails
-        if (this.bin[col][row] !== undefined) {
+        // Not sure this if statement is needed. Compare with vertical klax
+        if (this.bin[col][row] !== undefined && this.bin[col][row] !== -1) {
             tileColour = this.bin[col][row].colour;
         }
 
         if (this.bin[col + 1] !== undefined &&
             this.bin[col + 1][row] !== undefined &&
+            this.bin[col + 1][row] !== -1 &&
             this.bin[col + 1][row].colour === tileColour) {
             horArr.push({'col': col + 1, 'row': row});
 
             if (this.bin[col + 2] !== undefined &&
+                this.bin[col + 2][row] !== -1 &&
                 this.bin[col + 2][row].colour === tileColour) {
                 horArr.push({'col': col + 2, 'row': row});
             }
         }
 
         if (this.bin[col - 1] !== undefined &&
+            this.bin[col - 1][row] !== -1 &&
             this.bin[col - 1][row].colour === tileColour) {
             horArr.push({'col': col - 1, 'row': row});
 
             if (this.bin[col - 2] !== undefined &&
+                this.bin[col - 2][row] !== -1 &&
                 this.bin[col - 2][row].colour === tileColour) {
                 horArr.push({'col': col - 2, 'row': row});
             }
@@ -158,11 +163,13 @@ export default class Bin {
 
         if (this.bin[col] !== undefined &&
             this.bin[col][row + 1] !== undefined &&
+            this.bin[col][row + 1] !== -1 &&
             this.bin[col][row + 1].colour === tileColour) {
             vertArr.push({'col': col, 'row': row + 1});
 
             if (this.bin[col] !== undefined &&
                 this.bin[col][row + 2] !== undefined &&
+                this.bin[col][row + 2] !== -1 &&
                 this.bin[col][row + 2].colour === tileColour) {
                 vertArr.push({'col': col, 'row': row + 2});
             }
@@ -170,11 +177,13 @@ export default class Bin {
 
         if (this.bin[col] !== undefined &&
             this.bin[col][row - 1] !== undefined &&
+            this.bin[col][row - 1] !== -1 &&
             this.bin[col][row - 1].colour === tileColour) {
             vertArr.push({'col': col, 'row': row - 1});
 
             if (this.bin[col] !== undefined &&
                 this.bin[col][row - 2] !== undefined &&
+                this.bin[col][row - 2] !== -1 &&
                 this.bin[col][row - 2].colour === tileColour) {
                 vertArr.push({'col': col, 'row': row - 2});
             }
@@ -193,11 +202,13 @@ export default class Bin {
         //Right and down *1 and *2
         if (this.bin[col + 1] !== undefined &&
             this.bin[col + 1][row + 1] !== undefined &&
+            this.bin[col + 1][row + 1] !== -1 &&
             this.bin[col + 1][row + 1].colour === tileColour) {
             diag1Arr.push({'col': col + 1, 'row': row + 1});
 
             if (this.bin[col + 2] !== undefined &&
                 this.bin[col + 2][row + 2] !== undefined &&
+                this.bin[col + 2][row + 2] !== -1 &&
                 this.bin[col + 2][row + 2].colour === tileColour) {
                 diag1Arr.push({'col': col + 2, 'row': row + 2});
             }
@@ -206,11 +217,13 @@ export default class Bin {
         //Left and up *1 and *2
         if (this.bin[col - 1] !== undefined &&
             this.bin[col - 1][row - 1] !== undefined &&
+            this.bin[col - 1][row - 1] !== -1 &&
             this.bin[col - 1][row - 1].colour === tileColour) {
             diag1Arr.push({'col': col - 1, 'row': row - 1});
 
             if (this.bin[col - 2] !== undefined &&
                 this.bin[col - 2][row - 2] !== undefined &&
+                this.bin[col - 2][row - 2] !== -1 &&
                 this.bin[col - 2][row - 2].colour === tileColour) {
                 diag1Arr.push({'col': col - 2, 'row': row - 2});
             }
@@ -219,11 +232,13 @@ export default class Bin {
         //Right and down *1 and *2
         if (this.bin[col + 1] !== undefined &&
             this.bin[col + 1][row - 1] !== undefined &&
+            this.bin[col + 1][row - 1] !== -1 &&
             this.bin[col + 1][row - 1].colour === tileColour) {
             diag2Arr.push({'col': col + 1, 'row': row - 1});
 
             if (this.bin[col + 2] !== undefined &&
                 this.bin[col + 2][row - 2] !== undefined &&
+                this.bin[col + 2][row - 2] !== -1 &&
                 this.bin[col + 2][row - 2].colour === tileColour) {
                 diag2Arr.push({'col': col + 2, 'row': row - 2});
             }
@@ -231,11 +246,13 @@ export default class Bin {
         //Left and down *1 and *2
         if (this.bin[col - 1] !== undefined &&
             this.bin[col - 1][row + 1] !== undefined &&
+            this.bin[col - 1][row + 1] !== -1 &&
             this.bin[col - 1][row + 1].colour === tileColour) {
             diag2Arr.push({'col': col - 1, 'row': row + 1});
 
             if (this.bin[col - 2] !== undefined &&
                 this.bin[col - 2][row + 2] !== undefined &&
+                this.bin[col - 2][row + 2] !== -1 &&
                 this.bin[col - 2][row + 2].colour === tileColour) {
                 diag2Arr.push({'col': col - 2, 'row': row + 2});
             }
