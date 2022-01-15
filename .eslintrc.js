@@ -1,7 +1,8 @@
 module.exports = {
     "env": {
         "browser": true,
-        "es6": true
+        "es6": true,
+        "jest/globals": true
     },
     "parserOptions": {
         "sourceType": "module"
@@ -9,7 +10,9 @@ module.exports = {
     "extends": [
         "eslint:recommended",
         "p5js",
-        "p5js/dom"
+        "p5js/dom",
+        "plugin:jest/recommended",
+        "plugin:jest/style"
     ],
     "parserOptions": {
         "ecmaVersion": 6,
