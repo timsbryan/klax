@@ -11,6 +11,7 @@ import Belt from './belt';
 import Paddle from './paddle';
 import Bin from './bin';
 import Score from './score';
+import Tile from './tile';
 
 let belt;
 let bin;
@@ -130,6 +131,20 @@ window.keyPressed = function () {
             if (config.debug) {
                 frameRate(5);
                 console.log('Framerate now 5fps');
+            }
+            break;
+        //t
+        case 84:
+            if (config.debug) {
+                let pinkTile = new Tile(config, config.tileColours.pink);
+                let greenTile = new Tile(config, config.tileColours.green);
+                bin.bin = [
+                    [-1, pinkTile, pinkTile, greenTile, pinkTile],
+                    [-1, pinkTile, pinkTile, greenTile, pinkTile],
+                    [-1, -1, -1, -1, greenTile],
+                    [-1, -1, -1, -1, -1],
+                    [-1, -1, -1, -1, -1]
+                ];
             }
             break;
     }
