@@ -8,7 +8,7 @@ export default class Bin {
 
         this.cols = this.config.lanes;
         this.rows = this.config.lanes;
-        //TODO calc tile height better
+        //TODO calc tile height without magic number, using sketch height or whatever
         this.tileHeight = 30;
         this.tileWidth = this.config.tileSize;
 
@@ -31,33 +31,38 @@ export default class Bin {
         return arr;
     }
 
-    getLowestEmptyRow(col) {
+    getLowestEmptyPosition(col) {
         for (let i = 0; i < this.bin[col].length; i++) {
             if (this.bin[col].some((x) => x === -1)) {
                 if (this.bin[col][i + 1] !== -1) {
-                    //TODO fix bug here when too many tiles in column
+                    /*TODO fix bug here when too many tiles in column
+                    (this might be caught by if statement above) */
                     return i;
                 }
             } else return null;
         }
     }
 
+    // TODO see if this should be -1 or null (or undefined)
     pushToBin(tile, col) {
-        let row = this.getLowestEmptyRow(col);
+        let row = this.getLowestEmptyPosition(col);
         if (row !== null) {
             this.bin[col][row] = tile;
-            this.checkForKlax(col, row);
-        } else return { 'col': col, 'tile': tile };
+            return this.checkForKlax(col, row);
+        } else return new Object;
     }
 
-    /* TODO depending on performance maybe remove this function and just check for Klax at every
-     * position, always
+    /* TODO depending on performance maybe remove this function and just check for Klax at
+     * every position, always.
      */
     checkForKlax(col, row) {
+        /* TODO for these check functions, could point along the line and stop at first tile that
+           isn't the same colour */
         let horArr = this.checkHorizontalKlax(col, row);
         let verticalArr = this.checkVerticalKlax(col, row);
         let diagArr = this.checkDiagonalKlax(col, row);
 
+        // TODO Refactor
         if (Array.isArray(horArr) || Array.isArray(verticalArr) || Array.isArray(diagArr)) {
             let newArr = [];
             if (Array.isArray(horArr)) {
@@ -74,15 +79,16 @@ export default class Bin {
 
             if (newArr.length > 0) {
                 this.clearBinPositions(newArr);
-
                 this.dropTiles();
             }
+
+            return newArr;
         }
     }
 
     checkAllForKlax() {
-        this.bin.forEach((row, i) => {
-            this.bin[i].forEach((tile, j) => {
+        this.bin.forEach((_col, i) => {
+            this.bin[i].forEach((_tile, j) => {
                 let horArr = this.checkHorizontalKlax(i, j);
                 let verticalArr = this.checkVerticalKlax(i, j);
                 let diagArr = this.checkDiagonalKlax(i, j);
@@ -103,7 +109,6 @@ export default class Bin {
 
                     if (newArr.length > 0) {
                         this.clearBinPositions(newArr);
-
                         this.dropTiles();
                     }
                 }
@@ -112,31 +117,38 @@ export default class Bin {
     }
 
     checkHorizontalKlax(col, row) {
-        //TODO Maybe refactor to include all possible tiles not just three, use for loop etc.
-        let horArr = [[col, row]];
+        //TODO Maybe refactor to include all possible tiles not just three. Use for loop etc.
+        let horArr = [{'col': col, 'row': row}];
         let tileColour;
-        if (this.bin[col][row] !== undefined) {
+        // TODO refactor to include if statement around whole function.
+        //Throw error when if statement fails
+        // Not sure this if statement is needed. Compare with vertical klax
+        if (this.bin[col][row] !== undefined && this.bin[col][row] !== -1) {
             tileColour = this.bin[col][row].colour;
         }
 
         if (this.bin[col + 1] !== undefined &&
             this.bin[col + 1][row] !== undefined &&
+            this.bin[col + 1][row] !== -1 &&
             this.bin[col + 1][row].colour === tileColour) {
-            horArr.push([col + 1, row]);
+            horArr.push({'col': col + 1, 'row': row});
 
             if (this.bin[col + 2] !== undefined &&
+                this.bin[col + 2][row] !== -1 &&
                 this.bin[col + 2][row].colour === tileColour) {
-                horArr.push([col + 2, row]);
+                horArr.push({'col': col + 2, 'row': row});
             }
         }
 
         if (this.bin[col - 1] !== undefined &&
+            this.bin[col - 1][row] !== -1 &&
             this.bin[col - 1][row].colour === tileColour) {
-            horArr.push([col - 1, row]);
+            horArr.push({'col': col - 1, 'row': row});
 
             if (this.bin[col - 2] !== undefined &&
+                this.bin[col - 2][row] !== -1 &&
                 this.bin[col - 2][row].colour === tileColour) {
-                horArr.push([col - 2, row]);
+                horArr.push({'col': col - 2, 'row': row});
             }
         }
 
@@ -146,30 +158,34 @@ export default class Bin {
     }
 
     checkVerticalKlax(col, row) {
-        let vertArr = [[col, row]];
+        let vertArr = [{'col': col, 'row': row}];
         let tileColour = this.bin[col][row].colour;
 
         if (this.bin[col] !== undefined &&
             this.bin[col][row + 1] !== undefined &&
+            this.bin[col][row + 1] !== -1 &&
             this.bin[col][row + 1].colour === tileColour) {
-            vertArr.push([col, row + 1]);
+            vertArr.push({'col': col, 'row': row + 1});
 
             if (this.bin[col] !== undefined &&
                 this.bin[col][row + 2] !== undefined &&
+                this.bin[col][row + 2] !== -1 &&
                 this.bin[col][row + 2].colour === tileColour) {
-                vertArr.push([col, row + 2]);
+                vertArr.push({'col': col, 'row': row + 2});
             }
         }
 
         if (this.bin[col] !== undefined &&
             this.bin[col][row - 1] !== undefined &&
+            this.bin[col][row - 1] !== -1 &&
             this.bin[col][row - 1].colour === tileColour) {
-            vertArr.push([col, row - 1]);
+            vertArr.push({'col': col, 'row': row - 1});
 
             if (this.bin[col] !== undefined &&
                 this.bin[col][row - 2] !== undefined &&
+                this.bin[col][row - 2] !== -1 &&
                 this.bin[col][row - 2].colour === tileColour) {
-                vertArr.push([col, row - 2]);
+                vertArr.push({'col': col, 'row': row - 2});
             }
         }
 
@@ -179,57 +195,66 @@ export default class Bin {
     }
 
     checkDiagonalKlax(col, row) {
-        let diag1Arr = [[col, row]];
-        let diag2Arr = [[col, row]];
+        let diag1Arr = [{'col': col, 'row': row}];
+        let diag2Arr = [{'col': col, 'row': row}];
         let tileColour = this.bin[col][row].colour;
 
         //Right and down *1 and *2
         if (this.bin[col + 1] !== undefined &&
             this.bin[col + 1][row + 1] !== undefined &&
+            this.bin[col + 1][row + 1] !== -1 &&
             this.bin[col + 1][row + 1].colour === tileColour) {
-            diag1Arr.push([col + 1, row + 1]);
+            diag1Arr.push({'col': col + 1, 'row': row + 1});
 
             if (this.bin[col + 2] !== undefined &&
                 this.bin[col + 2][row + 2] !== undefined &&
+                this.bin[col + 2][row + 2] !== -1 &&
                 this.bin[col + 2][row + 2].colour === tileColour) {
-                diag1Arr.push([col + 2, row + 2]);
+                diag1Arr.push({'col': col + 2, 'row': row + 2});
             }
         }
+
         //Left and up *1 and *2
         if (this.bin[col - 1] !== undefined &&
             this.bin[col - 1][row - 1] !== undefined &&
+            this.bin[col - 1][row - 1] !== -1 &&
             this.bin[col - 1][row - 1].colour === tileColour) {
-            diag1Arr.push([col - 1, row - 1]);
+            diag1Arr.push({'col': col - 1, 'row': row - 1});
 
             if (this.bin[col - 2] !== undefined &&
                 this.bin[col - 2][row - 2] !== undefined &&
+                this.bin[col - 2][row - 2] !== -1 &&
                 this.bin[col - 2][row - 2].colour === tileColour) {
-                diag1Arr.push([col - 2, row - 2]);
+                diag1Arr.push({'col': col - 2, 'row': row - 2});
             }
         }
 
         //Right and down *1 and *2
         if (this.bin[col + 1] !== undefined &&
             this.bin[col + 1][row - 1] !== undefined &&
+            this.bin[col + 1][row - 1] !== -1 &&
             this.bin[col + 1][row - 1].colour === tileColour) {
-            diag2Arr.push([col + 1, row - 1]);
+            diag2Arr.push({'col': col + 1, 'row': row - 1});
 
             if (this.bin[col + 2] !== undefined &&
                 this.bin[col + 2][row - 2] !== undefined &&
+                this.bin[col + 2][row - 2] !== -1 &&
                 this.bin[col + 2][row - 2].colour === tileColour) {
-                diag2Arr.push([col + 2, row - 2]);
+                diag2Arr.push({'col': col + 2, 'row': row - 2});
             }
         }
         //Left and down *1 and *2
         if (this.bin[col - 1] !== undefined &&
             this.bin[col - 1][row + 1] !== undefined &&
+            this.bin[col - 1][row + 1] !== -1 &&
             this.bin[col - 1][row + 1].colour === tileColour) {
-            diag2Arr.push([col - 1, row + 1]);
+            diag2Arr.push({'col': col - 1, 'row': row + 1});
 
             if (this.bin[col - 2] !== undefined &&
                 this.bin[col - 2][row + 2] !== undefined &&
+                this.bin[col - 2][row + 2] !== -1 &&
                 this.bin[col - 2][row + 2].colour === tileColour) {
-                diag2Arr.push([col - 2, row + 2]);
+                diag2Arr.push({'col': col - 2, 'row': row + 2});
             }
         }
 
@@ -245,7 +270,7 @@ export default class Bin {
     }
 
     dropTiles() {
-        this.bin.forEach((tile, i) => {
+        this.bin.forEach((_tile, i) => {
             this.bin[i].forEach((tile, j) => {
                 if (this.bin[i][j] !== -1 &&
                     this.bin[i][j + 1] !== undefined &&
@@ -263,7 +288,7 @@ export default class Bin {
 
     clearBinPositions(tileArr) {
         tileArr.forEach((tilePos) => {
-            this.bin[tilePos[0]][tilePos[1]] = -1;
+            this.bin[tilePos.col][tilePos.row] = -1;
         });
     }
 
@@ -272,7 +297,7 @@ export default class Bin {
             for (let j = 0; j < this.rows; j++) {
                 push();
 
-                //TODO Translate better
+                //TODO Translate better (can't remember what this meant. Magic numbers maybe?)
                 translate(0, (this.config.tileSize / 4 * 3) * 5);
 
                 stroke(255);
