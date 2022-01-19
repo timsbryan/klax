@@ -8,7 +8,7 @@ import Paddle from '../src/paddle.js';
 import Tile from '../src/tile.js';
 // jest.mock('../src/tile.js');
 
-const config = { 'lanes': 2, 'tileSize': 4 };
+const config = { 'lanes': 2, 'tileSize': 4, 'maxTilesOnPaddle': 5 };
 
 window.push = () => null;
 window.fill = () => null;
@@ -31,6 +31,7 @@ describe('The paddle should', () => {
     test('be setup with defaults', () => {
         expect(paddle).toEqual({
             config,
+            'maxTiles': 5,
             'paddleHeight': 1.33333333333333333,
             'paddleLane': 1,
             'paddleTiles': []
@@ -38,15 +39,28 @@ describe('The paddle should', () => {
     });
 
     test('receive a tile when the paddle is in the same column as a tile', () => {
-        paddle.pushToPaddle('tile', 1);
+        paddle.paddleLane = 1
+        let droppedTiles = paddle.pushToPaddle('tile', 1);
 
         expect(paddle.paddleTiles).toHaveLength(1);
+        expect(droppedTiles).toBeUndefined;
     });
 
-    test('not to receive a tile when the paddle is not in the same column as a tile', () => {
-        paddle.pushToPaddle('tile', 2);
+    test('reject the tile when  when the paddle is not in the same column as a tile', () => {
+        paddle.paddleLane = 1
+        let droppedTiles = paddle.pushToPaddle('tile', 2);
 
         expect(paddle.paddleTiles).toHaveLength(0);
+        expect(droppedTiles).toBe('tile');
+    });
+
+    test('not receive a tile when the paddle is full of tiles', () => {
+        paddle.paddleTiles = ['tile1', 'tile2', 'tile3', 'tile4', 'tile5'];
+        paddle.paddleLane = 1
+        let droppedTiles = paddle.pushToPaddle('tile6', 1);
+
+        expect(paddle.paddleTiles).toHaveLength(5);
+        expect(droppedTiles).toBe('tile6')
     });
 
     test('remove the top tile if there are tiles on the paddle', () => {

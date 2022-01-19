@@ -3,7 +3,6 @@
   "browserslist": "> 1.0%, last 2 versions, not dead",
   "version": "1.0.0",
   "description": "Klax game.",
-  "main": "sketch.js",
   "scripts": {
     "start": "parcel index.html",
     "build": "parcel build index.html",
@@ -44,6 +43,7 @@
     ]
   },
   "dependencies": {
+    "@swc/helpers": "^0.3.2",
     "p5": "^1.4.0"
   },
   "eslintIgnore": [

@@ -17,6 +17,7 @@ let belt;
 let bin;
 let paddle;
 let score;
+let lives;
 // let klaxSpriteSheet = './assets/klax-spritesheet-96x161.png';
 let spritesheets = {};
 let config;
@@ -40,9 +41,10 @@ window.setup = function () {
             red: color(255, 0, 0),
             yellow: color(255, 255, 0)
         },
-        //TODO add node env parameter for debug true/false
         debug: true,
-        tileSize: null
+        tileSize: null,
+        lives: 3,
+        maxTilesOnPaddle: 5
     };
 
     config.tileSize = config.canvasWidth / config.lanes;
@@ -50,6 +52,7 @@ window.setup = function () {
     createCanvas(config.canvasWidth, config.canvasWidth);
     background(51);
 
+    lives = config.lives;
     belt = new Belt(config);
     paddle = new Paddle(config);
     bin = new Bin(config);
@@ -59,18 +62,34 @@ window.setup = function () {
 window.draw = function () {
     background(51);
 
-    bin.draw();
-    belt.draw();
-    paddle.draw();
-    score.draw();
+    if(lives < 0) {
+        window.noLoop();
 
-    let droppedTiles = belt.step();
+        push();
+        fill(255);
+        textSize(32);
+        text("Game Over", width / 2, height / 2);
+        pop();
+    } else {
+        bin.draw();
+        belt.draw();
+        paddle.draw();
+        score.draw();
 
-    if (droppedTiles.length !== 0) {
-        droppedTiles.forEach((el) => {
-            paddle.pushToPaddle(el.tile, el.col);
-        });
+        let tilesOffBelt = belt.step();
+
+        if (tilesOffBelt.length !== 0) {
+            tilesOffBelt.forEach((el) => {
+                let droppedTile = paddle.pushToPaddle(el.tile, el.col);
+                if(droppedTile !== undefined) {
+                    console.log(droppedTile);
+                    lives--;
+                    console.log(lives);
+                }
+            });
+        }
     }
+
 };
 
 window.keyPressed = function () {
@@ -147,5 +166,10 @@ window.keyPressed = function () {
                 ];
             }
             break;
+        // o
+        case 79:
+            if(config.debug) {
+                lives = 0;
+            }
     }
 };
