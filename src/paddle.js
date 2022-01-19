@@ -8,13 +8,17 @@ export default class Paddle {
         this.paddleTiles = [];
         this.paddleLane = Math.floor(config.lanes / 2);
         this.paddleHeight = config.tileSize / 3;
+        this.maxTiles = config.maxTilesOnPaddle;
     }
 
     //TODO Not sure this is the best name for this method
     pushToPaddle(tile, col) {
-        if (col === this.paddleLane) {
+        if(this.paddleTiles.length === this.maxTiles
+            || col !== this.paddleLane) {
+                return tile
+        } else {
             this.paddleTiles.push(tile);
-        } //TODO else statement if player has missed the stacker
+        }
     }
 
     removeTopTile() {
