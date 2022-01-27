@@ -287,9 +287,7 @@ export default class Bin {
     }
 
     clearBinPositions(tileArr) {
-        tileArr.forEach((tilePos) => {
-            this.bin[tilePos.col][tilePos.row] = -1;
-        });
+        tileArr.forEach(tilePos => this.bin[tilePos.col][tilePos.row] = -1);
     }
 
     draw() {
