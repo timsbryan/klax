@@ -89,12 +89,18 @@ describe('The bin should', () => {
 
         bin.bin = [
             [-1, -1, -1, tile, tile],
-            [-1, tile, tile, tile, tile]
+            [-1, tile, tile, tile, tile],
+            [-1, -1, -1, -1, -1],
+            [-1, -1, -1, -1, -1],
+            [-1, -1, -1, -1, -1],
         ];
 
         const newBin = [
             [-1, -1, tile1, tile, tile],
-            [-1, tile, tile, tile, tile]
+            [-1, tile, tile, tile, tile],
+            [-1, -1, -1, -1, -1],
+            [-1, -1, -1, -1, -1],
+            [-1, -1, -1, -1, -1],
         ];
 
         bin.pushToBin(tile1, 0);
