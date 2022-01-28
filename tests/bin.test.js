@@ -54,13 +54,6 @@ describe('The bin should', () => {
         });
     });
 
-    test('create a 2D array board with all empty spaces', () => {
-        expect(bin.make2DArray(2, 2)).toEqual([
-            [-1, -1],
-            [-1, -1]
-        ]);
-    });
-
     test('get the lowest row in a lane that doesn\'t already have a tile', () => {
         bin.bin = [
             [-1, -1, -1, tile, tile],
@@ -89,12 +82,18 @@ describe('The bin should', () => {
 
         bin.bin = [
             [-1, -1, -1, tile, tile],
-            [-1, tile, tile, tile, tile]
+            [-1, tile, tile, tile, tile],
+            [-1, -1, -1, -1, -1],
+            [-1, -1, -1, -1, -1],
+            [-1, -1, -1, -1, -1],
         ];
 
         const newBin = [
             [-1, -1, tile1, tile, tile],
-            [-1, tile, tile, tile, tile]
+            [-1, tile, tile, tile, tile],
+            [-1, -1, -1, -1, -1],
+            [-1, -1, -1, -1, -1],
+            [-1, -1, -1, -1, -1],
         ];
 
         bin.pushToBin(tile1, 0);

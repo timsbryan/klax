@@ -5,7 +5,6 @@ export default class Score {
   constructor() {
       this.pointsAmount = 0;
 
-      // TODO Big sandwich
       this.amounts = {
         paddle: 5,
         threeVertical: 50,
@@ -16,9 +15,7 @@ export default class Score {
         fiveHorizontal: 10000,
         threeDiagonal: 5000,
         fourDiagonal: 10000,
-        fiveDiagonal: 20000,
-        largeX: 80000,
-        bigSandwich: null
+        fiveDiagonal: 20000
       };
   }
 
