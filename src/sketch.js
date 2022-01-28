@@ -82,9 +82,7 @@ window.draw = function () {
             tilesOffBelt.forEach((el) => {
                 let droppedTile = paddle.pushToPaddle(el.tile, el.col);
                 if(droppedTile !== undefined) {
-                    console.log(droppedTile);
                     lives--;
-                    console.log(lives);
                 }
             });
         }
