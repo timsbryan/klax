@@ -63,13 +63,6 @@ describe('The belt should', () => {
         });
     });
 
-    test('create a 2D array board with all empty spaces', () => {
-        expect(belt.make2DArray(2, 2)).toEqual([
-            [-1, -1],
-            [-1, -1]
-        ]);
-    });
-
     test('return true if the next space in the belt is empty', () => {
         belt.belt = [
             [tile, tile, tile, tile, tile],

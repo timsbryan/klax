@@ -3,6 +3,7 @@
 'use strict';
 
 import Tile from './tile';
+import { make2DArray } from './utils';
 
 export default class Belt {
     constructor(config) {
@@ -13,22 +14,7 @@ export default class Belt {
         this.tileHeight = (config.tileSize / 4) * 3;
         this.tileWidth = config.tileSize;
 
-        this.belt = this.make2DArray(this.cols, this.rows);
-    }
-
-    //TODO move into utility class
-    make2DArray(cols, rows) {
-        let arr = new Array(cols);
-        for (let i = 0; i < arr.length; i++) {
-            arr[i] = new Array(rows);
-        }
-
-        for (let i = 0; i < cols; i++) {
-            for (let j = 0; j < rows; j++) {
-                arr[i][j] = -1;
-            }
-        }
-        return arr;
+        this.belt = make2DArray(this.cols, this.rows);
     }
 
     nextSpaceEmpty(col, row) {
@@ -52,7 +38,7 @@ export default class Belt {
         return new Tile(
             this.config,
             Object.keys(this.config.tileColours)[
-                parseInt(random(Object.keys(this.config.tileColours).length))
+            parseInt(random(Object.keys(this.config.tileColours).length))
             ]);
     }
 

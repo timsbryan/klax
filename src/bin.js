@@ -2,6 +2,8 @@
 /* exported Bin */
 'use strict';
 
+import { make2DArray } from './utils';
+
 export default class Bin {
     constructor(config) {
         this.config = config;
@@ -12,23 +14,7 @@ export default class Bin {
         this.tileHeight = 30;
         this.tileWidth = this.config.tileSize;
 
-        this.bin = this.make2DArray(this.cols, this.rows);
-    }
-
-    //TODO move into utility class
-    make2DArray(cols, rows) {
-        let arr = new Array(cols);
-        for (let i = 0; i < arr.length; i++) {
-            arr[i] = new Array(rows);
-        }
-
-        for (let i = 0; i < cols; i++) {
-            for (let j = 0; j < rows; j++) {
-                arr[i][j] = -1;
-            }
-        }
-
-        return arr;
+        this.bin = make2DArray(this.cols, this.rows);
     }
 
     getLowestEmptyPosition(col) {
