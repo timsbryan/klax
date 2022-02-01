@@ -66,6 +66,8 @@ export default class Bin {
             if (newArr.length > 0) {
                 this.clearBinPositions(newArr);
                 this.dropTiles();
+
+                this.checkAllForKlax();
             }
 
             return newArr;
@@ -96,6 +98,8 @@ export default class Bin {
                     if (newArr.length > 0) {
                         this.clearBinPositions(newArr);
                         this.dropTiles();
+
+                        this.checkAllForKlax();
                     }
                 }
             });

@@ -199,6 +199,7 @@ describe('The bin should', () => {
 
     test('remove tiles when it forms a diagonal klax', () => {
         const tile1 = new Tile(config, 'red');
+        tile1.colour = 'red';
 
         bin.bin = [
             [-1, -1, tile, tile1, tile1],
