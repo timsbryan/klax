@@ -49,17 +49,19 @@ export default class Bin {
         let diagArr = this.checkDiagonalKlax(col, row);
 
         // TODO Refactor
-        if (Array.isArray(horArr) || Array.isArray(verticalArr) || Array.isArray(diagArr)) {
+        if (Array.isArray(horArr?.tiles)
+            || Array.isArray(verticalArr?.tiles)
+            || Array.isArray(diagArr?.tiles)) {
             let newArr = [];
-            if (Array.isArray(horArr)) {
+            if (Array.isArray(horArr?.tiles)) {
                 newArr = newArr.concat(horArr);
             }
 
-            if (Array.isArray(verticalArr)) {
+            if (Array.isArray(verticalArr?.tiles)) {
                 newArr = newArr.concat(verticalArr);
             }
 
-            if (Array.isArray(diagArr)) {
+            if (Array.isArray(diagArr?.tiles)) {
                 newArr = newArr.concat(diagArr);
             }
 
@@ -81,17 +83,19 @@ export default class Bin {
                 let verticalArr = this.checkVerticalKlax(i, j);
                 let diagArr = this.checkDiagonalKlax(i, j);
 
-                if (Array.isArray(horArr) || Array.isArray(verticalArr) || Array.isArray(diagArr)) {
+                if (Array.isArray(horArr?.tiles)
+                    || Array.isArray(verticalArr?.tiles)
+                    || Array.isArray(diagArr?.tiles)) {
                     let newArr = [];
-                    if (Array.isArray(horArr)) {
+                    if (Array.isArray(horArr?.tiles)) {
                         newArr = newArr.concat(horArr);
                     }
 
-                    if (Array.isArray(verticalArr)) {
+                    if (Array.isArray(verticalArr?.tiles)) {
                         newArr = newArr.concat(verticalArr);
                     }
 
-                    if (Array.isArray(diagArr)) {
+                    if (Array.isArray(diagArr?.tiles)) {
                         newArr = newArr.concat(diagArr);
                     }
 
@@ -143,7 +147,7 @@ export default class Bin {
         }
 
         if (horArr.length >= 3) {
-            return horArr;
+            return {'type': 'horizontal', 'tiles': horArr};
         }
     }
 
@@ -180,7 +184,7 @@ export default class Bin {
         }
 
         if (vertArr.length >= 3) {
-            return vertArr;
+            return {'type': 'vertical', 'tiles': vertArr};
         }
     }
 
@@ -250,12 +254,12 @@ export default class Bin {
 
         if (diag1Arr.length >= 3) {
             if (diag2Arr.length >= 3) {
-                return diag1Arr.concat(diag2Arr);
+                return {'type': 'diagonal', 'tiles': diag1Arr.concat(diag2Arr) };
             } else {
-                return diag1Arr;
+                return {'type': 'diagonal', 'tiles': diag1Arr };
             }
         } else if (diag2Arr.length >= 3) {
-            return diag2Arr;
+            return {'type': 'diagonal', 'tiles': diag2Arr };
         }
     }
 
@@ -276,8 +280,9 @@ export default class Bin {
         });
     }
 
+    //TODO this should probably be put at the higher game object eventually
     clearBinPositions(tileArr) {
-        tileArr.forEach(tilePos => this.bin[tilePos.col][tilePos.row] = -1);
+        tileArr.forEach(klaxObj => klaxObj.tiles.forEach(tilePos => this.bin[tilePos.col][tilePos.row] = -1));
     }
 
     draw() {

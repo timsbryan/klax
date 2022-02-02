@@ -147,7 +147,10 @@ describe('The bin should', () => {
         ];
 
         expect(bin.pushToBin(tile, 2)).toMatchObject(
-            [{'col': 2, 'row': 4}, {'col': 1, 'row': 4}, {'col': 0, 'row': 4}]
+            [{
+                'type': 'horizontal',
+                'tiles': [{ 'col': 2, 'row': 4 }, { 'col': 1, 'row': 4 }, { 'col': 0, 'row': 4 }]
+            }]
         );
 
         expect(bin.bin).toEqual(newBin);
