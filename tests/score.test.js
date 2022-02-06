@@ -30,74 +30,74 @@ describe('The score should', () => {
     });
 
     test('add the correct amount to the score when a 3 tile vertical klax is scored', () => {
-        const vertArr = [ {}, {}, {} ];
+        const vertArr = [{}, {}, {}];
         score.pointsAmount = 10;
         score.addVerticalKlax(vertArr);
-        
+
         expect(score.points()).toBe(10 + score.amounts.threeVertical);
     });
 
     test('add the correct amount to the score when a 4 tile vertical klax is scored', () => {
-        const vertArr = [ {}, {}, {}, {} ];
+        const vertArr = [{}, {}, {}, {}];
         score.pointsAmount = 10;
         score.addVerticalKlax(vertArr);
-        
+
         expect(score.points()).toBe(10 + score.amounts.fourVertical);
     });
 
     test('add the correct amount to the score when a 5 tile vertical klax is scored', () => {
-        const verticalArr = [ {}, {}, {}, {}, {} ];
+        const verticalArr = [{}, {}, {}, {}, {}];
         score.pointsAmount = 10;
         score.addVerticalKlax(verticalArr);
-        
+
         expect(score.points()).toBe(10 + score.amounts.fiveVertical);
     });
 
     test('add the correct amount to the score when a 3 tile horizontal klax is scored', () => {
-        const horArr = [ {}, {}, {} ];
+        const horArr = [{}, {}, {}];
         score.pointsAmount = 10;
         score.addHorizontalKlax(horArr);
-        
+
         expect(score.points()).toBe(10 + score.amounts.threeHorizontal);
     });
 
     test('add the correct amount to the score when a 4 tile horizontal klax is scored', () => {
-        const horArr = [ {}, {}, {}, {} ];
+        const horArr = [{}, {}, {}, {}];
         score.pointsAmount = 10;
         score.addHorizontalKlax(horArr);
-        
+
         expect(score.points()).toBe(10 + score.amounts.fourHorizontal);
     });
 
     test('add the correct amount to the score when a 5 tile horizontal klax is scored', () => {
-        const horArr = [ {}, {}, {}, {}, {} ];
+        const horArr = [{}, {}, {}, {}, {}];
         score.pointsAmount = 10;
         score.addHorizontalKlax(horArr);
-        
+
         expect(score.points()).toBe(10 + score.amounts.fiveHorizontal);
     });
 
     test('add the correct amount to the score when a 3 tile diagonal klax is scored', () => {
-        const diagonalArr = [ {}, {}, {} ];
+        const diagonalArr = [{}, {}, {}];
         score.pointsAmount = 10;
         score.addDiagonalKlax(diagonalArr);
-        
+
         expect(score.points()).toBe(10 + score.amounts.threeDiagonal);
     });
 
     test('add the correct amount to the score when a 4 tile diagonal klax is scored', () => {
-        const diagonalArr = [ {}, {}, {}, {} ];
+        const diagonalArr = [{}, {}, {}, {}];
         score.pointsAmount = 10;
         score.addDiagonalKlax(diagonalArr);
-        
+
         expect(score.points()).toBe(10 + score.amounts.fourDiagonal);
     });
 
     test('add the correct amount to the score when a 5 tile diagonal klax is scored', () => {
-        const diagonalArr = [ {}, {}, {}, {}, {} ];
+        const diagonalArr = [{}, {}, {}, {}, {}];
         score.pointsAmount = 10;
         score.addDiagonalKlax(diagonalArr);
-        
+
         expect(score.points()).toBe(10 + score.amounts.fiveDiagonal);
     });
-  });
+});
