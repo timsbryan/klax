@@ -6,6 +6,7 @@
 'use strict';
 
 import Tile from '../src/tile.js';
+
 const config = {
   'speed': 1
 };

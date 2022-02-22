@@ -27,39 +27,39 @@ export default class Score {
     this.pointsAmount += amount;
   }
 
-  addVerticalKlax(klax) {
-    if (klax.length === 3) {
+  addVerticalKlax(vklax) {
+    if (vklax.length === 3) {
       this.add(this.amounts.threeVertical);
-    } else if (klax.length === 4) {
+    } else if (vklax.length === 4) {
       this.add(this.amounts.fourVertical);
-    } else if (klax.length === 5) {
+    } else if (vklax.length === 5) {
       this.add(this.amounts.fiveVertical);
     } else {
-      throw new Error(`Unexpected vertical klax length: ${klax.length}`);
+      throw new Error(`Unexpected vertical klax length: ${vklax.length}`);
     }
   }
 
-  addHorizontalKlax(klax) {
-    if (klax.length === 3) {
+  addHorizontalKlax(hklax) {
+    if (hklax.length === 3) {
       this.add(this.amounts.threeHorizontal);
-    } else if (klax.length === 4) {
+    } else if (hklax.length === 4) {
       this.add(this.amounts.fourHorizontal);
-    } else if (klax.length === 5) {
+    } else if (hklax.length === 5) {
       this.add(this.amounts.fiveHorizontal);
     } else {
-      throw new Error(`Unexpected horizontal klax length: ${klax.length}`);
+      throw new Error(`Unexpected horizontal klax length: ${hklax.length}`);
     }
   }
 
-  addDiagonalKlax(klax) {
-    if (klax.length === 3) {
+  addDiagonalKlax(dklax) {
+    if (dklax.length === 3) {
       this.add(this.amounts.threeDiagonal);
-    } else if (klax.length === 4) {
+    } else if (dklax.length === 4) {
       this.add(this.amounts.fourDiagonal);
-    } else if (klax.length === 5) {
+    } else if (dklax.length === 5) {
       this.add(this.amounts.fiveDiagonal);
     } else {
-      throw new Error(`Unexpected horizontal klax length: ${klax.length}`);
+      throw new Error(`Unexpected horizontal klax length: ${dklax.length}`);
     }
   }
 

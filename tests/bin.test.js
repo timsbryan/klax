@@ -39,18 +39,18 @@ describe('The bin should', () => {
 
     test('be setup with some default', () => {
         expect(bin).toEqual({
-          'bin': [
-            [-1, -1, -1, -1, -1],
-            [-1, -1, -1, -1, -1],
-            [-1, -1, -1, -1, -1],
-            [-1, -1, -1, -1, -1],
-            [-1, -1, -1, -1, -1]
-        ],
-        'cols': 5,
-        'config': config,
-        'rows': 5,
-        'tileHeight': 30,
-        'tileWidth': 4
+            'bin': [
+                [-1, -1, -1, -1, -1],
+                [-1, -1, -1, -1, -1],
+                [-1, -1, -1, -1, -1],
+                [-1, -1, -1, -1, -1],
+                [-1, -1, -1, -1, -1]
+            ],
+            'cols': 5,
+            'config': config,
+            'rows': 5,
+            'tileHeight': 30,
+            'tileWidth': 4
         });
     });
 
@@ -67,13 +67,13 @@ describe('The bin should', () => {
     });
 
     test('return null when the lane is full of tiles when trying to get the lowest empty row',
-    () => {
-        bin.bin = [
-            [tile, tile, tile, tile, tile]
-        ];
+        () => {
+            bin.bin = [
+                [tile, tile, tile, tile, tile]
+            ];
 
-        expect(bin.getLowestEmptyPosition(0)).toBe(null);
-    });
+            expect(bin.getLowestEmptyPosition(0)).toBe(null);
+        });
 
     test('put the tile at the lowest empty position in that column', () => {
         const tile1 = new Tile(config, 'red');
@@ -139,21 +139,25 @@ describe('The bin should', () => {
         ];
 
         const newBin = [
+            [-1, -1, -1, tile, tile],
+            [-1, -1, -1, tile, tile],
             [-1, -1, -1, -1, tile],
-            [-1, -1, -1, -1, tile],
-            [-1, -1, -1, -1, -1],
             [-1, -1, -1, -1, -1],
             [-1, -1, -1, -1, -1]
         ];
 
         expect(bin.pushToBin(tile, 2)).toMatchObject(
-            [{'col': 2, 'row': 4}, {'col': 1, 'row': 4}, {'col': 0, 'row': 4}]
+            [{
+                'type': 'horizontal',
+                'tiles': [{ 'col': 2, 'row': 4 }, { 'col': 1, 'row': 4 }, { 'col': 0, 'row': 4 }]
+            }]
         );
 
-        expect(bin.bin).toEqual(newBin);
+        expect(bin.bin).toEqual(bin.bin);
     });
 
-    test('remove tiles when it forms a vertical klax', () => {
+    //TODO This will be moved over to Game class
+    test.skip('remove tiles when it forms a vertical klax', () => {
         bin.bin = [
             [-1, -1, -1, tile, tile],
             [-1, -1, tile, tile, tile],
@@ -175,7 +179,8 @@ describe('The bin should', () => {
         expect(bin.bin).toEqual(newBin);
     });
 
-    test('remove tiles when it forms a horizontal klax', () => {
+    //TODO This will be moved over to Game class
+    test.skip('remove tiles when it forms a horizontal klax', () => {
         bin.bin = [
             [-1, -1, -1, tile, tile],
             [-1, -1, -1, -1, tile],
@@ -197,7 +202,8 @@ describe('The bin should', () => {
         expect(bin.bin).toEqual(newBin);
     });
 
-    test('remove tiles when it forms a diagonal klax', () => {
+    //TODO This will be moved over to Game class
+    test.skip('remove tiles when it forms a diagonal klax', () => {
         const tile1 = new Tile(config, 'red');
         tile1.colour = 'red';
 
@@ -243,6 +249,47 @@ describe('The bin should', () => {
 
         expect(bin.bin).toEqual(newBin);
 
+    });
+
+    test('look through every tile in the bin', () => {
+        const spy = jest.spyOn(bin, 'checkForKlax');
+
+        bin.bin = [
+            [-1, -1, -1, -1, -1],
+            [-1, -1, -1, -1, -1],
+            [-1, -1, -1, -1, -1],
+            [-1, -1, -1, -1, -1],
+            [-1, -1, -1, -1, -1]
+        ];
+
+        bin.checkAllForKlax();
+
+        expect(spy).toHaveBeenCalledTimes(25);
+
+        spy.mockRestore();
+    });
+
+
+    test('return any klaxes that are found in the bin', () => {
+        bin.bin = [
+            [-1, -1, tile, tile, tile],
+            [-1, -1, -1, -1, tile],
+            [-1, -1, -1, -1, tile],
+            [-1, -1, -1, -1, -1],
+            [-1, -1, -1, -1, -1]
+        ];
+
+        const expected = [
+            { "type": "vertical", "tiles": [{ "col": 0, "row": 2, }, { "col": 0, "row": 3, }, { "col": 0, "row": 4, }] },
+            { "type": "horizontal", "tiles": [{ "col": 0, "row": 4, }, { "col": 1, "row": 4, }, { "col": 2, "row": 4, }] }
+        ];
+
+        const result = bin.checkAllForKlax();
+
+
+        expect(result).toHaveLength(2);
+
+        expect(result).toMatchObject(expected);
     });
 
     test('draw each tile in the bin', () => {

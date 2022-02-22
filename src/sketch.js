@@ -62,7 +62,7 @@ window.setup = function () {
 window.draw = function () {
     background(51);
 
-    if(lives < 0) {
+    if (lives < 0) {
         window.noLoop();
 
         push();
@@ -81,7 +81,7 @@ window.draw = function () {
         if (tilesOffBelt.length !== 0) {
             tilesOffBelt.forEach((el) => {
                 let droppedTile = paddle.pushToPaddle(el.tile, el.col);
-                if(droppedTile !== undefined) {
+                if (droppedTile !== undefined) {
                     lives--;
                 }
             });
@@ -125,6 +125,36 @@ window.keyPressed = function () {
 
             if (tile) {
                 let klaxes = bin.pushToBin(tile.tile, tile.col);
+
+                klaxes.forEach(obj => {
+                    if (obj.type === 'vertical') {
+                        score.addVerticalKlax(obj.tiles);
+                    } else if (obj.type === 'horizontal') {
+                        score.addHorizontalKlax(obj.tiles);
+                    } else if (obj.type === 'diagonal') {
+                        score.addDiagonalKlax(obj.tiles);
+                    }
+
+                    bin.clearBinPositions(klaxes);
+                    bin.dropTiles();
+                });
+
+                if (klaxes) {
+                    let allKlaxes = bin.checkAllForKlax();
+
+                    allKlaxes.forEach(obj => {
+                        if (obj.type === 'vertical') {
+                            score.addVerticalKlax(obj.tiles);
+                        } else if (obj.type === 'horizontal') {
+                            score.addHorizontalKlax(obj.tiles);
+                        } else if (obj.type === 'diagonal') {
+                            score.addDiagonalKlax(obj.tiles);
+                        }
+                    });
+
+                    bin.clearBinPositions(allKlaxes);
+                    bin.dropTiles();
+                }
             }
             break;
         }
@@ -166,7 +196,7 @@ window.keyPressed = function () {
             break;
         // o
         case 79:
-            if(config.debug) {
+            if (config.debug) {
                 lives = 0;
             }
     }
