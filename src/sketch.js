@@ -134,7 +134,27 @@ window.keyPressed = function () {
                     } else if (obj.type === 'diagonal') {
                         score.addDiagonalKlax(obj.tiles);
                     }
-                })
+
+                    bin.clearBinPositions(klaxes);
+                    bin.dropTiles();
+                });
+
+                if (klaxes) {
+                    let allKlaxes = bin.checkAllForKlax();
+
+                    allKlaxes.forEach(obj => {
+                        if (obj.type === 'vertical') {
+                            score.addVerticalKlax(obj.tiles);
+                        } else if (obj.type === 'horizontal') {
+                            score.addHorizontalKlax(obj.tiles);
+                        } else if (obj.type === 'diagonal') {
+                            score.addDiagonalKlax(obj.tiles);
+                        }
+                    });
+
+                    bin.clearBinPositions(allKlaxes);
+                    bin.dropTiles();
+                }
             }
             break;
         }

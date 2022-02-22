@@ -2,7 +2,7 @@
 /* exported Bin */
 'use strict';
 
-import { make2DArray } from './utils';
+import { make2DArray, uniqueValues } from './utils';
 
 export default class Bin {
     constructor(config) {
@@ -32,10 +32,12 @@ export default class Bin {
     // TODO see if this should be -1 or null (or undefined)
     pushToBin(tile, col) {
         let row = this.getLowestEmptyPosition(col);
+
         if (row !== null) {
             this.bin[col][row] = tile;
             return this.checkForKlax(col, row);
-        } else return new Object;
+        }
+        return new Object;
     }
 
     /* TODO depending on performance maybe remove this function and just check for Klax at
@@ -66,10 +68,7 @@ export default class Bin {
             }
 
             if (newArr.length > 0) {
-                this.clearBinPositions(newArr);
                 this.dropTiles();
-
-                this.checkAllForKlax();
             }
 
             return newArr;
@@ -77,37 +76,14 @@ export default class Bin {
     }
 
     checkAllForKlax() {
-        this.bin.forEach((_col, i) => {
-            this.bin[i].forEach((_tile, j) => {
-                let horArr = this.checkHorizontalKlax(i, j);
-                let verticalArr = this.checkVerticalKlax(i, j);
-                let diagArr = this.checkDiagonalKlax(i, j);
-
-                if (Array.isArray(horArr?.tiles)
-                    || Array.isArray(verticalArr?.tiles)
-                    || Array.isArray(diagArr?.tiles)) {
-                    let newArr = [];
-                    if (Array.isArray(horArr?.tiles)) {
-                        newArr = newArr.concat(horArr);
-                    }
-
-                    if (Array.isArray(verticalArr?.tiles)) {
-                        newArr = newArr.concat(verticalArr);
-                    }
-
-                    if (Array.isArray(diagArr?.tiles)) {
-                        newArr = newArr.concat(diagArr);
-                    }
-
-                    if (newArr.length > 0) {
-                        this.clearBinPositions(newArr);
-                        this.dropTiles();
-
-                        this.checkAllForKlax();
-                    }
-                }
+        let allKlaxes = this.bin.map((_col, i) => {
+            return this.bin[i].map((_tile, j) => {
+                return this.checkForKlax(i, j);
             });
         });
+
+        return uniqueValues(allKlaxes.flat().filter(n => n).flat());
+
     }
 
     checkHorizontalKlax(col, row) {
@@ -273,14 +249,12 @@ export default class Bin {
                     this.bin[i][j + 1] = tile;
                     this.bin[i][j] = -1;
                     this.dropTiles();
-
-                    this.checkAllForKlax();
                 }
             });
         });
     }
 
-    //TODO this should probably be put at the higher game object eventually
+    //TODO this should probably be put at the higher Game object eventually
     clearBinPositions(tileArr) {
         tileArr.forEach(klaxObj => klaxObj.tiles.forEach(tilePos => this.bin[tilePos.col][tilePos.row] = -1));
     }
