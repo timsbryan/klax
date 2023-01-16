@@ -23,12 +23,12 @@ let spritesheets = {};
 
 /**
  * Global config options for the game
- * @typedef {Object} config
+ * @typedef {object} config
  * @property {Number} canvasWidth
  * @property {Number} lanes
  * @property {Number} beltSteps
  * @property {Number} speed
- * @property {Object} tileColours
+ * @property {object} tileColours
  * @property {Boolean} debug
  * @property {Number} tileSize
  * @property {Number} lives

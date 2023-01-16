@@ -4,6 +4,10 @@
 
 import { make2DArray, uniqueValues } from './utils';
 
+/**
+ * Create a bin.
+ * @param {import('./sketch').config} config
+ */
 export default class Bin {
     constructor(config) {
         this.config = config;

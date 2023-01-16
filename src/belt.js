@@ -124,7 +124,7 @@ export default class Belt {
      */
     /**
      * Calls all tiles to find out if they should move one space lower.
-     * @returns {{tile: Object, col: number}[]} All tiles that should drop off the belt.
+     * @returns {{tile: object, col: number}[]} All tiles that should drop off the belt.
      */
     step() {
         let droppedTiles = [];
