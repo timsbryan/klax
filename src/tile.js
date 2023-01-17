@@ -10,7 +10,13 @@
 // const pinkSpriteWidth = 180;
 // const pinkAnimation = [];
 
+/** Creates a tile.  */
 export default class Tile {
+    /**
+     * 
+     * @param {import('./sketch').config} config
+     * @param {import('p5').Color} colour 
+     */
     constructor(config, colour) {
         this.config = config;
         this.lastUpdate = millis();
@@ -27,11 +33,21 @@ export default class Tile {
         // pinkSpriteImg = new Sprite(pinkAnimation, 0, 0, 0.1);
     }
 
+    /**
+     * @param {Number} posX 
+     * @param {Number} posY 
+     * @param {Number} tWidth 
+     * @param {Number} tHeight 
+     */
     //TODO check this is still being used and fix
     update(posX, posY, tWidth, tHeight) {
         this.draw(posX, posY, tWidth, tHeight);
     }
 
+    /**
+     * 
+     * @returns {Boolean} true if the tile should updated/moved, otherwise false.
+     */
     step() {
         if (millis() - this.lastUpdate >= this.config.speed) {
             this.lastUpdate = millis();
@@ -42,6 +58,13 @@ export default class Tile {
         }
     }
 
+    /**
+     * Displays the tile on the screen.
+     * @param {Number} posX 
+     * @param {Number} posY 
+     * @param {Number} tWidth 
+     * @param {Number} tHeight 
+     */
     draw(posX, posY, tWidth, tHeight) {
         // pinkSpriteImg.show();
         // pinkSpriteImg.animate();
