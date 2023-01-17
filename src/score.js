@@ -1,6 +1,9 @@
 /* eslint-env p5js */
 'use strict';
 
+/**
+ * Class that keeps and adds up the score.
+ */
 export default class Score {
   constructor() {
       this.pointsAmount = 0;
@@ -19,14 +22,27 @@ export default class Score {
       };
   }
 
+  /**
+   * 
+   * @returns {number} The score.
+   */
   points() {
       return this.pointsAmount;
   }
 
+  /**
+   * 
+   * @param {number} amount Adds an amount to the score.
+   */
   add(amount) {
     this.pointsAmount += amount;
   }
 
+  /**
+   * Adds a 3,4 or 4 tile vertical klax to score.
+   * @todo verify param types.
+   * @param {Array<Object>} vklax 
+   */
   addVerticalKlax(vklax) {
     if (vklax.length === 3) {
       this.add(this.amounts.threeVertical);
@@ -39,6 +55,11 @@ export default class Score {
     }
   }
 
+  /**
+   * Adds a 3,4 or 5 horizontal klax to score.
+   * @todo verify param types.
+   * @param {Array<Object>} hklax 
+   */
   addHorizontalKlax(hklax) {
     if (hklax.length === 3) {
       this.add(this.amounts.threeHorizontal);
@@ -51,6 +72,11 @@ export default class Score {
     }
   }
 
+  /**
+   * Adds a 3,4 or 5 diagonal klax to score.
+   * @todo verify param types.
+   * @param {Array<Object>} dklax 
+   */
   addDiagonalKlax(dklax) {
     if (dklax.length === 3) {
       this.add(this.amounts.threeDiagonal);
@@ -63,6 +89,9 @@ export default class Score {
     }
   }
 
+  /**
+   * Draws the score.
+   */
   draw() {
     push();
     fill(255);
