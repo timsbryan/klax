@@ -5,7 +5,12 @@
 import Tile from './tile';
 import { make2DArray } from './utils';
 
+/** Class that represents a conveyor belt. */
 export default class Belt {
+/**
+ * Create a belt.
+ * @param {import('./sketch').config} config
+ */
     constructor(config) {
         this.config = config;
 
@@ -17,6 +22,12 @@ export default class Belt {
         this.belt = make2DArray(this.cols, this.rows);
     }
 
+    /**
+     * Checks to see if the next space in the column is empty.
+     * @param {number} col 
+     * @param {number} row 
+     * @returns {boolean} returns true if the next space in the column is empty, otherwise false.
+     */
     nextSpaceEmpty(col, row) {
         if (this.belt[row + 1][col] === -1) {
             return true;
@@ -25,6 +36,9 @@ export default class Belt {
         }
     }
 
+    /**
+     * Adds a new tile to a random lane.
+     */
     addNewTile() {
         //TODO eventually use getRandomLane method to do this to make it safer
         let randomLane = random(this.config.lanes);
@@ -34,18 +48,31 @@ export default class Belt {
         this.belt[randomLane][0] = this.newTile;
     }
 
+    
+    /**
+     * 
+     * @returns {Object} a new tile of a random colour.
+     */
     createNewTile() {
         return new Tile(
             this.config,
             Object.keys(this.config.tileColours)[
-            parseInt(random(Object.keys(this.config.tileColours).length))
+              random(Object.keys(this.config.tileColours).length)
             ]);
     }
 
+    /**
+     * Pushes a tile back to the top of the tile.
+     * @param {number} tile 
+     * @param {number} col 
+     */
     pushTileToTop(tile, col) {
         this.belt[0][col] = tile;
     }
 
+    /**
+     * @todo This can probably be deleted.
+     */
     getRandomEmptyLane() {
         const indices = [];
 
@@ -60,28 +87,45 @@ export default class Belt {
         } else return null;
     }
 
-    //TODO Remove once finished testing
+    /**
+     * @todo Remove once finished testing or add to debug.
+     */
     addNewGreenTile() {
         this.newTile = this.createNewGreenTile();
 
-        return this.belt[parseInt(random(this.config.lanes))][0] = this.newTile;
+        return this.belt[random(this.config.lanes)][0] = this.newTile;
     }
-    //TODO Remove once finished testing
+
+    /**
+     * @todo Remove once finished testing or add to debug.
+     */
     createNewGreenTile() {
         return new Tile(this.config, this.config.tileColours.green);
     }
-    //TODO Remove once finished testing
+
+    /**
+     * @todo Remove once finished testing or add to debug.
+     */
     addNewPurpleTile() {
         this.newTile = this.createNewPurpleTile();
 
-        return this.belt[parseInt(random(this.config.lanes))][0] = this.newTile;
+        return this.belt[random(this.config.lanes)][0] = this.newTile;
     }
-    //TODO Remove once finished testing
+
+    /**
+     * @todo Remove once finished testing or add to debug.
+     */
     createNewPurpleTile() {
         return new Tile(this.config, this.config.tileColours.pink);
     }
-
-    //calls tile to find out if tile should move one space lower.
+    /**
+     * @typedef {Array} droppedTiles
+     * @property {number}
+     */
+    /**
+     * Calls all tiles to find out if they should move one space lower.
+     * @returns {{tile: object, col: number}[]} All tiles that should drop off the belt.
+     */
     step() {
         let droppedTiles = [];
 
@@ -109,6 +153,9 @@ export default class Belt {
         return droppedTiles;
     }
 
+    /**
+     * Draws all tiles to the screen.
+     */
     draw() {
         for (let i = 0; i < this.cols; i++) {
             for (let j = 0; j < this.rows; j++) {

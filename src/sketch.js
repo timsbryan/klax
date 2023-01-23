@@ -20,6 +20,20 @@ let score;
 let lives;
 // let klaxSpriteSheet = './assets/klax-spritesheet-96x161.png';
 let spritesheets = {};
+
+/**
+ * Global config options for the game
+ * @typedef {object} config
+ * @property {Number} canvasWidth
+ * @property {Number} lanes
+ * @property {Number} beltSteps
+ * @property {Number} speed
+ * @property {object} tileColours
+ * @property {Boolean} debug
+ * @property {Number} tileSize
+ * @property {Number} lives
+ * @property {Number} maxTilesOnPaddle
+ */
 let config;
 
 window.preload = function () {
@@ -68,7 +82,7 @@ window.draw = function () {
         push();
         fill(255);
         textSize(32);
-        text("Game Over", width / 2, height / 2);
+        text('Game Over', width / 2, height / 2);
         pop();
     } else {
         bin.draw();
@@ -126,7 +140,7 @@ window.keyPressed = function () {
             if (tile) {
                 let klaxes = bin.pushToBin(tile.tile, tile.col);
 
-                klaxes.forEach(obj => {
+                klaxes.forEach((obj) => {
                     if (obj.type === 'vertical') {
                         score.addVerticalKlax(obj.tiles);
                     } else if (obj.type === 'horizontal') {
@@ -142,7 +156,7 @@ window.keyPressed = function () {
                 if (klaxes) {
                     let allKlaxes = bin.checkAllForKlax();
 
-                    allKlaxes.forEach(obj => {
+                    allKlaxes.forEach((obj) => {
                         if (obj.type === 'vertical') {
                             score.addVerticalKlax(obj.tiles);
                         } else if (obj.type === 'horizontal') {
