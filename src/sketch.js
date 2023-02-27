@@ -21,7 +21,6 @@ let score;
 let lives;
 const klaxSpriteSheet = new URL('../assets/klax-spritesheet-96x161.png', import.meta.url);
 let spritesheets = {};
-let tileAnim;
 
 /**
  * Global config options for the game
@@ -39,7 +38,7 @@ let tileAnim;
 let config;
 
 window.preload = function () {
-  spritesheets.pink = loadImage(klaxSpriteSheet.toString());
+    spritesheets.tiles = loadImage(klaxSpriteSheet.toString());
 };
 
 window.setup = function () {
@@ -69,11 +68,10 @@ window.setup = function () {
     background(51);
 
     lives = config.lives;
-    belt = new Belt(config);
+    belt = new Belt(config, spritesheets.tiles);
     paddle = new Paddle(config);
     bin = new Bin(config);
     score = new Score();
-    tileAnim = new Sprite(spritesheets.pink, 0, 0, 96, 162, 33, 0.1);
 };
 
 window.draw = function () {
@@ -104,10 +102,6 @@ window.draw = function () {
             });
         }
     }
-
-    // image(spritesheets.pink, 0, 0, 96, 162, 96*(frameCount % 33), 0, 96, 162);
-    tileAnim.show();
-    tileAnim.animate();
 };
 
 window.keyPressed = function () {
@@ -203,8 +197,8 @@ window.keyPressed = function () {
         //t
         case 84:
             if (config.debug) {
-                let pinkTile = new Tile(config, config.tileColours.pink);
-                let greenTile = new Tile(config, config.tileColours.green);
+                let pinkTile = new Tile(config, 1, config.tileColours.pink, spritesheets.tiles);
+                let greenTile = new Tile(config, 1, config.tileColours.green, spritesheets.tiles);
                 bin.bin = [
                     [-1, pinkTile, pinkTile, greenTile, pinkTile],
                     [-1, pinkTile, pinkTile, greenTile, pinkTile],

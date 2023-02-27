@@ -2,35 +2,26 @@
 /* exported Tile */
 'use strict';
 
-//TODO Create sprites when ready
-// import Sprite from './sprite';
-
-// let pinkSpriteImg;
-// const pinkSpriteFrames = 36;
-// const pinkSpriteWidth = 180;
-// const pinkAnimation = [];
+import Sprite from './sprite';
 
 /** Creates a tile.  */
 export default class Tile {
     /**
      * 
      * @param {import('./sketch').config} config
-     * @param {import('p5').Color} colour 
+     * @param {Number} lane Which lane the tile is in.
+     * @param {String} colour 
+     * @param {import('p5').Image} spritesheet 
      */
-    constructor(config, colour) {
+    constructor(config, lane, colour, spritesheet) {
         this.config = config;
         this.lastUpdate = millis();
         this.colour = colour;
-
-        //TODO Create sprites when ready
-        // for (let i = 0; i < pinkSpriteFrames; i++) {
-        //     const pos = i * pinkSpriteWidth;
-
-        //     const img = [pos, 0, pinkSpriteWidth, pinkSpriteWidth];
-        //     pinkAnimation.push(img);
-        // }
-
-        // pinkSpriteImg = new Sprite(pinkAnimation, 0, 0, 0.1);
+        this.tileWidth = config.tileSize;
+        this.lane = lane;
+        this.loopNum = 1;
+    
+        this.tileAnim = new Sprite(spritesheet, 0, 0, 96, 161, 36, this.config.speed);
     }
 
     /**
@@ -40,42 +31,28 @@ export default class Tile {
      * @param {Number} tHeight 
      */
     //TODO check this is still being used and fix
-    update(posX, posY, tWidth, tHeight) {
-        this.draw(posX, posY, tWidth, tHeight);
-    }
+    // update(posX, posY, tWidth, tHeight) {
+    //     this.tileAnim.animate();
+    //     // this.draw(posX, posY, tWidth, tHeight);
+    // }
 
     /**
      * 
      * @returns {Boolean} true if the tile should updated/moved, otherwise false.
      */
     step() {
-        if (millis() - this.lastUpdate >= this.config.speed) {
-            this.lastUpdate = millis();
+        this.tileAnim.animate();
 
-            return true;
-        } else {
-            return false;
-        }
+        return this.tileAnim.getFrameNumber() === 1;
     }
 
     /**
      * Displays the tile on the screen.
-     * @param {Number} posX 
-     * @param {Number} posY 
-     * @param {Number} tWidth 
-     * @param {Number} tHeight 
+     * @param {Number} lane which lane to display the tile.
      */
-    draw(posX, posY, tWidth, tHeight) {
-        // pinkSpriteImg.show();
-        // pinkSpriteImg.animate();
-
+    draw(lane) {
         push();
-
-        noStroke();
-        fill(this.colour);
-        translate(posX, posY);
-        rect(0, 0, tWidth, tHeight);
-
+        this.tileAnim.show(lane * this.tileWidth);
         pop();
     }
 }

@@ -107,9 +107,7 @@ export default class Bin {
                 return this.checkForKlax(i, j);
             });
         });
-
         return uniqueValues(allKlaxes.flat().filter(n => n).flat());
-
     }
 
     /**
@@ -204,6 +202,7 @@ export default class Bin {
      * @param {Number} col 
      * @param {Number} row 
      * @returns {{'type': 'diagonal', 'tiles': Array<{'col': Number, 'row': Number}>}|undefined}
+     * @todo Need to check for X number of diagonal klaxes
      */
     checkDiagonalKlax(col, row) {
         let diag1Arr = [{ 'col': col, 'row': row }];

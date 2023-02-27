@@ -11,7 +11,8 @@ export default class Sprite {
      * @param {Number} cellWidth the width of a cell.
      * @param {Number} cellHeight the height of a cell.
      * @param {Number} numCells the amount of cells in a sprite animation.
-     * @param {Number} speed the speed at which the animation plays. 1 being 1 animation frame each canvas refresh.
+     * @param {Number} speed the speed at which the animation plays. 1 being 1 animation frame each
+     *                 canvas refresh.
      */
     constructor(image, x, y, cellWidth, cellHeight, numCells, speed) {
         this.image = image;
@@ -23,19 +24,51 @@ export default class Sprite {
         this.speed = speed;
         this.index = 0;
         this.posY = 0;
+        this.lastUpdate = millis();
+        this.loopNum = 1;
     }
 
-    show() {
+    show(posX) {
         let index = Math.floor(this.index) % this.numCells;
 
-        if(this.index >= this.numCells -1) {
-            this.posY = this.cellHeight / 2;
+        if (this.index >= this.numCells) {
+            this.loopNum++;
+            this.posX = posX;
+            this.posY += this.cellHeight / 2;
+            this.index = 0;
         }
 
-        image(this.image, 0, this.posY, this.cellWidth, this.cellHeight, this.cellWidth * (index % this.numCells), 0, this.cellWidth, this.cellHeight);
+        image(
+            this.image,
+            posX,
+            this.posY,
+            this.cellWidth,
+            this.cellHeight,
+            this.cellWidth * index,
+            0,
+            this.cellWidth,
+            this.cellHeight
+        );
+    }
+
+    getFrameNumber() {
+        return this.index;
     }
 
     animate() {
-        this.index += this.speed;
+        if (millis() - this.lastUpdate >= this.speed / this.numCells) {
+            this.lastUpdate = millis();
+            this.index++;
+
+            return true;
+
+        //     if (this.index === 1 && this.loopNum !== 1) {
+        //         return true;
+        //     } else {
+        //          return false;
+        //     }
+        // } else {
+        //     return false;
+        }
     }
 }

@@ -24,9 +24,9 @@ export default class Paddle {
      * @todo Not sure this is the best name for this method?
      */
     pushToPaddle(tile, col) {
-        if(this.paddleTiles.length === this.maxTiles
+        if (this.paddleTiles.length === this.maxTiles
             || col !== this.paddleLane) {
-                return tile
+                return tile;
         } else {
             this.paddleTiles.push(tile);
         }

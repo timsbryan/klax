@@ -10,7 +10,6 @@ module.exports = {
     "extends": [
         "eslint:recommended",
         "p5js",
-        "p5js/dom",
         "plugin:jest/recommended",
         "plugin:jest/style"
     ],
