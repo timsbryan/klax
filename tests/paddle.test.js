@@ -10,7 +10,15 @@ import Tile from '../src/tile.js';
 jest.mock('../src/sprite.js');
 jest.mock('p5');
 
-const config = { 'lanes': 2, 'tileSize': 4, 'maxTilesOnPaddle': 5, 'speed': 2 };
+const config = {
+    'lanes': 2,
+    'tileSize': 4,
+    'maxTilesOnPaddle': 5,
+    'speed': 2,
+    'tileColours': {
+        'green': { 'firstTileYPos': 0 },
+    },
+};
 const Image = (w,h) => null;
 const createImage = (width, height) => Image;
 const img = createImage(1,1);
@@ -110,11 +118,11 @@ describe('The paddle should', () => {
         paddle.paddleLane = 2;
         const tile = new Tile(config, 1, 'green', img);
         paddle.paddleTiles = [tile, tile, tile];
-        const spy = jest.spyOn(tile, 'draw');
+        const spy = jest.spyOn(tile, 'drawFrame');
 
         paddle.draw();
 
-        expect(window.translate.mock.calls).toHaveLength(4);
+        expect(window.translate.mock.calls).toHaveLength(1);
         expect(window.translate.mock.calls[0][0]).toBe(10);
         expect(window.translate.mock.calls[0][1]).toBe(154);
         expect(spy).toHaveBeenCalledTimes(3);

@@ -19,8 +19,9 @@ export default class Paddle {
      * Push tiles onto the paddle if they are in the correct column
      * @param {object} tile
      * @param {Number} col
-     * @returns {object|undefined} If the paddle has reached the maximum number of tiles or the dropped tile is in a different tile to the paddle
-     *     then the tile is returned, otherwise the tile is pushed onto the tile.
+     * @returns {object|undefined} If the paddle has reached the maximum number of tiles or the
+     *                             dropped tile is in a different tile to the paddle then the tile
+     *                             is returned, otherwise the tile is pushed onto the tile.
      * @todo Not sure this is the best name for this method?
      */
     pushToPaddle(tile, col) {
@@ -34,7 +35,9 @@ export default class Paddle {
 
     /**
      * Remove the tile on the top of the paddle.
-     * @returns {object|boolean} If there are tiles on the paddle returns an object of the top tile and the column the paddle is in. If there are not tiles, returns false
+     * @returns {object|boolean} If there are tiles on the paddle returns an object of the top tile
+     *                           and the column the paddle is in. If there are not tiles, returns
+     *                           false
      * @todo else could return undefined?
      */
     removeTopTile() {
@@ -78,13 +81,13 @@ export default class Paddle {
             (this.paddleLane + 1) * this.config.tileSize - (this.config.tileSize / 2),
             (height / 4 * 3) + (this.paddleTiles.length * (this.paddleHeight))
         );
+        
 
         rect(0, 0, this.config.tileSize, this.paddleHeight);
 
         push();
         this.paddleTiles.forEach((tile, i) => {
-            translate(0, this.paddleHeight * -1);
-            tile.draw(0, 0, this.config.tileSize, this.paddleHeight);
+            tile.drawFrame(18, -50, -(i*30) - 100);
         });
         pop();
 

@@ -7,7 +7,6 @@ import Sprite from './sprite';
 /** Creates a tile.  */
 export default class Tile {
     /**
-     * 
      * @param {import('./sketch').config} config
      * @param {Number} lane Which lane the tile is in.
      * @param {String} colour 
@@ -21,7 +20,15 @@ export default class Tile {
         this.lane = lane;
         this.loopNum = 1;
     
-        this.tileAnim = new Sprite(spritesheet, 0, 0, 96, 161, 36, this.config.speed);
+        this.tileAnim = new Sprite(
+            spritesheet,
+            0,
+            this.config.tileColours[this.colour].firstTileYPos,
+            96,
+            161,
+            36,
+            this.config.speed
+        );
     }
 
     /**
@@ -44,6 +51,18 @@ export default class Tile {
         this.tileAnim.animate();
 
         return this.tileAnim.getFrameNumber() === 1;
+    }
+
+    /**
+     * Displays the tile on the screen at a specific frame.
+     * @param {Number} frameNumber The specific frame to show.
+     * @param {Number} x The position to show the image on the x axis.
+     * @param {Number} y The position to show the image on the y axis.
+     */
+    drawFrame(frameNumber, x, y) {
+        push();
+        this.tileAnim.showFrame(frameNumber, x, y);
+        pop();
     }
 
     /**

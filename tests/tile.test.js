@@ -9,7 +9,10 @@ import Tile from '../src/tile.js';
 import Sprite from '../src/sprite.js';
 
 const config = {
-  'speed': 1
+  'speed': 1,
+  'tileColours': {
+    'red': { 'firstTileYPos': 0 },
+  },
 };
 const colour = 'red';
 
@@ -35,7 +38,10 @@ describe('Creating a new tile should', () => {
     expect(tile).toEqual({
       'colour': 'red',
       'config': {
-        'speed': 1
+        'speed': 1,
+        'tileColours': {
+          'red': { 'firstTileYPos': 0 },
+        },
       },
       'lane': 1,
       'lastUpdate': 1,

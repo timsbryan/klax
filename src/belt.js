@@ -108,7 +108,7 @@ export default class Belt {
         return new Tile(
             this.config,
             lane,
-            this.config.tileColours.green,
+            'green',
             this.spritesheet
             );
     }
@@ -130,7 +130,7 @@ export default class Belt {
         return new Tile(
             this.config,
             lane,
-            this.config.tileColours.pink,
+            'pink',
             this.spritesheet
             );
     }

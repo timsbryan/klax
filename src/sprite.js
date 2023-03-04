@@ -45,7 +45,27 @@ export default class Sprite {
             this.cellWidth,
             this.cellHeight,
             this.cellWidth * index,
-            0,
+            this.y,
+            this.cellWidth,
+            this.cellHeight
+        );
+    }
+
+    /**
+     * Show a specific frame in a spritesheet.
+     * @param {Number} frameNumber The specific frame to show.
+     * @param {Number} x The position to show the image on the x axis.
+     * @param {Number} y The position to show the image on the y axis.
+     */
+    showFrame(frameNumber, x, y) {
+        image(
+            this.image,
+            x,
+            y,
+            this.cellWidth,
+            this.cellHeight,
+            this.cellWidth * frameNumber,
+            this.y,
             this.cellWidth,
             this.cellHeight
         );

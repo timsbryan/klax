@@ -24,6 +24,10 @@ const img = createImage(1, 1);
 
 const config = {
     'speed': 2,
+    'tileColours': {
+        'green': { 'firstTileYPos': 0 },
+        'red': { 'firstTileYPos': 0 }
+    },
     'lanes': 5,
     'tileSize': 4
 };

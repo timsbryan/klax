@@ -28,8 +28,11 @@ const config = {
     'lanes': 5,
     'tileSize': 4,
     'tileColours': {
-        'blue': color(0, 0, 255),
-        'green': color(0, 255, 0)
+        'red': { 'firstTileYPos': 322 },
+        'blue': { 'firstTileYPos': 322 },
+        'orange': { 'firstTileYPos': 322 },
+        'green': { 'firstTileYPos': 322 },
+        'pink': { 'firstTileYPos':  483 },
     }
 };
 
@@ -38,7 +41,7 @@ describe('The belt should', () => {
     let belt;
 
     beforeEach(() => {
-        tile = new Tile(config, 1, 'green', img);
+        tile = new Tile(config, 1, 'blue', img);
         belt = new Belt(config, img);
     });
 
@@ -56,8 +59,11 @@ describe('The belt should', () => {
                 'speed': 2,
                 'lanes': 5,
                 'tileColours': {
-                    'blue': 1,
-                    'green': 1
+                    'red': { 'firstTileYPos': 322 },
+                    'blue': { 'firstTileYPos': 322 },
+                    'orange': { 'firstTileYPos': 322 },
+                    'green': { 'firstTileYPos': 322 },
+                    'pink': { 'firstTileYPos':  483 },
                 },
                 'tileSize': 4
             },
@@ -203,7 +209,7 @@ describe('The belt should', () => {
     });
 
     test('belt should not move tiles one row lower when not ready', () => {
-        const tile6 = new Tile(config, 1, 'purple', img);
+        const tile6 = new Tile(config, 1, 'pink', img);
         const tile7 = new Tile(config, 1, 'orange', img);
         tile6.lastUpdate = 1;
         tile7.lastUpdate = 1;

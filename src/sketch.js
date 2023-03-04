@@ -49,12 +49,12 @@ window.setup = function () {
         beltSteps: 5,
         speed: 500,
         tileColours: {
-            blue: color(0, 0, 255),
-            green: color(0, 255, 0),
-            orange: color(255, 128, 0),
-            pink: color(255, 0, 255),
-            red: color(255, 0, 0),
-            yellow: color(255, 255, 0)
+            "blue": { "firstTileYPos": 0 },
+            "green": { "firstTileYPos": 161 },
+            "orange": { "firstTileYPos": 322 },
+            "pink": { "firstTileYPos":  483 },
+            "red": { "firstTileYPos": 644 },
+            "yellow": { "firstTileYPos": 805 }
         },
         debug: true,
         tileSize: null,

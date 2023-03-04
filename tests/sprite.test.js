@@ -5,6 +5,9 @@
 'use strict';
 
 import Sprite from '../src/sprite';
+import p5 from 'p5';
+
+jest.mock('p5');
 
 window.millis = () => 500;
 window.image = jest.fn();
@@ -17,6 +20,7 @@ describe('The sprite should', () => {
 
   beforeEach(() => {
     sprite = new Sprite(img, 1, 2, 3, 4, 3, 6);
+    p5.mockClear();
   });
 
   test('be setup with some default', () => {
@@ -38,7 +42,7 @@ describe('The sprite should', () => {
   test('show the image with the correct parameters', () => {
     sprite.show(42);
 
-    expect(window.image).toHaveBeenCalledWith(img, 42, 0, 3, 4, 0, 0, 3, 4);
+    expect(window.image).toHaveBeenCalledWith(img, 42, 0, 3, 4, 0, 2, 3, 4);
   });
 
   test('update time last updated when the correct amount of time has elapsed', () => {
@@ -84,5 +88,11 @@ describe('The sprite should', () => {
     expect(sprite.animate()).toBeTruthy();
 
     millisSpy.mockRestore();
+  });
+
+  test('should show a specific frame when showFrame is called', () => {
+    sprite.showFrame();
+
+    expect(window.image).toHaveBeenCalled();
   });
 });
