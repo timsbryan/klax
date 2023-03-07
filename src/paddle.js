@@ -81,12 +81,12 @@ export default class Paddle {
             (this.paddleLane + 1) * this.config.tileSize - (this.config.tileSize / 2),
             (height / 4 * 3) + (this.paddleTiles.length * (this.paddleHeight))
         );
-        
 
         rect(0, 0, this.config.tileSize, this.paddleHeight);
 
         push();
         this.paddleTiles.forEach((tile, i) => {
+            // TODO remove magic numbers
             tile.drawFrame(18, -50, -(i*30) - 100);
         });
         pop();

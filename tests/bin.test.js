@@ -18,6 +18,7 @@ window.stroke = () => null;
 window.noStroke = () => null;
 window.strokeWeight = () => null;
 window.translate = () => null;
+window.height = () => null;
 const Image = (w,h) => null;
 const createImage = (width, height) => Image;
 const img = createImage(1, 1);
@@ -284,8 +285,8 @@ describe('The bin should', () => {
         let tile = new Tile(config, 1, 'red', img);
         let tile1 = new Tile(config, 1, 'red', img);
 
-        const spy1 = jest.spyOn(tile, 'draw');
-        const spy2 = jest.spyOn(tile1, 'draw');
+        const spy1 = jest.spyOn(tile, 'drawFrame');
+        const spy2 = jest.spyOn(tile1, 'drawFrame');
 
         bin.bin = [
             [-1, -1, -1, tile, tile],

@@ -197,8 +197,8 @@ window.keyPressed = function () {
         //t
         case 84:
             if (config.debug) {
-                let pinkTile = new Tile(config, 1, config.tileColours.pink, spritesheets.tiles);
-                let greenTile = new Tile(config, 1, config.tileColours.green, spritesheets.tiles);
+                let pinkTile = new Tile(config, 1, 'pink', spritesheets.tiles);
+                let greenTile = new Tile(config, 1, 'green', spritesheets.tiles);
                 bin.bin = [
                     [-1, pinkTile, pinkTile, greenTile, pinkTile],
                     [-1, pinkTile, pinkTile, greenTile, pinkTile],
@@ -208,6 +208,20 @@ window.keyPressed = function () {
                 ];
             }
             break;
+        //u
+        case 85:
+            if (config.debug) {
+                let pinkTile = new Tile(config, 1, 'pink', spritesheets.tiles);
+                let greenTile = new Tile(config, 1, 'green', spritesheets.tiles);
+                let redTile = new Tile(config, 1, 'red', spritesheets.tiles);
+                bin.bin = [
+                    [redTile, pinkTile, greenTile, pinkTile, greenTile],
+                    [-1, -1, -1, -1, -1],
+                    [-1, -1, -1, -1, -1],
+                    [-1, -1, -1, -1, -1],
+                    [-1, -1, -1, -1, -1]
+                ];
+            }
         // o
         case 79:
             if (config.debug) {

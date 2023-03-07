@@ -324,16 +324,16 @@ export default class Bin {
                     this.tileHeight
                 );
 
-                if (this.bin[i][j] !== -1) {
-                    this.bin[i][j].draw(
-                        i * this.tileWidth,
-                        j * this.tileHeight,
-                        this.tileWidth,
-                        this.tileHeight
-                    );
-                }
-
                 pop();
+            }
+        }
+
+        for (let i = 0; i < this.cols; i++) {
+            for (let j = 0; j < this.rows; j++) {
+                if (this.bin[i][j] !== -1) {
+                    // TODO remove magic numbers
+                    this.bin[i][j].drawFrame(18, 10+(i*120), height-200+(j*30));
+                }
             }
         }
     }
