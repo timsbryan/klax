@@ -12,15 +12,13 @@ import Paddle from './paddle';
 import Bin from './bin';
 import Score from './score';
 import Tile from './tile';
+import Sprite from './sprite';
 
 let belt;
 let bin;
 let paddle;
 let score;
 let lives;
-// let klaxSpriteSheet = './assets/klax-spritesheet-96x161.png';
-let spritesheets = {};
-
 /**
  * Global config options for the game
  * @typedef {object} config
@@ -34,26 +32,18 @@ let spritesheets = {};
  * @property {Number} lives
  * @property {Number} maxTilesOnPaddle
  */
-let config;
-
-window.preload = function () {
-    // spritesheets.pink = loadImage(klaxSpriteSheet);
-};
-
-window.setup = function () {
-    // frameRate(1);
-    config = {
+let config = {
         canvasWidth: 600,
         lanes: 5,
         beltSteps: 5,
         speed: 500,
         tileColours: {
-            blue: color(0, 0, 255),
-            green: color(0, 255, 0),
-            orange: color(255, 128, 0),
-            pink: color(255, 0, 255),
-            red: color(255, 0, 0),
-            yellow: color(255, 255, 0)
+            "blue": { "firstTileYPos": 0 },
+            "green": { "firstTileYPos": 161 },
+            "orange": { "firstTileYPos": 322 },
+            "pink": { "firstTileYPos":  483 },
+            "red": { "firstTileYPos": 644 },
+            "yellow": { "firstTileYPos": 805 }
         },
         debug: true,
         tileSize: null,
@@ -61,13 +51,27 @@ window.setup = function () {
         maxTilesOnPaddle: 5
     };
 
+let klaxSpriteSheet;
+if(config.debug) {
+    klaxSpriteSheet = new URL('../assets/klax-spritesheet-96x161-debug.png', import.meta.url);
+} else {
+    klaxSpriteSheet = new URL('../assets/klax-spritesheet-96x161.png', import.meta.url);
+}
+let spritesheets = {};
+
+
+window.preload = function () {
+    spritesheets.tiles = loadImage(klaxSpriteSheet.toString());
+};
+
+window.setup = function () {
     config.tileSize = config.canvasWidth / config.lanes;
 
     createCanvas(config.canvasWidth, config.canvasWidth);
     background(51);
 
     lives = config.lives;
-    belt = new Belt(config);
+    belt = new Belt(config, spritesheets.tiles);
     paddle = new Paddle(config);
     bin = new Bin(config);
     score = new Score();
@@ -101,7 +105,6 @@ window.draw = function () {
             });
         }
     }
-
 };
 
 window.keyPressed = function () {
@@ -197,8 +200,8 @@ window.keyPressed = function () {
         //t
         case 84:
             if (config.debug) {
-                let pinkTile = new Tile(config, config.tileColours.pink);
-                let greenTile = new Tile(config, config.tileColours.green);
+                let pinkTile = new Tile(config, 1, 'pink', spritesheets.tiles);
+                let greenTile = new Tile(config, 1, 'green', spritesheets.tiles);
                 bin.bin = [
                     [-1, pinkTile, pinkTile, greenTile, pinkTile],
                     [-1, pinkTile, pinkTile, greenTile, pinkTile],
@@ -208,6 +211,20 @@ window.keyPressed = function () {
                 ];
             }
             break;
+        //u
+        case 85:
+            if (config.debug) {
+                let pinkTile = new Tile(config, 1, 'pink', spritesheets.tiles);
+                let greenTile = new Tile(config, 1, 'green', spritesheets.tiles);
+                let redTile = new Tile(config, 1, 'red', spritesheets.tiles);
+                bin.bin = [
+                    [redTile, pinkTile, greenTile, pinkTile, greenTile],
+                    [-1, -1, -1, -1, -1],
+                    [-1, -1, -1, -1, -1],
+                    [-1, -1, -1, -1, -1],
+                    [-1, -1, -1, -1, -1]
+                ];
+            }
         // o
         case 79:
             if (config.debug) {

@@ -107,9 +107,7 @@ export default class Bin {
                 return this.checkForKlax(i, j);
             });
         });
-
         return uniqueValues(allKlaxes.flat().filter(n => n).flat());
-
     }
 
     /**
@@ -204,6 +202,7 @@ export default class Bin {
      * @param {Number} col 
      * @param {Number} row 
      * @returns {{'type': 'diagonal', 'tiles': Array<{'col': Number, 'row': Number}>}|undefined}
+     * @todo Need to check for X number of diagonal klaxes
      */
     checkDiagonalKlax(col, row) {
         let diag1Arr = [{ 'col': col, 'row': row }];
@@ -325,16 +324,16 @@ export default class Bin {
                     this.tileHeight
                 );
 
-                if (this.bin[i][j] !== -1) {
-                    this.bin[i][j].draw(
-                        i * this.tileWidth,
-                        j * this.tileHeight,
-                        this.tileWidth,
-                        this.tileHeight
-                    );
-                }
-
                 pop();
+            }
+        }
+
+        for (let i = 0; i < this.cols; i++) {
+            for (let j = 0; j < this.rows; j++) {
+                if (this.bin[i][j] !== -1) {
+                    // TODO remove magic numbers
+                    this.bin[i][j].drawFrame(18, 10+(i*120), height-200+(j*30));
+                }
             }
         }
     }

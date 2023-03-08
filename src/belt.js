@@ -7,12 +7,14 @@ import { make2DArray } from './utils';
 
 /** Class that represents a conveyor belt. */
 export default class Belt {
-/**
- * Create a belt.
- * @param {import('./sketch').config} config
- */
-    constructor(config) {
+    /**
+     * Create a belt.
+     * @param {import('./sketch').config} config
+     * @param {import('p5').Image} spritesheet a spritesheet for tiles.
+     */
+    constructor(config, spritesheet) {
         this.config = config;
+        this.spritesheet = spritesheet;
 
         this.cols = config.lanes;
         this.rows = config.lanes;
@@ -43,22 +45,25 @@ export default class Belt {
         //TODO eventually use getRandomLane method to do this to make it safer
         let randomLane = random(this.config.lanes);
 
-        this.newTile = this.createNewTile();
+        this.newTile = this.createNewTile(randomLane);
 
         this.belt[randomLane][0] = this.newTile;
     }
 
-    
+
     /**
-     * 
+     * @param {Number} lane Which lane the tile is in.
      * @returns {Object} a new tile of a random colour.
      */
-    createNewTile() {
+    createNewTile(lane) {
         return new Tile(
             this.config,
+            lane,
             Object.keys(this.config.tileColours)[
-              random(Object.keys(this.config.tileColours).length)
-            ]);
+            random(Object.keys(this.config.tileColours).length)
+            ],
+            this.spritesheet
+        );
     }
 
     /**
@@ -91,32 +96,43 @@ export default class Belt {
      * @todo Remove once finished testing or add to debug.
      */
     addNewGreenTile() {
-        this.newTile = this.createNewGreenTile();
-
-        return this.belt[random(this.config.lanes)][0] = this.newTile;
+        let lane = Math.floor(random(this.config.lanes));
+        this.newTile = this.createNewGreenTile(lane);
+        this.belt[lane][0] = this.newTile;
     }
 
     /**
      * @todo Remove once finished testing or add to debug.
      */
-    createNewGreenTile() {
-        return new Tile(this.config, this.config.tileColours.green);
+    createNewGreenTile(lane) {
+        return new Tile(
+            this.config,
+            lane,
+            'green',
+            this.spritesheet
+            );
     }
 
     /**
      * @todo Remove once finished testing or add to debug.
      */
     addNewPurpleTile() {
-        this.newTile = this.createNewPurpleTile();
+        let lane = Math.floor(random(this.config.lanes));
+        this.newTile = this.createNewPurpleTile(lane);
 
-        return this.belt[random(this.config.lanes)][0] = this.newTile;
+        this.belt[lane][0] = this.newTile;
     }
 
     /**
      * @todo Remove once finished testing or add to debug.
      */
-    createNewPurpleTile() {
-        return new Tile(this.config, this.config.tileColours.pink);
+    createNewPurpleTile(lane) {
+        return new Tile(
+            this.config,
+            lane,
+            'pink',
+            this.spritesheet
+            );
     }
     /**
      * @typedef {Array} droppedTiles
@@ -173,14 +189,13 @@ export default class Belt {
                 );
 
                 pop();
+            }
+        }
 
+        for (let i = 0; i < this.cols; i++) {
+            for (let j = 0; j < this.rows; j++) {
                 if (this.belt[i][j] !== -1) {
-                    this.belt[i][j].update(
-                        i * this.tileWidth,
-                        j * this.tileHeight,
-                        this.tileWidth,
-                        this.tileHeight
-                    );
+                    this.belt[i][j].draw(i);
                 }
             }
         }

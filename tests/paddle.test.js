@@ -6,9 +6,22 @@
 
 import Paddle from '../src/paddle.js';
 import Tile from '../src/tile.js';
-// jest.mock('../src/tile.js');
 
-const config = { 'lanes': 2, 'tileSize': 4, 'maxTilesOnPaddle': 5 };
+jest.mock('../src/sprite.js');
+jest.mock('p5');
+
+const config = {
+    'lanes': 2,
+    'tileSize': 4,
+    'maxTilesOnPaddle': 5,
+    'speed': 2,
+    'tileColours': {
+        'green': { 'firstTileYPos': 0 },
+    },
+};
+const Image = (w,h) => null;
+const createImage = (width, height) => Image;
+const img = createImage(1,1);
 
 window.push = () => null;
 window.fill = () => null;
@@ -39,15 +52,15 @@ describe('The paddle should', () => {
     });
 
     test('receive a tile when the paddle is in the same column as a tile', () => {
-        paddle.paddleLane = 1
+        paddle.paddleLane = 1;
         let droppedTiles = paddle.pushToPaddle('tile', 1);
 
         expect(paddle.paddleTiles).toHaveLength(1);
-        expect(droppedTiles).toBeUndefined;
+        expect(droppedTiles).toBeUndefined();
     });
 
     test('reject the tile when  when the paddle is not in the same column as a tile', () => {
-        paddle.paddleLane = 1
+        paddle.paddleLane = 1;
         let droppedTiles = paddle.pushToPaddle('tile', 2);
 
         expect(paddle.paddleTiles).toHaveLength(0);
@@ -56,11 +69,11 @@ describe('The paddle should', () => {
 
     test('not receive a tile when the paddle is full of tiles', () => {
         paddle.paddleTiles = ['tile1', 'tile2', 'tile3', 'tile4', 'tile5'];
-        paddle.paddleLane = 1
+        paddle.paddleLane = 1;
         let droppedTiles = paddle.pushToPaddle('tile6', 1);
 
         expect(paddle.paddleTiles).toHaveLength(5);
-        expect(droppedTiles).toBe('tile6')
+        expect(droppedTiles).toBe('tile6');
     });
 
     test('remove the top tile if there are tiles on the paddle', () => {
@@ -103,13 +116,13 @@ describe('The paddle should', () => {
 
     test('draw each tile stacked on the paddle', () => {
         paddle.paddleLane = 2;
-        const tile = new Tile();
+        const tile = new Tile(config, 1, 'green', img);
         paddle.paddleTiles = [tile, tile, tile];
-        const spy = jest.spyOn(tile, 'draw');
+        const spy = jest.spyOn(tile, 'drawFrame');
 
         paddle.draw();
 
-        expect(window.translate.mock.calls.length).toBe(7);
+        expect(window.translate.mock.calls).toHaveLength(1);
         expect(window.translate.mock.calls[0][0]).toBe(10);
         expect(window.translate.mock.calls[0][1]).toBe(154);
         expect(spy).toHaveBeenCalledTimes(3);

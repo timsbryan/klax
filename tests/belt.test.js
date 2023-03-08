@@ -18,14 +18,21 @@ window.translate = () => null;
 window.fill = () => null;
 window.rect = () => null;
 window.pop = () => null;
+window.image = () => null;
+const Image = (w,h) => null;
+const createImage = (width, height) => Image;
+const img = createImage(1,1);
 
 const config = {
     'speed': 2,
     'lanes': 5,
     'tileSize': 4,
     'tileColours': {
-        'blue': color(0, 0, 255),
-        'green': color(0, 255, 0)
+        'red': { 'firstTileYPos': 322 },
+        'blue': { 'firstTileYPos': 322 },
+        'orange': { 'firstTileYPos': 322 },
+        'green': { 'firstTileYPos': 322 },
+        'pink': { 'firstTileYPos':  483 },
     }
 };
 
@@ -34,8 +41,8 @@ describe('The belt should', () => {
     let belt;
 
     beforeEach(() => {
-        tile = new Tile(config, 'green');
-        belt = new Belt(config);
+        tile = new Tile(config, 1, 'blue', img);
+        belt = new Belt(config, img);
     });
 
     test('be setup with some default', () => {
@@ -52,12 +59,16 @@ describe('The belt should', () => {
                 'speed': 2,
                 'lanes': 5,
                 'tileColours': {
-                    'blue': 1,
-                    'green': 1
+                    'red': { 'firstTileYPos': 322 },
+                    'blue': { 'firstTileYPos': 322 },
+                    'orange': { 'firstTileYPos': 322 },
+                    'green': { 'firstTileYPos': 322 },
+                    'pink': { 'firstTileYPos':  483 },
                 },
                 'tileSize': 4
             },
             'rows': 5,
+            'spritesheet': img,
             'tileHeight': 3,
             'tileWidth': 4
         });
@@ -133,16 +144,13 @@ describe('The belt should', () => {
             [-1, -1, -1, -1, -1]
         ];
 
-        expect(belt.getRandomEmptyLane()).toBe(null);
+        expect(belt.getRandomEmptyLane()).toBeNull();
     });
 
     test('belt should move all tiles one row lower when ready', () => {
-        const tile1 = new Tile(config, 'red');
-        const tile2 = new Tile(config, 'green');
-        tile1.lastUpdate = 1;
-        tile2.lastUpdate = 1;
-
-        window.millis = () => 5;
+        const tile1 = new Tile(config, 1, 'red', img);
+        const tile2 = new Tile(config, 1, 'green', img);
+        const mockTileStep = jest.spyOn(Tile.prototype, 'step').mockImplementation(() => true);
 
         belt.belt = [
             [tile1, -1, tile2, -1, -1],
@@ -161,16 +169,17 @@ describe('The belt should', () => {
         ];
 
         expect(belt.step()).toEqual([]);
+        expect(mockTileStep).toHaveBeenCalled();
         expect(belt.belt).toEqual(newBelt);
+
+        mockTileStep.mockRestore();
     });
 
     test('belt should return any tiles on the bottom row when they\'re ready to move', () => {
-        const tile3 = new Tile(config, 'red');
-        const tile4 = new Tile(config, 'green');
-        const tile5 = new Tile(config, 'blue');
-        tile3.lastUpdate = 1;
-        tile4.lastUpdate = 1;
-        tile5.lastUpdate = 3;
+        const tile3 = new Tile(config, 1, 'red', img);
+        const tile4 = new Tile(config, 4, 'green', img);
+        const tile5 = new Tile(config, 2, 'blue', img);
+        const mockTileStep = jest.spyOn(Tile.prototype, 'step').mockImplementation(() => true);
 
         window.millis = () => 5;
 
@@ -195,11 +204,13 @@ describe('The belt should', () => {
              {'tile': tile5, 'col': 1}]
         );
         expect(belt.belt).toEqual(newBelt);
+
+        mockTileStep.mockRestore();
     });
 
     test('belt should not move tiles one row lower when not ready', () => {
-        const tile6 = new Tile(config, 'purple');
-        const tile7 = new Tile(config, 'orange');
+        const tile6 = new Tile(config, 1, 'pink', img);
+        const tile7 = new Tile(config, 1, 'orange', img);
         tile6.lastUpdate = 1;
         tile7.lastUpdate = 1;
 
@@ -227,7 +238,7 @@ describe('The belt should', () => {
     });
 
     test('belt', () => {
-        const spy = jest.spyOn(tile, 'update');
+        const spy = jest.spyOn(tile, 'draw');
 
         belt.belt = [
             [tile, -1, -1, -1, -1],

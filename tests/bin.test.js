@@ -6,7 +6,8 @@
 
 import Tile from '../src/tile.js';
 import Bin from '../src/bin.js';
-jest.mock('../src/tile.js');
+
+jest.mock('../src/sprite.js');
 
 window.fill = () => null;
 window.millis = () => null;
@@ -14,11 +15,20 @@ window.pop = () => null;
 window.push = () => null;
 window.rect = () => null;
 window.stroke = () => null;
+window.noStroke = () => null;
 window.strokeWeight = () => null;
 window.translate = () => null;
+window.height = () => null;
+const Image = (w,h) => null;
+const createImage = (width, height) => Image;
+const img = createImage(1, 1);
 
 const config = {
     'speed': 2,
+    'tileColours': {
+        'green': { 'firstTileYPos': 0 },
+        'red': { 'firstTileYPos': 0 }
+    },
     'lanes': 5,
     'tileSize': 4
 };
@@ -29,12 +39,7 @@ describe('The bin should', () => {
 
     beforeAll(() => {
         bin = new Bin(config);
-        tile = new Tile();
-        tile.colour = 'green';
-    });
-
-    beforeEach(() => {
-        Tile.mockClear();
+        tile = new Tile(config, 1, 'green', img);
     });
 
     test('be setup with some default', () => {
@@ -72,13 +77,11 @@ describe('The bin should', () => {
                 [tile, tile, tile, tile, tile]
             ];
 
-            expect(bin.getLowestEmptyPosition(0)).toBe(null);
+            expect(bin.getLowestEmptyPosition(0)).toBeNull();
         });
 
     test('put the tile at the lowest empty position in that column', () => {
-        const tile1 = new Tile(config, 'red');
-        tile1.colour = 'red';
-
+        const tile1 = new Tile(config, 1, 'red', img);
 
         bin.bin = [
             [-1, -1, -1, tile, tile],
@@ -102,8 +105,7 @@ describe('The bin should', () => {
     });
 
     test('return an empty object if there are no empty spaces', () => {
-        const tile1 = new Tile(config, 'red');
-        tile1.colour = 'red';
+        const tile1 = new Tile(config, 1, 'red', img);
 
         bin.bin = [
             [-1, -1, -1, tile, tile],
@@ -127,21 +129,10 @@ describe('The bin should', () => {
 
     test(`return an object with the position of tiles that form an horizontal klax
         when an horizontal klax of 3 tiles is created`, () => {
-        const tile1 = new Tile(config, 'red');
-        tile1.colour = 'red';
-
         bin.bin = [
             [-1, -1, -1, tile, tile],
             [-1, -1, -1, tile, tile],
             [-1, -1, -1, -1, -1],
-            [-1, -1, -1, -1, -1],
-            [-1, -1, -1, -1, -1]
-        ];
-
-        const newBin = [
-            [-1, -1, -1, tile, tile],
-            [-1, -1, -1, tile, tile],
-            [-1, -1, -1, -1, tile],
             [-1, -1, -1, -1, -1],
             [-1, -1, -1, -1, -1]
         ];
@@ -204,8 +195,7 @@ describe('The bin should', () => {
 
     //TODO This will be moved over to Game class
     test.skip('remove tiles when it forms a diagonal klax', () => {
-        const tile1 = new Tile(config, 'red');
-        tile1.colour = 'red';
+        const tile1 = new Tile(config, 1, 'red', img);
 
         bin.bin = [
             [-1, -1, tile, tile1, tile1],
@@ -248,7 +238,6 @@ describe('The bin should', () => {
         bin.checkForKlax(0, 3);
 
         expect(bin.bin).toEqual(newBin);
-
     });
 
     test('look through every tile in the bin', () => {
@@ -280,8 +269,8 @@ describe('The bin should', () => {
         ];
 
         const expected = [
-            { "type": "vertical", "tiles": [{ "col": 0, "row": 2, }, { "col": 0, "row": 3, }, { "col": 0, "row": 4, }] },
-            { "type": "horizontal", "tiles": [{ "col": 0, "row": 4, }, { "col": 1, "row": 4, }, { "col": 2, "row": 4, }] }
+            { 'type': 'vertical', 'tiles': [{ 'col': 0, 'row': 2 }, { 'col': 0, 'row': 3 }, { 'col': 0, 'row': 4 }] },
+            { 'type': 'horizontal', 'tiles': [{ 'col': 0, 'row': 4 }, { 'col': 1, 'row': 4 }, { 'col': 2, 'row': 4 }] }
         ];
 
         const result = bin.checkAllForKlax();
@@ -293,8 +282,11 @@ describe('The bin should', () => {
     });
 
     test('draw each tile in the bin', () => {
-        let tile = new Tile();
-        let tile1 = new Tile();
+        let tile = new Tile(config, 1, 'red', img);
+        let tile1 = new Tile(config, 1, 'red', img);
+
+        const spy1 = jest.spyOn(tile, 'drawFrame');
+        const spy2 = jest.spyOn(tile1, 'drawFrame');
 
         bin.bin = [
             [-1, -1, -1, tile, tile],
@@ -304,13 +296,15 @@ describe('The bin should', () => {
             [-1, -1, -1, -1, -1]
         ];
 
-        expect(Tile.mock.instances[0].draw).not.toHaveBeenCalled();
-        expect(Tile.mock.instances[1].draw).not.toHaveBeenCalled();
+        expect(spy1).not.toHaveBeenCalled();
+        expect(spy2).not.toHaveBeenCalled();
 
         bin.draw();
 
-        expect(Tile.mock.instances[0].draw).toHaveBeenCalledTimes(4);
-        expect(Tile.mock.instances[1].draw).toHaveBeenCalledTimes(2);
+        expect(spy1).toHaveBeenCalledTimes(4);
+        expect(spy2).toHaveBeenCalledTimes(2);
 
+        spy1.mockRestore();
+        spy2.mockRestore();
     });
 });
