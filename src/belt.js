@@ -150,7 +150,7 @@ export default class Belt {
                 if (typeof this.belt[i][j] === 'object') {
                     let thisTile = this.belt[i][j];
 
-                    if (thisTile.step(j)) {
+                    if (thisTile.step()) {
                         this.belt[i][j] = -1;
 
                         if (j + 1 >= this.belt[i].length) {
