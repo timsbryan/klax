@@ -19,9 +19,6 @@ let bin;
 let paddle;
 let score;
 let lives;
-const klaxSpriteSheet = new URL('../assets/klax-spritesheet-96x161.png', import.meta.url);
-let spritesheets = {};
-
 /**
  * Global config options for the game
  * @typedef {object} config
@@ -35,15 +32,7 @@ let spritesheets = {};
  * @property {Number} lives
  * @property {Number} maxTilesOnPaddle
  */
-let config;
-
-window.preload = function () {
-    spritesheets.tiles = loadImage(klaxSpriteSheet.toString());
-};
-
-window.setup = function () {
-    // frameRate(1);
-    config = {
+let config = {
         canvasWidth: 600,
         lanes: 5,
         beltSteps: 5,
@@ -62,6 +51,20 @@ window.setup = function () {
         maxTilesOnPaddle: 5
     };
 
+let klaxSpriteSheet;
+if(config.debug) {
+    klaxSpriteSheet = new URL('../assets/klax-spritesheet-96x161-debug.png', import.meta.url);
+} else {
+    klaxSpriteSheet = new URL('../assets/klax-spritesheet-96x161.png', import.meta.url);
+}
+let spritesheets = {};
+
+
+window.preload = function () {
+    spritesheets.tiles = loadImage(klaxSpriteSheet.toString());
+};
+
+window.setup = function () {
     config.tileSize = config.canvasWidth / config.lanes;
 
     createCanvas(config.canvasWidth, config.canvasWidth);
