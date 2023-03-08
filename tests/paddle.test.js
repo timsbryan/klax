@@ -45,7 +45,7 @@ describe('The paddle should', () => {
         expect(paddle).toEqual({
             config,
             'maxTiles': 5,
-            'paddleHeight': 1.33333333333333333,
+            'paddleHeight': 1.3333333333333333,
             'paddleLane': 1,
             'paddleTiles': []
         });

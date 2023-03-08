@@ -34,11 +34,11 @@ export function make2DArray(cols, rows) {
 export function isDuplicate(arr1, arr2) {
   if (Object.keys(arr1.tiles).length !== Object.keys(arr2.tiles).length) return false;
 
-  return arr1.tiles.map(pos1 => {
-    return arr2.tiles.map(pos2 => {
-      return pos1.col === pos2.col && pos1.row === pos2.row
-    }).some(v => v === true)
-  }).every(v => v === true);
+  return arr1.tiles.map((pos1) => {
+    return arr2.tiles.map((pos2) => {
+      return pos1.col === pos2.col && pos1.row === pos2.row;
+    }).some((v) => v === true);
+  }).every((v) => v === true);
 }
 
 /**
@@ -49,7 +49,7 @@ export function isDuplicate(arr1, arr2) {
  */
 export function uniqueValues(a) {
   return a.filter((value, index, array) => {
-    return index === array.findIndex(t => {
+    return index === array.findIndex((t) => {
       return isDuplicate(value, t);
     });
   });

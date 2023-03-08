@@ -269,8 +269,16 @@ describe('The bin should', () => {
         ];
 
         const expected = [
-            { 'type': 'vertical', 'tiles': [{ 'col': 0, 'row': 2 }, { 'col': 0, 'row': 3 }, { 'col': 0, 'row': 4 }] },
-            { 'type': 'horizontal', 'tiles': [{ 'col': 0, 'row': 4 }, { 'col': 1, 'row': 4 }, { 'col': 2, 'row': 4 }] }
+            { 'type': 'vertical', 'tiles': [
+                { 'col': 0, 'row': 2 },
+                { 'col': 0, 'row': 3 },
+                { 'col': 0, 'row': 4 }
+            ]},
+            { 'type': 'horizontal', 'tiles': [
+                { 'col': 0, 'row': 4 },
+                { 'col': 1, 'row': 4 },
+                { 'col': 2, 'row': 4 }
+            ]}
         ];
 
         const result = bin.checkAllForKlax();
