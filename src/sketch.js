@@ -12,7 +12,6 @@ import Paddle from './paddle';
 import Bin from './bin';
 import Score from './score';
 import Tile from './tile';
-import Sprite from './sprite';
 
 let belt;
 let bin;
@@ -38,12 +37,12 @@ let config = {
         beltSteps: 5,
         speed: 500,
         tileColours: {
-            "blue": { "firstTileYPos": 0 },
-            "green": { "firstTileYPos": 161 },
-            "orange": { "firstTileYPos": 322 },
-            "pink": { "firstTileYPos":  483 },
-            "red": { "firstTileYPos": 644 },
-            "yellow": { "firstTileYPos": 805 }
+            'blue': { 'firstTileYPos': 0 },
+            'green': { 'firstTileYPos': 161 },
+            'orange': { 'firstTileYPos': 322 },
+            'pink': { 'firstTileYPos':  483 },
+            'red': { 'firstTileYPos': 644 },
+            'yellow': { 'firstTileYPos': 805 }
         },
         debug: true,
         tileSize: null,
@@ -52,7 +51,7 @@ let config = {
     };
 
 let klaxSpriteSheet;
-if(config.debug) {
+if (config.debug) {
     klaxSpriteSheet = new URL('../assets/klax-spritesheet-96x161-debug.png', import.meta.url);
 } else {
     klaxSpriteSheet = new URL('../assets/klax-spritesheet-96x161.png', import.meta.url);
@@ -225,6 +224,7 @@ window.keyPressed = function () {
                     [-1, -1, -1, -1, -1]
                 ];
             }
+            break;
         // o
         case 79:
             if (config.debug) {

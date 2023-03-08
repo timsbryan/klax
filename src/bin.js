@@ -107,7 +107,7 @@ export default class Bin {
                 return this.checkForKlax(i, j);
             });
         });
-        return uniqueValues(allKlaxes.flat().filter(n => n).flat());
+        return uniqueValues(allKlaxes.flat().filter((n) => n).flat());
     }
 
     /**
@@ -280,7 +280,8 @@ export default class Bin {
     }
 
     /**
-     * Drop any tiles that have empty space below them and then call itself again until no tile have empty space below.
+     * Drop any tiles that have empty space below them and then call itself again until no tile have
+     * empty space below.
      */
     dropTiles() {
         this.bin.forEach((_tile, i) => {
@@ -302,7 +303,9 @@ export default class Bin {
      * @param {Array} tileArr 
      */
     clearBinPositions(tileArr) {
-        tileArr.forEach(klaxObj => klaxObj.tiles.forEach(tilePos => this.bin[tilePos.col][tilePos.row] = -1));
+        tileArr.forEach((klaxObj) => klaxObj.tiles.forEach(
+            (tilePos) => this.bin[tilePos.col][tilePos.row] = -1
+            ));
     }
 
     draw() {
