@@ -127,4 +127,11 @@ describe('The paddle should', () => {
         expect(window.translate.mock.calls[0][1]).toBe(154);
         expect(spy).toHaveBeenCalledTimes(3);
     });
+
+    test('return the current column that the paddle is in', () => {
+        paddle.paddleLane = 3;
+        expect(paddle.getColumn()).toBe(3);
+
+
+    });
 });

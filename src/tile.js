@@ -60,9 +60,7 @@ export default class Tile {
      * @param {Number} y The position to show the image on the y axis.
      */
     drawFrame(frameNumber, x, y) {
-        push();
         this.tileAnim.showFrame(frameNumber, x, y);
-        pop();
     }
 
     /**

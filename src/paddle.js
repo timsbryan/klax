@@ -34,6 +34,14 @@ export default class Paddle {
     }
 
     /**
+     * @returns The current lane that the paddle is in.
+     */
+    getColumn() {
+        return this.paddleLane;
+    }
+
+
+    /**
      * Remove the tile on the top of the paddle.
      * @returns {object|boolean} If there are tiles on the paddle returns an object of the top tile
      *                           and the column the paddle is in. If there are not tiles, returns
@@ -84,12 +92,10 @@ export default class Paddle {
 
         rect(0, 0, this.config.tileSize, this.paddleHeight);
 
-        push();
         this.paddleTiles.forEach((tile, i) => {
             // TODO remove magic numbers
             tile.drawFrame(18, -50, -(i*30) - 100);
         });
-        pop();
 
         pop();
     }

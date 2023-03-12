@@ -97,7 +97,7 @@ describe('The tile should', () => {
     const mockSpriteGetFrameNumber = jest.spyOn(Sprite.prototype, 'getFrameNumber')
       .mockImplementation(() => 1);
 
-    expect(tile.step(2)).toBeTruthy();
+    expect(tile.step()).toBeTruthy();
 
     expect(mockSpriteAnimate).toHaveBeenCalled();
     expect(mockSpriteGetFrameNumber).toHaveBeenCalled();

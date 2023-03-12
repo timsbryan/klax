@@ -72,7 +72,7 @@ export default class Belt {
      * @param {number} col 
      */
     pushTileToTop(tile, col) {
-        this.belt[0][col] = tile;
+        this.belt[col][0] = tile;
     }
 
     /**

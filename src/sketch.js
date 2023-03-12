@@ -130,35 +130,20 @@ window.keyPressed = function () {
             break;
 
         //down arrow
+        /**
+         * TODO This needs to cater for three actions:
+         * 1. There's no room in the lane so do nothing
+         * 2. There's room in the lane so push the tile to it
+         * 3. There's room in the lane so push the tile and it forms a klax; increment score
+         */
         case 40: {
-            /**
-             * TODO This needs to cater for three actions:
-             * 1. There's no room in the lane so do nothing
-             * 2. There's room in the lane so push the tile to it
-             * 3. There's room in the lane so push the tile and it forms a klax; increment score
-             */
-            let tile = paddle.removeTopTile();
+            if (bin.getLowestEmptyPosition(paddle.getColumn()) !== null) {
+                let tile = paddle.removeTopTile();
 
-            if (tile) {
-                let klaxes = bin.pushToBin(tile.tile, tile.col);
+                if (tile) {
+                    let klaxes = bin.pushToBin(tile.tile, tile.col);
 
-                klaxes.forEach((obj) => {
-                    if (obj.type === 'vertical') {
-                        score.addVerticalKlax(obj.tiles);
-                    } else if (obj.type === 'horizontal') {
-                        score.addHorizontalKlax(obj.tiles);
-                    } else if (obj.type === 'diagonal') {
-                        score.addDiagonalKlax(obj.tiles);
-                    }
-
-                    bin.clearBinPositions(klaxes);
-                    bin.dropTiles();
-                });
-
-                if (klaxes) {
-                    let allKlaxes = bin.checkAllForKlax();
-
-                    allKlaxes.forEach((obj) => {
+                    klaxes.forEach((obj) => {
                         if (obj.type === 'vertical') {
                             score.addVerticalKlax(obj.tiles);
                         } else if (obj.type === 'horizontal') {
@@ -166,10 +151,27 @@ window.keyPressed = function () {
                         } else if (obj.type === 'diagonal') {
                             score.addDiagonalKlax(obj.tiles);
                         }
+
+                        bin.clearBinPositions(klaxes);
+                        bin.dropTiles();
                     });
 
-                    bin.clearBinPositions(allKlaxes);
-                    bin.dropTiles();
+                    if (klaxes) {
+                        let allKlaxes = bin.checkAllForKlax();
+
+                        allKlaxes.forEach((obj) => {
+                            if (obj.type === 'vertical') {
+                                score.addVerticalKlax(obj.tiles);
+                            } else if (obj.type === 'horizontal') {
+                                score.addHorizontalKlax(obj.tiles);
+                            } else if (obj.type === 'diagonal') {
+                                score.addDiagonalKlax(obj.tiles);
+                            }
+                        });
+
+                        bin.clearBinPositions(allKlaxes);
+                        bin.dropTiles();
+                    }
                 }
             }
             break;
