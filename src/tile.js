@@ -53,6 +53,10 @@ export default class Tile {
         return this.tileAnim.getFrameNumber() === 1;
     }
 
+    resetPosY() {
+        this.tileAnim.resetPosY();
+    }
+
     /**
      * Displays the tile on the screen at a specific frame.
      * @param {Number} frameNumber The specific frame to show.

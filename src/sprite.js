@@ -75,6 +75,10 @@ export default class Sprite {
         return this.index;
     }
 
+    resetPosY() {
+        this.posY = 0;
+    }
+
     animate() {
         if (millis() - this.lastUpdate >= this.speed / this.numCells) {
             this.lastUpdate = millis();

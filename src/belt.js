@@ -68,10 +68,11 @@ export default class Belt {
 
     /**
      * Pushes a tile back to the top of the tile.
-     * @param {number} tile 
+     * @param {import('./tile').default} tile 
      * @param {number} col 
      */
     pushTileToTop(tile, col) {
+        tile.resetPosY();
         this.belt[col][0] = tile;
     }
 
